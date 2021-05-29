@@ -7,7 +7,7 @@
     "dev-start": "ts-node-dev server/index.ts",
     "dev-build": "webpack --mode development --watch"
   },
-  "author": "",
+  "author": "Tarrin Neal",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.14.3",
