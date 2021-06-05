@@ -1,43 +1,38 @@
 import * as path from 'path';
 import * as express from 'express';
+import { Socket } from 'socket.io';
 const port = 3080;
 const app = express();
-import * as http from 'http';
-const server = http.createServer(app);
-import { Server } from 'socket.io';
-const io = new Server(server);
+
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 
 app.use('/', express.static(path.join(__dirname, '../build')));
 
-io.on('connection', (socket) => {
+io.on('connection', (socket: Socket) => {
 
-  console.log('a user has connected');
-  socket.emit('HelloClient', getCurrentTime());
-  console.log(socket.id);
+  console.log('a user has connected, socket.id: ', socket.id);
+  socket.emit('HelloClient', new Date().toLocaleString());
 
   socket.on('disconnect', () => {
-    console.log('a user has disconnected');
+    console.log('a user has disconnected, socket.id: ', socket.id);
   });
 
   //listening events
 
-  //template sorta
   socket.on('insertEventNameHere', () => {
+    //template sorta
     //do stuff
-    let variable = 'whatever variable stuff you want';
+    const variable: string = 'whatever variable stuff you want';
     socket.emit('insertClientListeningEventNameHere', variable);
   });
 });
 
-const getCurrentTime = () => {
-  const currentDate = new Date();
-  const dateTime = currentDate.getDate() + '/' + (currentDate.getMonth() +1) + '/' + currentDate.getFullYear() + ' ' + currentDate.getHours() + ':' + currentDate.getMinutes() + ':' + currentDate.getSeconds();
-  console.log(dateTime)
-  return dateTime;
-};
-
-server.listen(port, ()=> {
+const server = http.listen(port, ()=> {
   console.log(`listening on port ${port}`);
 });
 
+// httpServer.listen(port, ()=> {
+//   console.log(`listening on port ${port}`);
+// });

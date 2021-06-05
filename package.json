@@ -17,6 +17,8 @@
     "@types/express": "^4.17.12",
     "@types/react": "^17.0.7",
     "@types/react-dom": "^17.0.5",
+    "@types/socket.io": "^3.0.2",
+    "@types/socket.io-client": "^3.0.0",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.6",
     "html-loader": "^2.1.2",
