@@ -1,10 +1,38 @@
-import * as path from 'path'
-import * as express from 'express'
-const port = 3080
-const app = express()
+import * as path from 'path';
+import * as express from 'express';
+import { Socket } from 'socket.io';
+const port = 3080;
+const app = express();
 
-app.use('/', express.static(path.join(__dirname, '../build')))
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
-app.listen(port, ()=> {
-  console.log(`listening on port ${port}`)
-})
+
+app.use('/', express.static(path.join(__dirname, '../build')));
+
+io.on('connection', (socket: Socket) => {
+
+  console.log('a user has connected, socket.id: ', socket.id);
+  socket.emit('HelloClient', new Date().toLocaleString());
+
+  socket.on('disconnect', () => {
+    console.log('a user has disconnected, socket.id: ', socket.id);
+  });
+
+  //listening events
+
+  socket.on('insertEventNameHere', () => {
+    //template sorta
+    //do stuff
+    const variable: string = 'whatever variable stuff you want';
+    socket.emit('insertClientListeningEventNameHere', variable);
+  });
+});
+
+const server = http.listen(port, ()=> {
+  console.log(`listening on port ${port}`);
+});
+
+// httpServer.listen(port, ()=> {
+//   console.log(`listening on port ${port}`);
+// });
