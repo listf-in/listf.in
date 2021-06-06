@@ -3,9 +3,33 @@ import ListItem from './ListItem';
 import '../sass/styles.scss';
 
 type ListProps = {
-  list: {};
+  list: {
+    uid: String;
+    'Board.name': String;
+    'Board.owner'?: {
+      uid: String;
+      'User.name': String;
+    };
+    'Board.listItems'?: {
+      uid: String;
+      'Board.name': String;
+      'Board.owner'?: {
+        uid: String;
+        'User.name': String;
+      };
+      'Board.listItems'?: {
+        uid: String;
+        'Board.name': String;
+        'Board.owner'?: {
+          uid: String;
+          'User.name': String;
+        };
+      }[];
+    }[];
+  };
 };
 const List: FC<ListProps> = ({ list }) => {
+  debugger;
   return (
     <div className='list'>
       {list['Board.name']}

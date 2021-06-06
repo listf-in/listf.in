@@ -1,7 +1,8 @@
 #mainBoard {
   display: grid;
   grid-template-rows: auto;
-  grid-template-columns: repeat(10, 255px);
+  grid-template-columns: 255px;
+  grid-auto-flow: column;
 }
 
 .list {

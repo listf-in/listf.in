@@ -26,7 +26,7 @@ const App: FC = () => {
 
   const [board, setBoard] = useState({
     uid: 'String',
-    'Board.owner': 'user',
+    'Board.owner': { uid: 'fill', 'User.name': 'user' },
     'Board.name': 'String',
     'Board.members': [
       {
@@ -34,7 +34,28 @@ const App: FC = () => {
         'User.name': 'String',
       },
     ],
-    'Board.listItems': [{}],
+    'Board.listItems': [
+      {
+        uid: 'String',
+        'Board.name': 'String',
+        'Board.owner': { uid: 'fill', 'User.name': 'user' },
+        'Board.listItems': [
+          {
+            uid: 'String',
+            'Board.name': 'String',
+            'Board.owner': { uid: 'fill', 'User.name': 'user' },
+            'Board.listItems': [
+              {
+                uid: 'String',
+                'Board.name': 'String',
+                'Board.owner': { uid: 'fill', 'User.name': 'user' },
+                'Board.listItems': [{}],
+              },
+            ],
+          },
+        ],
+      },
+    ],
   });
 
   useEffect(() => {
@@ -62,7 +83,7 @@ const App: FC = () => {
       <div>
         socket info:
         <br />
-        socket ID: {connection ? connection.id : null}
+        socket ID: {connection && connection.id}
         <br />
         connection time: {connectionTime}
       </div>
