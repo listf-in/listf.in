@@ -1,3 +1,9 @@
+#mainBoard {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(10, 255px);
+}
+
 .list {
   width: 250px;
   border: 2px solid black;

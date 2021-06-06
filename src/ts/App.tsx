@@ -67,7 +67,7 @@ const App: FC = () => {
         connection time: {connectionTime}
       </div>
 
-      <div>{JSON.stringify(board)}</div>
+      {board['Board.name']}
       <div id='mainBoard'>
         {board['Board.listItems'].map((list) => {
           return <List list={list} />;
