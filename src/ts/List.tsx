@@ -29,7 +29,6 @@ type ListProps = {
   };
 };
 const List: FC<ListProps> = ({ list }) => {
-  debugger;
   return (
     <div className='list'>
       {list['Board.name']}
