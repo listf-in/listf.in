@@ -50,11 +50,9 @@ const App: FC = () => {
     axios
       .get('/board')
       .then((board) => {
-        debugger;
         setBoard(board.data);
       })
       .catch((err) => {
-        debugger;
         setBoard(err);
       });
   }, []);
