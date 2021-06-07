@@ -13,7 +13,6 @@ app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '../build')));
 
 app.get('/board', (req, res) => {
-  debugger;
   res.send(boardData);
 });
 
