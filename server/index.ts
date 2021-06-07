@@ -1,17 +1,22 @@
 import * as path from 'path';
 import * as express from 'express';
 import { Socket } from 'socket.io';
+const boardData = require('../dummy_board_data.json');
+
 const port = 3080;
 const app = express();
 
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-
+app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '../build')));
 
-io.on('connection', (socket: Socket) => {
+app.get('/board', (req, res) => {
+  res.send(boardData);
+});
 
+io.on('connection', (socket: Socket) => {
   console.log('a user has connected, socket.id: ', socket.id);
   socket.emit('HelloClient', new Date().toLocaleString());
 
@@ -29,7 +34,7 @@ io.on('connection', (socket: Socket) => {
   });
 });
 
-const server = http.listen(port, ()=> {
+const server = http.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
 

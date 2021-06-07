@@ -1,0 +1,18 @@
+#mainBoard {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 255px;
+  grid-auto-flow: column;
+}
+
+.list {
+  width: 250px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.listItem {
+  width: 225px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
