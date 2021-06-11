@@ -34,7 +34,7 @@ io.on('connection', (socket: Socket) => {
   });
 });
 
-const server = http.listen(port, () => {
+/*const server = */ http.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
 

@@ -1,21 +1,21 @@
 import React, { FC, useState, useEffect } from 'react';
 import '../sass/styles.scss';
 import { io, Socket } from 'socket.io-client';
-import axios, { Method } from 'axios';
+import axios from 'axios';
 import List from './List';
 // const ENDPOINT = ''; //if we use a specific endpoint
 
 type board = {
   uid: String;
   'Board.owner': user;
-  'Board.name': String;
+  'Board.name': string;
   'Board.members': [user];
   'Board.listItems': [board];
 };
 
 type user = {
-  uid: String;
-  'User.name': String;
+  uid: string;
+  'User.name': string;
 };
 
 const App: FC = () => {
@@ -91,7 +91,7 @@ const App: FC = () => {
       {board['Board.name']}
       <div id='mainBoard'>
         {board['Board.listItems'].map((list) => {
-          return <List list={list} />;
+          return <List key={list['Board.name']} list={list} />;
         })}
       </div>
     </div>
