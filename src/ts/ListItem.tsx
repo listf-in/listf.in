@@ -1,13 +1,13 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import '../sass/styles.scss';
 
 type ListItemProps = {
   item: {
-    uid: String;
-    'Board.name': String;
+    uid: string;
+    'Board.name': string;
     'Board.owner'?: {
-      uid: String;
-      'User.name': String;
+      uid: string;
+      'User.name': string;
     };
     'Board.listItems'?: {}[];
   };

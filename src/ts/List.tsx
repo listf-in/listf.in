@@ -1,40 +1,41 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import ListItem from './ListItem';
 import '../sass/styles.scss';
 
 type ListProps = {
   list: {
-    uid: String;
-    'Board.name': String;
+    uid: string;
+    'Board.name': string;
     'Board.owner'?: {
-      uid: String;
-      'User.name': String;
+      uid: string;
+      'User.name': string;
     };
     'Board.listItems'?: {
-      uid: String;
-      'Board.name': String;
+      uid: string;
+      'Board.name': string;
       'Board.owner'?: {
-        uid: String;
-        'User.name': String;
+        uid: string;
+        'User.name': string;
       };
       'Board.listItems'?: {
-        uid: String;
-        'Board.name': String;
+        uid: string;
+        'Board.name': string;
         'Board.owner'?: {
-          uid: String;
-          'User.name': String;
+          uid: string;
+          'User.name': string;
         };
       }[];
     }[];
   };
 };
+
 const List: FC<ListProps> = ({ list }) => {
   return (
     <div className='list'>
       {list['Board.name']}
       {list['Board.listItems'] &&
         list['Board.listItems'].map((item) => {
-          return <ListItem item={item} />;
+          return <ListItem key={item['Board.name']} item={item} />;
         })}
     </div>
   );
