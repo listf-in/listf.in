@@ -1,0 +1,29 @@
+type Board {
+  id: ID!
+  name: String!
+  owner: User!
+  members: [User] @hasInverse(field: boards)
+  listItems: [Board]
+  labels: [Label]
+  theme: String
+}
+
+type Label {
+  id: ID!
+  name: String!
+  color: String!
+}
+
+type User {
+  id: ID!
+  name: String! @search
+  friends: [User] @hasInverse(field: friends)
+  teams: [Team] @hasInverse(field: members)
+  boards: [Board] @hasInverse(field: members)
+}
+
+type Team {
+  id: ID!
+  name: String!
+  members: [User] @hasInverse(field: teams)
+}
