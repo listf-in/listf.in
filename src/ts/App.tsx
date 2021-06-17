@@ -4,6 +4,7 @@ import { io, Socket } from 'socket.io-client';
 import axios from 'axios';
 import List from './List';
 import LoginButton from './LoginButton';
+import ProfileInfo from './ProfileInfo';
 // const ENDPOINT = ''; //if we use a specific endpoint
 
 type board = {
@@ -83,6 +84,9 @@ const App: FC = () => {
     <div>
       <div id='loginButton'>
         <LoginButton/>
+      </div>
+      <div id='userProfileInfo'>
+        <ProfileInfo />
       </div>
       <div>
         socket info:

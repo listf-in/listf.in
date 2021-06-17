@@ -6,7 +6,7 @@ const LoginButton: FC = () => {
 
   // If we're already logged in display logout button instead:
   if (isAuthenticated) {
-    return <button onClick={() => logout({ returnTo: window.location.origin })}></button>
+    return <button onClick={() => logout({ returnTo: window.location.origin })}>Log Out</button>
   }
   return <button onClick={() => loginWithRedirect()}>Log in</button>;
 }
