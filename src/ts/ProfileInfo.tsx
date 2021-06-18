@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import { useAuth0 } from '@auth0/auth0-react';
-import { User } from '@auth0/auth0-spa-js';
 
 const ProfileInfo: FC = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -13,7 +12,7 @@ const ProfileInfo: FC = () => {
     isAuthenticated && (
       <div>
         <img src={user.picture} alt={user.name} />
-        <h2>{User.name}</h2>
+        <h2>{user.name}</h2>
         <p>{user.email}</p>
       </div>
     )
