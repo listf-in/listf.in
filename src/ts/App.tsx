@@ -83,7 +83,7 @@ const App: FC = () => {
   return (
     <div>
       <div id='loginButton'>
-        <LoginButton/>
+        <LoginButton />
       </div>
       <div id='userProfileInfo'>
         <ProfileInfo />
@@ -99,7 +99,9 @@ const App: FC = () => {
       {board['Board.name']}
       <div id='mainBoard'>
         {board['Board.listItems'].map((list) => {
-          return <List key={list['Board.name']} list={list} />;
+          return (
+            <List key={list['Board.name']} list={list} setBoard={setBoard} />
+          );
         })}
       </div>
     </div>
