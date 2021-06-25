@@ -33,7 +33,7 @@ type ListProps = {
 };
 
 const List: FC<ListProps> = ({ list, setBoard }) => {
-  const getBoard = (e: object): void => {
+  const getBoard = (/*e: object*/): void => {
     axios.get('/board').then((data) => {
       setBoard(data);
     });
