@@ -4,19 +4,19 @@ import '../sass/styles.scss';
 type ListItemProps = {
   getBoard: MouseEventHandler;
   item: {
-    uid: string;
-    'Board.name': string;
-    'Board.owner'?: {
-      uid: string;
-      'User.name': string;
+    id: string;
+    name: string;
+    owner?: {
+      id: string;
+      name: string;
     };
-    'Board.listItems'?: {}[];
+    listItems?: {}[];
   };
 };
 const ListItem: FC<ListItemProps> = ({ item, getBoard }) => {
   return (
     <div className='listItem' onClick={getBoard}>
-      {item['Board.name']}
+      {item['name']}
     </div>
   );
 };

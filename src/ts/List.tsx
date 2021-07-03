@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 
 import ListItem from './ListItem';
 import '../sass/styles.scss';
@@ -7,25 +7,25 @@ import '../sass/styles.scss';
 type ListProps = {
   setBoard: Function;
   list: {
-    uid: string;
-    'Board.name': string;
-    'Board.owner'?: {
-      uid: string;
-      'User.name': string;
+    id: string;
+    name: string;
+    owner?: {
+      id: string;
+      name: string;
     };
-    'Board.listItems'?: {
-      uid: string;
-      'Board.name': string;
-      'Board.owner'?: {
-        uid: string;
-        'User.name': string;
+    listItems?: {
+      id: string;
+      name: string;
+      owner?: {
+        id: string;
+        name: string;
       };
-      'Board.listItems'?: {
-        uid: string;
-        'Board.name': string;
-        'Board.owner'?: {
-          uid: string;
-          'User.name': string;
+      listItems?: {
+        id: string;
+        name: string;
+        owner?: {
+          id: string;
+          name: string;
         };
       }[];
     }[];
@@ -34,22 +34,19 @@ type ListProps = {
 
 const List: FC<ListProps> = ({ list, setBoard }) => {
   const getBoard = (/*e: object*/): void => {
-    axios.get('/board').then(({ data }) => {
-      setBoard(data);
-    });
+    // axios.get('/board').then(({ data }) => {
+    //   setBoard(data);
+    // });
+    //replace with updated version for apollo
   };
 
   return (
     <div className='list' onClick={getBoard}>
-      {list['Board.name']}
-      {list['Board.listItems'] &&
-        list['Board.listItems'].map((item) => {
+      {list['name']}
+      {list['listItems'] &&
+        list['listItems'].map((item) => {
           return (
-            <ListItem
-              key={item['Board.name']}
-              item={item}
-              getBoard={getBoard}
-            />
+            <ListItem key={item['name']} item={item} getBoard={getBoard} />
           );
         })}
     </div>
