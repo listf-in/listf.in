@@ -11,6 +11,7 @@ import {
   gql,
   NormalizedCacheObject,
 } from '@apollo/client';
+import { useAuth0 } from '@auth0/auth0-react';
 // const ENDPOINT = ''; //if we use a specific endpoint
 
 type AppProps = {
@@ -35,6 +36,8 @@ const App: FC<AppProps> = ({ client }) => {
   // const [connection, setConnection] = useState(null as null | Socket); //alternative typing
 
   // const [connectionTime, setConnectionTime] = useState(''); //example
+
+  const { user, isAuthenticated } = useAuth0();
 
   const [board, setBoard] = useState({
     id: 'String',
@@ -88,6 +91,67 @@ const App: FC<AppProps> = ({ client }) => {
       });
   };
 
+  const userFetch = (email: string): void => {
+    client
+      .query({
+        query: gql`
+          query {
+            getUser(email: "${email}") {
+              name
+              email
+              avatar
+              boards {
+                id
+                name
+                owner {
+                  email
+                  name
+                }
+              }
+              homeBoard {
+                id
+                name
+                owner {
+                  email
+                  name
+                }
+                listItems {
+                  id
+                  name
+                  owner {
+                    email
+                    name
+                  }
+                  listItems {
+                    id
+                    name
+                    owner {
+                      email
+                      name
+                    }
+                    listItems {
+                      id
+                      name
+                      owner {
+                        email
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `,
+      })
+      .then((result) => {
+        setBoard(result.data.getUser.homeBoard);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     // console.log('connecting');
     // const socket = socketIOClient(ENDPOINT); //if you set an endpoint
@@ -96,8 +160,14 @@ const App: FC<AppProps> = ({ client }) => {
     // socket.on('HelloClient', (data: string) => {
     //   setConnectionTime(data);
     // });
-    boardFetch();
+    // boardFetch();
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      userFetch(user.email);
+    }
+  }, [user]);
 
   return (
     <div>

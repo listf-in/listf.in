@@ -1,4 +1,4 @@
-type Board {
+type Board @withSubscription {
   id: ID!
   name: String!
   owner: User!
@@ -17,9 +17,8 @@ type Label {
 }
 
 type User {
-  id: ID!
   name: String! @search
-  email: String! @search
+  email: String! @id
   friends: [User] @hasInverse(field: friends)
   teams: [Team] @hasInverse(field: members)
   boards: [Board] @hasInverse(field: members)

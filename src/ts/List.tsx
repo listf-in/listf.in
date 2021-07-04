@@ -33,7 +33,8 @@ type ListProps = {
 };
 
 const List: FC<ListProps> = ({ list, boardFetch }) => {
-  const getBoard = (e: object, id: string): void => {
+  const getBoard = (e: React.MouseEvent<HTMLElement>, id: string): void => {
+    e.stopPropagation();
     boardFetch(id);
   };
 
