@@ -1,22 +1,21 @@
 import React, { FC, useState, useEffect } from 'react';
 import '../sass/styles.scss';
-import { io, Socket } from 'socket.io-client';
+// import { io, Socket } from 'socket.io-client';
 import List from './List';
-import LoginButton from './LoginButton';
-import ProfileInfo from './ProfileInfo';
+import Login from './Login';
 import {
   ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  useQuery,
+  // InMemoryCache,
+  // ApolloProvider,
+  // useQuery,
   gql,
+  NormalizedCacheObject,
 } from '@apollo/client';
 // const ENDPOINT = ''; //if we use a specific endpoint
 
-const client = new ApolloClient({
-  uri: 'http://144.126.217.146:8080/graphql',
-  cache: new InMemoryCache(),
-});
+type AppProps = {
+  client: ApolloClient<NormalizedCacheObject>;
+};
 
 type board = {
   id: string;
@@ -31,7 +30,7 @@ type user = {
   name: string;
 };
 
-const App: FC = () => {
+const App: FC<AppProps> = ({ client }) => {
   // const [connection, setConnection] = useState<null | Socket>(null);
   // const [connection, setConnection] = useState(null as null | Socket); //alternative typing
 
@@ -47,31 +46,10 @@ const App: FC = () => {
         name: 'String',
       },
     ],
-    listItems: [
-      {
-        id: 'String',
-        name: 'String',
-        owner: { id: 'fill', name: 'user' },
-        listItems: [
-          {
-            id: 'String',
-            name: 'String',
-            owner: { id: 'fill', name: 'user' },
-            listItems: [
-              {
-                id: 'String',
-                name: 'String',
-                owner: { id: 'fill', name: 'user' },
-                listItems: [{}],
-              },
-            ],
-          },
-        ],
-      },
-    ],
+    listItems: [],
   });
 
-  const boardFetch = (id: string = '0x5'): void => {
+  const boardFetch = (id: string = '0x6a'): void => {
     client
       .query({
         query: gql`
@@ -79,21 +57,21 @@ const App: FC = () => {
             getBoard(id: "${id}") {
               name
               owner {
-                id
+                email
                 name
               }
               listItems {
                 id
                 name
                 owner {
-                  id
+                  email
                   name
                 }
                 listItems {
                   id
                   name
                   owner {
-                    id
+                    email
                     name
                   }
                 }
@@ -123,12 +101,7 @@ const App: FC = () => {
 
   return (
     <div>
-      <div id='loginButton'>
-        <LoginButton />
-      </div>
-      <div id='userProfileInfo'>
-        <ProfileInfo />
-      </div>
+      <Login />
       {/* <div>
         socket info:
         <br />

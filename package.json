@@ -4,8 +4,8 @@
   "description": "an advanced recursive ticketing application",
   "main": "index.js",
   "scripts": {
-    "dev-start": "ts-node-dev server/index.ts",
-    "dev-build": "webpack --mode development --watch",
+    "start": "ts-node-dev server/index.ts",
+    "build": "webpack --mode development --watch",
     "test": "jest"
   },
   "author": "Tarrin Neal",
