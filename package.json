@@ -4,8 +4,8 @@
   "description": "an advanced recursive ticketing application",
   "main": "index.js",
   "scripts": {
-    "dev-start": "ts-node-dev server/index.ts",
-    "dev-build": "webpack --mode development --watch",
+    "start": "ts-node-dev server/index.ts",
+    "build": "webpack --mode development --watch",
     "test": "jest"
   },
   "author": "Tarrin Neal",
@@ -40,9 +40,11 @@
     "webpack-cli": "^4.7.0"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.20",
     "@auth0/auth0-react": "^1.5.0",
     "axios": "^0.21.1",
     "express": "^4.17.1",
+    "graphql": "^15.5.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router": "^5.2.0",

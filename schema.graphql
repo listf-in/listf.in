@@ -5,6 +5,8 @@ type Board {
   members: [User] @hasInverse(field: boards)
   listItems: [Board]
   labels: [Label]
+  start: DateTime
+  end: DateTime
   theme: String
 }
 
@@ -17,9 +19,11 @@ type Label {
 type User {
   id: ID!
   name: String! @search
+  email: String! @search
   friends: [User] @hasInverse(field: friends)
   teams: [Team] @hasInverse(field: members)
   boards: [Board] @hasInverse(field: members)
+  homeBoard: Board
 }
 
 type Team {

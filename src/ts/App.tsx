@@ -1,107 +1,119 @@
 import React, { FC, useState, useEffect } from 'react';
 import '../sass/styles.scss';
-import { io, Socket } from 'socket.io-client';
-import axios from 'axios';
+// import { io, Socket } from 'socket.io-client';
 import List from './List';
-import LoginButton from './LoginButton';
-import ProfileInfo from './ProfileInfo';
+import Login from './Login';
+import {
+  ApolloClient,
+  // InMemoryCache,
+  // ApolloProvider,
+  // useQuery,
+  gql,
+  NormalizedCacheObject,
+} from '@apollo/client';
 // const ENDPOINT = ''; //if we use a specific endpoint
 
+type AppProps = {
+  client: ApolloClient<NormalizedCacheObject>;
+};
+
 type board = {
-  uid: String;
-  'Board.owner': user;
-  'Board.name': string;
-  'Board.members': [user];
-  'Board.listItems': [board];
+  id: string;
+  owner: user;
+  name: string;
+  members: [user];
+  listItems: [board];
 };
 
 type user = {
-  uid: string;
-  'User.name': string;
+  id: string;
+  name: string;
 };
 
-const App: FC = () => {
-  const [connection, setConnection] = useState<null | Socket>(null);
+const App: FC<AppProps> = ({ client }) => {
+  // const [connection, setConnection] = useState<null | Socket>(null);
   // const [connection, setConnection] = useState(null as null | Socket); //alternative typing
 
-  const [connectionTime, setConnectionTime] = useState(''); //example
+  // const [connectionTime, setConnectionTime] = useState(''); //example
 
   const [board, setBoard] = useState({
-    uid: 'String',
-    'Board.owner': { uid: 'fill', 'User.name': 'user' },
-    'Board.name': 'String',
-    'Board.members': [
+    id: 'String',
+    owner: { id: 'fill', name: 'user' },
+    name: 'String',
+    members: [
       {
-        uid: 'String',
-        'User.name': 'String',
+        id: 'String',
+        name: 'String',
       },
     ],
-    'Board.listItems': [
-      {
-        uid: 'String',
-        'Board.name': 'String',
-        'Board.owner': { uid: 'fill', 'User.name': 'user' },
-        'Board.listItems': [
-          {
-            uid: 'String',
-            'Board.name': 'String',
-            'Board.owner': { uid: 'fill', 'User.name': 'user' },
-            'Board.listItems': [
-              {
-                uid: 'String',
-                'Board.name': 'String',
-                'Board.owner': { uid: 'fill', 'User.name': 'user' },
-                'Board.listItems': [{}],
-              },
-            ],
-          },
-        ],
-      },
-    ],
+    listItems: [],
   });
 
-  useEffect(() => {
-    console.log('connecting');
-    // const socket = socketIOClient(ENDPOINT); //if you set an endpoint
-    const socket = io();
-
-    setConnection(socket);
-
-    socket.on('HelloClient', (data: string) => {
-      setConnectionTime(data);
-    });
-    axios
-      .get('/board')
-      .then((board) => {
-        setBoard(board.data);
+  const boardFetch = (id: string = '0x6a'): void => {
+    client
+      .query({
+        query: gql`
+          query {
+            getBoard(id: "${id}") {
+              name
+              owner {
+                email
+                name
+              }
+              listItems {
+                id
+                name
+                owner {
+                  email
+                  name
+                }
+                listItems {
+                  id
+                  name
+                  owner {
+                    email
+                    name
+                  }
+                }
+              }
+            }
+          }
+        `,
+      })
+      .then((result) => {
+        setBoard(result.data.getBoard);
       })
       .catch((err) => {
-        setBoard(err);
+        console.log(err);
       });
+  };
+
+  useEffect(() => {
+    // console.log('connecting');
+    // const socket = socketIOClient(ENDPOINT); //if you set an endpoint
+    // const socket = io();
+    // setConnection(socket);
+    // socket.on('HelloClient', (data: string) => {
+    //   setConnectionTime(data);
+    // });
+    boardFetch();
   }, []);
 
   return (
     <div>
-      <div id='loginButton'>
-        <LoginButton />
-      </div>
-      <div id='userProfileInfo'>
-        <ProfileInfo />
-      </div>
-      <div>
+      <Login />
+      {/* <div>
         socket info:
         <br />
         socket ID: {connection && connection.id}
         <br />
         connection time: {connectionTime}
-      </div>
+      </div> */}
 
-      {board['Board.name']}
+      {board.name}
       <div id='mainBoard'>
-        {board['Board.listItems'].map((list) => {
-          return (
-            <List key={list['Board.name']} list={list} setBoard={setBoard} />
-          );
+        {board['listItems'].map((list) => {
+          return <List key={list.name} list={list} boardFetch={boardFetch} />;
         })}
       </div>
     </div>

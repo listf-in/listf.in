@@ -1,22 +1,22 @@
-import React, { FC, MouseEventHandler } from 'react';
+import React, { FC } from 'react';
 import '../sass/styles.scss';
 
 type ListItemProps = {
-  getBoard: MouseEventHandler;
+  getBoard: Function;
   item: {
-    uid: string;
-    'Board.name': string;
-    'Board.owner'?: {
-      uid: string;
-      'User.name': string;
+    id: string;
+    name: string;
+    owner?: {
+      id: string;
+      name: string;
     };
-    'Board.listItems'?: {}[];
+    listItems?: {}[];
   };
 };
 const ListItem: FC<ListItemProps> = ({ item, getBoard }) => {
   return (
-    <div className='listItem' onClick={getBoard}>
-      {item['Board.name']}
+    <div className='listItem' onClick={(e) => getBoard(e, item.id)}>
+      {item['name']}
     </div>
   );
 };
