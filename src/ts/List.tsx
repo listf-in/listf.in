@@ -5,7 +5,7 @@ import ListItem from './ListItem';
 import '../sass/styles.scss';
 
 type ListProps = {
-  setBoard: Function;
+  boardFetch: Function;
   list: {
     id: string;
     name: string;
@@ -32,16 +32,13 @@ type ListProps = {
   };
 };
 
-const List: FC<ListProps> = ({ list, setBoard }) => {
-  const getBoard = (/*e: object*/): void => {
-    // axios.get('/board').then(({ data }) => {
-    //   setBoard(data);
-    // });
-    //replace with updated version for apollo
+const List: FC<ListProps> = ({ list, boardFetch }) => {
+  const getBoard = (e: object, id: string): void => {
+    boardFetch(id);
   };
 
   return (
-    <div className='list' onClick={getBoard}>
+    <div className='list' onClick={(e) => getBoard(e, list.id)}>
       {list['name']}
       {list['listItems'] &&
         list['listItems'].map((item) => {

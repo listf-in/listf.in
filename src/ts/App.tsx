@@ -19,11 +19,11 @@ const client = new ApolloClient({
 });
 
 type board = {
-  id: String;
-  'Board.owner': user;
-  'Board.name': string;
-  'Board.members': [user];
-  'Board.listItems': [board];
+  id: string;
+  owner: user;
+  name: string;
+  members: [user];
+  listItems: [board];
 };
 
 type user = {
@@ -71,22 +71,12 @@ const App: FC = () => {
     ],
   });
 
-  useEffect(() => {
-    // console.log('connecting');
-    // const socket = socketIOClient(ENDPOINT); //if you set an endpoint
-    // const socket = io();
-
-    // setConnection(socket);
-
-    // socket.on('HelloClient', (data: string) => {
-    //   setConnectionTime(data);
-    // });
-
+  const boardFetch = (id: string = '0x5'): void => {
     client
       .query({
         query: gql`
           query {
-            getBoard(id: "0x5") {
+            getBoard(id: "${id}") {
               name
               owner {
                 id
@@ -112,7 +102,23 @@ const App: FC = () => {
           }
         `,
       })
-      .then((result) => setBoard(result.data.getBoard));
+      .then((result) => {
+        setBoard(result.data.getBoard);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    // console.log('connecting');
+    // const socket = socketIOClient(ENDPOINT); //if you set an endpoint
+    // const socket = io();
+    // setConnection(socket);
+    // socket.on('HelloClient', (data: string) => {
+    //   setConnectionTime(data);
+    // });
+    boardFetch();
   }, []);
 
   return (
@@ -134,7 +140,7 @@ const App: FC = () => {
       {board.name}
       <div id='mainBoard'>
         {board['listItems'].map((list) => {
-          return <List key={list.name} list={list} setBoard={setBoard} />;
+          return <List key={list.name} list={list} boardFetch={boardFetch} />;
         })}
       </div>
     </div>
