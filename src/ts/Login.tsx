@@ -5,8 +5,6 @@ import LoginButton from './LoginButton';
 import ProfileInfo from './ProfileInfo';
 
 const Login: FC = () => {
-  useEffect(() => {}, []);
-
   return (
     <div>
       <div id='loginButton'>
