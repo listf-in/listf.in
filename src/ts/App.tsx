@@ -37,7 +37,7 @@ const App: FC<AppProps> = ({ client }) => {
 
   // const [connectionTime, setConnectionTime] = useState(''); //example
 
-  const { user, isAuthenticated } = useAuth0();
+  const { user } = useAuth0();
 
   const [board, setBoard] = useState({
     id: '',
@@ -52,7 +52,7 @@ const App: FC<AppProps> = ({ client }) => {
     listItems: [],
   });
 
-  const boardFetch = (id: string = '0x6a'): void => {
+  const boardFetch = (id: string): void => {
     client
       .query({
         query: gql`
@@ -129,14 +129,7 @@ const App: FC<AppProps> = ({ client }) => {
                       email
                       name
                     }
-                    listItems {
-                      id
-                      name
-                      owner {
-                        email
-                        name
-                      }
-                    }
+
                   }
                 }
               }
@@ -149,6 +142,7 @@ const App: FC<AppProps> = ({ client }) => {
       })
       .catch((err) => {
         if (err === err) {
+          //check to see if correct error
           client
             .mutate({
               mutation: gql`mutation {
@@ -157,7 +151,7 @@ const App: FC<AppProps> = ({ client }) => {
                     name: "${user.name}",
                     email: "${user.email}",
                     homeBoard: {
-                      name: "${user.email}'s Home Board",
+                      name: "${user.name}'s Home Board",
                       owner: {
                         email: "${user.email}"
                       }
