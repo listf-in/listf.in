@@ -40,13 +40,13 @@ const App: FC<AppProps> = ({ client }) => {
   const { user, isAuthenticated } = useAuth0();
 
   const [board, setBoard] = useState({
-    id: 'String',
-    owner: { id: 'fill', name: 'user' },
-    name: 'String',
+    id: '',
+    owner: { id: '', name: '' },
+    name: '',
     members: [
       {
-        id: 'String',
-        name: 'String',
+        id: '',
+        name: '',
       },
     ],
     listItems: [],
@@ -145,9 +145,11 @@ const App: FC<AppProps> = ({ client }) => {
         `,
       })
       .then((result) => {
+        debugger;
         setBoard(result.data.getUser.homeBoard);
       })
       .catch((err) => {
+        debugger;
         console.log(err);
       });
   };
