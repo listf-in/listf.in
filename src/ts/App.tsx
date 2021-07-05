@@ -7,7 +7,7 @@ import {
   ApolloClient,
   // InMemoryCache,
   // ApolloProvider,
-  // useQuery,
+  useQuery,
   gql,
   NormalizedCacheObject,
 } from '@apollo/client';
@@ -145,12 +145,52 @@ const App: FC<AppProps> = ({ client }) => {
         `,
       })
       .then((result) => {
-        debugger;
         setBoard(result.data.getUser.homeBoard);
       })
       .catch((err) => {
-        debugger;
-        console.log(err);
+        if (err === err) {
+          client
+            .mutate({
+              mutation: gql`mutation {
+                addUser(input: [
+                  {
+                    name: "${user.name}",
+                    email: "${user.email}",
+                    homeBoard: {
+                      name: "${user.email}'s Home Board",
+                      owner: {
+                        email: "${user.email}"
+                      }
+                    }
+                  }
+                ]) {
+                  user {
+                    name
+                    email
+                    avatar
+                    homeBoard {
+                      id
+                      name
+                      owner	{
+                        name
+                      }
+                      listItems {
+                        id
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+              `,
+            })
+            .then((result) => {
+              setBoard(result.data.addUser.user[0].homeBoard);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       });
   };
 
