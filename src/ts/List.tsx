@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 
 import ListItem from './ListItem';
 import '../sass/styles.scss';
+import AddBoardForm from './AddBoardForm';
 
 type ListProps = {
   boardFetch: Function;
@@ -47,6 +48,9 @@ const List: FC<ListProps> = ({ list, boardFetch }) => {
             <ListItem key={item['name']} item={item} getBoard={getBoard} />
           );
         })}
+      <div className='listItem addBoardForm'>
+        <AddBoardForm parent={list.id} placeholder={'Add List Item'} />
+      </div>
     </div>
   );
 };

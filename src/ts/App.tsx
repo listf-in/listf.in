@@ -12,6 +12,7 @@ import {
   NormalizedCacheObject,
 } from '@apollo/client';
 import { useAuth0 } from '@auth0/auth0-react';
+import AddBoardForm from './AddBoardForm';
 // const ENDPOINT = ''; //if we use a specific endpoint
 
 type AppProps = {
@@ -215,12 +216,20 @@ const App: FC<AppProps> = ({ client }) => {
         <br />
         connection time: {connectionTime}
       </div> */}
-
+      {/*this all needs to be added to it's own component*/}
       {board.name}
       <div id='mainBoard'>
         {board['listItems'].map((list) => {
           return <List key={list.name} list={list} boardFetch={boardFetch} />;
         })}
+        <div className='list addBoardForm'>
+          <AddBoardForm
+            parent={board.id}
+            placeholder={'Add List'}
+            client={client}
+            setBoard={setBoard}
+          />
+        </div>
       </div>
     </div>
   );
