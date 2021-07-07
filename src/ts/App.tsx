@@ -59,6 +59,7 @@ const App: FC<AppProps> = ({ client }) => {
         query: gql`
           query {
             getBoard(id: "${id}") {
+              id
               name
               owner {
                 email
