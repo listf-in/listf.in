@@ -6,15 +6,15 @@ import '../sass/styles.scss';
 type AddBoardFormProps = {
   parent: string;
   placeholder: string;
-  setBoard: Function;
   client: ApolloClient<NormalizedCacheObject>;
+  callback: Function;
 };
 
 const AddBoardForm: FC<AddBoardFormProps> = ({
   parent,
   placeholder,
   client,
-  setBoard,
+  callback,
 }) => {
   const [formValue, setFormValue] = useState('');
   const { user } = useAuth0();
@@ -73,7 +73,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
               `,
       })
       .then((result) => {
-        setBoard(result.data.updateBoard.board[0]);
+        callback(result);
       })
       .catch((err) => {
         console.log(err);

@@ -7,6 +7,8 @@ import AddBoardForm from './AddBoardForm';
 
 type ListProps = {
   boardFetch: Function;
+  client: any;
+  parent: string;
   list: {
     id: string;
     name: string;
@@ -33,7 +35,7 @@ type ListProps = {
   };
 };
 
-const List: FC<ListProps> = ({ list, boardFetch }) => {
+const List: FC<ListProps> = ({ list, boardFetch, client, parent }) => {
   const getBoard = (e: React.MouseEvent<HTMLElement>, id: string): void => {
     e.stopPropagation();
     boardFetch(id);
@@ -49,7 +51,12 @@ const List: FC<ListProps> = ({ list, boardFetch }) => {
           );
         })}
       <div className='listItem addBoardForm'>
-        <AddBoardForm parent={list.id} placeholder={'Add List Item'} />
+        <AddBoardForm
+          parent={list.id}
+          placeholder={'Add List Item'}
+          client={client}
+          callback={() => boardFetch(parent)}
+        />
       </div>
     </div>
   );
