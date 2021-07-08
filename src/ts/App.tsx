@@ -59,6 +59,7 @@ const App: FC<AppProps> = ({ client }) => {
         query: gql`
           query {
             getBoard(id: "${id}") {
+              id
               name
               owner {
                 email
@@ -220,14 +221,22 @@ const App: FC<AppProps> = ({ client }) => {
       {board.name}
       <div id='mainBoard'>
         {board['listItems'].map((list) => {
-          return <List key={list.name} list={list} boardFetch={boardFetch} />;
+          return (
+            <List
+              key={list.name}
+              list={list}
+              boardFetch={boardFetch}
+              client={client}
+              parent={board.id}
+            />
+          );
         })}
         <div className='list addBoardForm'>
           <AddBoardForm
             parent={board.id}
             placeholder={'Add List'}
             client={client}
-            setBoard={setBoard}
+            callback={(result) => setBoard(result.data.updateBoard.board[0])}
           />
         </div>
       </div>
