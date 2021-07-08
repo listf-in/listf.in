@@ -1,7 +1,7 @@
 #mainBoard {
   display: grid;
   grid-template-rows: auto;
-  grid-template-columns: 255px;
+  grid-template-columns: repeat(auto-fill, 255px);
   grid-auto-flow: column;
 }
 
