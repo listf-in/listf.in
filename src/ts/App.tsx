@@ -204,7 +204,6 @@ const App: FC<AppProps> = ({ client }) => {
   return (
     <div>
       <Login />
-      {prevBoardList[0] && <button onClick={goBack}>Back</button>}
       {user && (
         <Board
           client={client}
@@ -212,6 +211,8 @@ const App: FC<AppProps> = ({ client }) => {
           setBoard={setBoard}
           boardFetch={boardFetch}
           addHistory={addHistory}
+          goBack={goBack}
+          prevBoardList={prevBoardList}
         />
       )}
     </div>
