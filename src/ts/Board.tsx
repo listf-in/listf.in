@@ -9,6 +9,8 @@ type BoardProps = {
   client: any;
   setBoard: Function;
   addHistory: Function;
+  prevBoardList: Array<string>;
+  goBack: Function;
   board: {
     id: string;
     name: string;
@@ -41,10 +43,19 @@ const Board: FC<BoardProps> = ({
   client,
   setBoard,
   addHistory,
+  prevBoardList,
+  goBack,
 }) => {
   return (
     <div className='board'>
       {board.name}
+      <button
+        className={'backButton'}
+        onClick={goBack}
+        disabled={!prevBoardList[0]}
+      >
+        Back
+      </button>
       <div id='mainBoard'>
         {board.listItems.map((list) => {
           return (
