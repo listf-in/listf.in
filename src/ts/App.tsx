@@ -45,6 +45,18 @@ const App: FC<AppProps> = ({ client }) => {
     listItems: [],
   });
 
+  const [prevBoardList, setPrevBoardList] = useState([]);
+
+  const goBack = (e) => {
+    const bBoard = prevBoardList[prevBoardList.length - 1];
+    setPrevBoardList(prevBoardList.slice(0, prevBoardList.length - 1));
+    boardFetch(bBoard);
+  };
+
+  const addHistory = () => {
+    setPrevBoardList(prevBoardList.concat(board.id));
+  };
+
   const boardFetch = (id: string): void => {
     client.cache.reset();
     client
@@ -192,12 +204,14 @@ const App: FC<AppProps> = ({ client }) => {
   return (
     <div>
       <Login />
+      {prevBoardList[0] && <button onClick={goBack}>Back</button>}
       {user && (
         <Board
           client={client}
           board={board}
           setBoard={setBoard}
           boardFetch={boardFetch}
+          addHistory={addHistory}
         />
       )}
     </div>

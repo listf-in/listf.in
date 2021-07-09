@@ -8,6 +8,7 @@ type BoardProps = {
   boardFetch: Function;
   client: any;
   setBoard: Function;
+  addHistory: Function;
   board: {
     id: string;
     name: string;
@@ -34,7 +35,13 @@ type BoardProps = {
   };
 };
 
-const Board: FC<BoardProps> = ({ board, boardFetch, client, setBoard }) => {
+const Board: FC<BoardProps> = ({
+  board,
+  boardFetch,
+  client,
+  setBoard,
+  addHistory,
+}) => {
   return (
     <div className='board'>
       {board.name}
@@ -47,6 +54,7 @@ const Board: FC<BoardProps> = ({ board, boardFetch, client, setBoard }) => {
               boardFetch={boardFetch}
               client={client}
               parent={board.id}
+              addHistory={addHistory}
             />
           );
         })}

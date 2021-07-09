@@ -7,6 +7,7 @@ type ListItemProps = {
   getBoard: Function;
   client: ApolloClient<NormalizedCacheObject>;
   refreshTopBoard: Function;
+  addHistory: Function;
   item: {
     id: string;
     name: string;
@@ -22,9 +23,16 @@ const ListItem: FC<ListItemProps> = ({
   getBoard,
   client,
   refreshTopBoard,
+  addHistory,
 }) => {
   return (
-    <div className='listItem' onClick={(e) => getBoard(e, item.id)}>
+    <div
+      className='listItem'
+      onClick={(e) => {
+        addHistory();
+        getBoard(e, item.id);
+      }}
+    >
       {item['name']}
       <DeleteButton
         boardID={item.id}

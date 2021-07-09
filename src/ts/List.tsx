@@ -10,6 +10,7 @@ type ListProps = {
   boardFetch: Function;
   client: ApolloClient<NormalizedCacheObject>;
   parent: string;
+  addHistory: Function;
   list: {
     id: string;
     name: string;
@@ -36,7 +37,13 @@ type ListProps = {
   };
 };
 
-const List: FC<ListProps> = ({ list, boardFetch, client, parent }) => {
+const List: FC<ListProps> = ({
+  list,
+  boardFetch,
+  client,
+  parent,
+  addHistory,
+}) => {
   const getBoard = (e: React.MouseEvent<HTMLElement>, id: string): void => {
     e.stopPropagation();
     boardFetch(id);
@@ -47,7 +54,13 @@ const List: FC<ListProps> = ({ list, boardFetch, client, parent }) => {
   };
 
   return (
-    <div className='list' onClick={(e) => getBoard(e, list.id)}>
+    <div
+      className='list'
+      onClick={(e) => {
+        addHistory();
+        getBoard(e, list.id);
+      }}
+    >
       {list['name']}
       <DeleteButton
         boardID={list.id}
@@ -63,6 +76,7 @@ const List: FC<ListProps> = ({ list, boardFetch, client, parent }) => {
               getBoard={getBoard}
               client={client}
               refreshTopBoard={refreshTopBoard}
+              addHistory={addHistory}
             />
           );
         })}
