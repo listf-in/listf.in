@@ -46,6 +46,7 @@ const App: FC<AppProps> = ({ client }) => {
   });
 
   const boardFetch = (id: string): void => {
+    client.cache.reset();
     client
       .query({
         query: gql`
