@@ -74,7 +74,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
               `,
       })
       .then((result) => {
-        callback(result);
+        callback(e, result);
       })
       .catch((err) => {
         console.log(err);

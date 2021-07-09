@@ -55,7 +55,7 @@ const Board: FC<BoardProps> = ({ board, boardFetch, client, setBoard }) => {
             parent={board.id}
             placeholder={'Add List'}
             client={client}
-            callback={(result) => setBoard(result.data.updateBoard.board[0])}
+            callback={(e, result) => setBoard(result.data.updateBoard.board[0])}
           />
         </div>
       </div>

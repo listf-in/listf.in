@@ -1,8 +1,12 @@
+import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import React, { FC } from 'react';
 import '../sass/styles.scss';
+import DeleteButton from './DeleteButton';
 
 type ListItemProps = {
   getBoard: Function;
+  client: ApolloClient<NormalizedCacheObject>;
+  refreshTopBoard: Function;
   item: {
     id: string;
     name: string;
@@ -13,10 +17,20 @@ type ListItemProps = {
     listItems?: {}[];
   };
 };
-const ListItem: FC<ListItemProps> = ({ item, getBoard }) => {
+const ListItem: FC<ListItemProps> = ({
+  item,
+  getBoard,
+  client,
+  refreshTopBoard,
+}) => {
   return (
     <div className='listItem' onClick={(e) => getBoard(e, item.id)}>
       {item['name']}
+      <DeleteButton
+        boardID={item.id}
+        client={client}
+        callback={refreshTopBoard}
+      />
     </div>
   );
 };
