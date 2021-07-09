@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import '../sass/styles.scss';
 
 import LoginButton from './LoginButton';

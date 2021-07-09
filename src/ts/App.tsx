@@ -1,7 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
 import '../sass/styles.scss';
-// import { io, Socket } from 'socket.io-client';
-import List from './List';
 import Login from './Login';
 import {
   ApolloClient,
@@ -12,8 +10,7 @@ import {
   NormalizedCacheObject,
 } from '@apollo/client';
 import { useAuth0 } from '@auth0/auth0-react';
-import AddBoardForm from './AddBoardForm';
-// const ENDPOINT = ''; //if we use a specific endpoint
+import Board from './Board';
 
 type AppProps = {
   client: ApolloClient<NormalizedCacheObject>;
@@ -33,11 +30,6 @@ type user = {
 };
 
 const App: FC<AppProps> = ({ client }) => {
-  // const [connection, setConnection] = useState<null | Socket>(null);
-  // const [connection, setConnection] = useState(null as null | Socket); //alternative typing
-
-  // const [connectionTime, setConnectionTime] = useState(''); //example
-
   const { user } = useAuth0();
 
   const [board, setBoard] = useState({
@@ -191,17 +183,6 @@ const App: FC<AppProps> = ({ client }) => {
   };
 
   useEffect(() => {
-    // console.log('connecting');
-    // const socket = socketIOClient(ENDPOINT); //if you set an endpoint
-    // const socket = io();
-    // setConnection(socket);
-    // socket.on('HelloClient', (data: string) => {
-    //   setConnectionTime(data);
-    // });
-    // boardFetch();
-  }, []);
-
-  useEffect(() => {
     if (user) {
       userFetch(user.email);
     }
@@ -210,36 +191,14 @@ const App: FC<AppProps> = ({ client }) => {
   return (
     <div>
       <Login />
-      {/* <div>
-        socket info:
-        <br />
-        socket ID: {connection && connection.id}
-        <br />
-        connection time: {connectionTime}
-      </div> */}
-      {/*this all needs to be added to it's own component*/}
-      {board.name}
-      <div id='mainBoard'>
-        {board['listItems'].map((list) => {
-          return (
-            <List
-              key={list.name}
-              list={list}
-              boardFetch={boardFetch}
-              client={client}
-              parent={board.id}
-            />
-          );
-        })}
-        <div className='list addBoardForm'>
-          <AddBoardForm
-            parent={board.id}
-            placeholder={'Add List'}
-            client={client}
-            callback={(result) => setBoard(result.data.updateBoard.board[0])}
-          />
-        </div>
-      </div>
+      {user && (
+        <Board
+          client={client}
+          board={board}
+          setBoard={setBoard}
+          boardFetch={boardFetch}
+        />
+      )}
     </div>
   );
 };
