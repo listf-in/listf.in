@@ -5,7 +5,7 @@ import {
   ApolloClient,
   // InMemoryCache,
   // ApolloProvider,
-  useQuery,
+  // useQuery,
   gql,
   NormalizedCacheObject,
 } from '@apollo/client';
@@ -48,6 +48,7 @@ const App: FC<AppProps> = ({ client }) => {
   const [prevBoardList, setPrevBoardList] = useState([]);
 
   const goBack = (e) => {
+    e.preventDefault();
     const bBoard = prevBoardList[prevBoardList.length - 1];
     setPrevBoardList(prevBoardList.slice(0, prevBoardList.length - 1));
     boardFetch(bBoard);
