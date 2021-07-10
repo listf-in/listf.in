@@ -3,7 +3,7 @@ import * as express from 'express';
 import { Socket } from 'socket.io';
 const boardData = require('../dummy_board_data.json');
 
-const port = 3080;
+const port = process.env.PORT || 3080;
 const app = express();
 
 const http = require('http').Server(app);
