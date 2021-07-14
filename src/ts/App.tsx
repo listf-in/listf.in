@@ -51,11 +51,12 @@ const App: FC<AppProps> = ({ client }) => {
     e.preventDefault();
     const bBoard = prevBoardList[prevBoardList.length - 1];
     setPrevBoardList(prevBoardList.slice(0, prevBoardList.length - 1));
-    boardFetch(bBoard);
+    boardFetch(bBoard.id);
   };
 
-  const addHistory = () => {
-    setPrevBoardList(prevBoardList.concat(board.id));
+  const addHistory = (brd?: object) => {
+    const newHist = brd ? [board, brd] : [board];
+    setPrevBoardList(prevBoardList.concat(newHist));
   };
 
   const boardFetch = (id: string): void => {
@@ -214,6 +215,7 @@ const App: FC<AppProps> = ({ client }) => {
           addHistory={addHistory}
           goBack={goBack}
           prevBoardList={prevBoardList}
+          setPrevBoardList={setPrevBoardList}
         />
       )}
     </div>

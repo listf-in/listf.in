@@ -3,14 +3,32 @@ import React, { FC } from 'react';
 import '../sass/styles.scss';
 
 type depthBarProps = {
-  depthList: Array<string>;
+  prevBoardList: Array<object>;
+  boardFetch: Function;
+  setPrevBoardList: Function;
 };
 
-const DepthBar: FC<depthBarProps> = ({ depthList }) => {
-  const depthBarItems = depthList.map((depth) => {
-    return { depth };
+const DepthBar: FC<depthBarProps> = ({
+  prevBoardList,
+  setPrevBoardList,
+  boardFetch,
+}) => {
+  const depthBarItems = prevBoardList.map((depth) => {
+    return (
+      <span
+        key={depth.name}
+        onClick={() => {
+          boardFetch(depth.id);
+          setPrevBoardList(
+            prevBoardList.slice(0, prevBoardList.indexOf(depth))
+          );
+        }}
+      >
+        {depth.name + ' > '}
+      </span>
+    );
   });
-  return { depthBarItems };
+  return depthBarItems;
 };
 
 export default DepthBar;
