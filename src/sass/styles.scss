@@ -47,3 +47,13 @@
 .clickable {
   cursor: pointer;
 }
+
+.shareButtons {
+  color: lightgray;
+  &:hover {
+    color: black;
+  }
+}
+.boardShareInputForm {
+  display: inline;
+}

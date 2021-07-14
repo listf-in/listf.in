@@ -4,10 +4,13 @@ import '../sass/styles.scss';
 import List from './List';
 import AddBoardForm from './AddBoardForm';
 import DepthBar from './DepthBar';
+import ShareButton from './ShareButton';
+import AddShareButton from './AddShareButton';
+import { gql } from '@apollo/client';
 
 type BoardProps = {
   boardFetch: Function;
-  client: any;
+  client: object;
   setBoard: Function;
   addHistory: Function;
   prevBoardList: Array<object>;
@@ -49,6 +52,61 @@ const Board: FC<BoardProps> = ({
   goBack,
   setPrevBoardList,
 }) => {
+  const addToTopBoard = (
+    e: React.FormEvent<HTMLFormElement>,
+    value: string
+  ) => {
+    client
+      .mutate({
+        mutation: gql`mutation {
+                updateBoard(input:
+                  { filter: {
+                    id: "${board.id}"
+                  },
+                  set: {
+                    listItems: [
+                      {
+                        id: "${value}"
+                      }
+                    ]
+                  }
+                }) {
+                  board {
+                    id
+                    name
+                    owner {
+                      email
+                      name
+                    }
+                    listItems {
+                      id
+                      name
+                      owner {
+                        email
+                        name
+                      }
+                      listItems {
+                        id
+                        name
+                        owner {
+                          email
+                          name
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              `,
+      })
+      .then((result) => {
+        setBoard(result.data.updateBoard.board[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className='board'>
       <DepthBar
@@ -64,6 +122,8 @@ const Board: FC<BoardProps> = ({
       >
         Back
       </button>
+      <ShareButton id={board.id} />
+      <AddShareButton addToTopBoard={addToTopBoard} />
       <div id='mainBoard'>
         {board.listItems.map((list) => {
           return (
