@@ -53,9 +53,13 @@ const List: FC<ListProps> = ({
     getBoard(e, parent);
   };
 
+  const addMiddleBoard = () => {
+    addHistory(list);
+  };
+
   return (
     <div
-      className='list'
+      className='list clickable'
       onClick={(e) => {
         addHistory();
         getBoard(e, list.id);
@@ -76,7 +80,7 @@ const List: FC<ListProps> = ({
               getBoard={getBoard}
               client={client}
               refreshTopBoard={refreshTopBoard}
-              addHistory={addHistory}
+              addMiddleBoard={addMiddleBoard}
             />
           );
         })}
