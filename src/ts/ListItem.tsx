@@ -27,7 +27,7 @@ const ListItem: FC<ListItemProps> = ({
 }) => {
   return (
     <div
-      className='listItem'
+      className='listItem clickable'
       onClick={(e) => {
         addMiddleBoard();
         getBoard(e, item.id);

@@ -16,7 +16,8 @@ const DepthBar: FC<depthBarProps> = ({
   const depthBarItems = prevBoardList.map((depth) => {
     return (
       <span
-        key={depth.name}
+        className={'clickable depthBarItem'}
+        key={depth.id}
         onClick={() => {
           boardFetch(depth.id);
           setPrevBoardList(

@@ -59,7 +59,7 @@ const List: FC<ListProps> = ({
 
   return (
     <div
-      className='list'
+      className='list clickable'
       onClick={(e) => {
         addHistory();
         getBoard(e, list.id);

@@ -58,7 +58,7 @@ const Board: FC<BoardProps> = ({
       />
       {board.name}
       <button
-        className={'backButton'}
+        className={'backButton clickable'}
         onClick={goBack}
         disabled={!prevBoardList[0]}
       >

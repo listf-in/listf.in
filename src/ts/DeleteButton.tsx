@@ -38,7 +38,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({ boardID, client, callback }) => {
 
   return (
     <button
-      className={'deleteButton'}
+      className={'deleteButton clickable'}
       onClick={(e) => deleteFromParentBoard(e, boardID)}
     >
       X
