@@ -204,7 +204,7 @@ const App: FC<AppProps> = ({ client }) => {
   }, [user]);
 
   return (
-    <div>
+    <>
       <Login />
       {user && (
         <Board
@@ -218,7 +218,7 @@ const App: FC<AppProps> = ({ client }) => {
           setPrevBoardList={setPrevBoardList}
         />
       )}
-    </div>
+    </>
   );
 };
 
