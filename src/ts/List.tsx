@@ -71,26 +71,28 @@ const List: FC<ListProps> = ({
         client={client}
         callback={refreshTopBoard}
       />
-      {list['listItems'] &&
-        list['listItems'].map((item) => {
-          return (
-            <ListItem
-              key={item['name']}
-              item={item}
-              getBoard={getBoard}
-              client={client}
-              refreshTopBoard={refreshTopBoard}
-              addMiddleBoard={addMiddleBoard}
-            />
-          );
-        })}
-      <div className='listItem addBoardForm'>
-        <AddBoardForm
-          parent={list.id}
-          placeholder={'Add List Item'}
-          client={client}
-          callback={refreshTopBoard}
-        />
+      <div className='listContainer'>
+        {list['listItems'] &&
+          list['listItems'].map((item) => {
+            return (
+              <ListItem
+                key={item['name']}
+                item={item}
+                getBoard={getBoard}
+                client={client}
+                refreshTopBoard={refreshTopBoard}
+                addMiddleBoard={addMiddleBoard}
+              />
+            );
+          })}
+        <div className='listItem addBoardForm'>
+          <AddBoardForm
+            parent={list.id}
+            placeholder={'Add List Item'}
+            client={client}
+            callback={refreshTopBoard}
+          />
+        </div>
       </div>
     </div>
   );
