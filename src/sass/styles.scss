@@ -5,38 +5,64 @@
 
 body,
 html {
+  overflow: hidden;
   //
 }
 
 #root {
+  overflow: hidden;
   //
 }
 
 #app {
+  overflow: hidden;
   //
+}
+
+#loginButton {
+  float: right;
+}
+
+#userProfileIlnfo {
+  height: 10vh;
+}
+
+.profilePicture {
+  height: 3em;
+}
+
+.profileUsername {
+  display: inline;
+}
+
+.board {
+  overflow-y: hidden;
+  overflow-x: auto;
+  height: 90vh;
 }
 
 #mainBoard {
   display: grid;
-  grid-template-rows: auto;
+  height: calc(100% - 75px);
+  grid-template-rows: 100%;
   grid-template-columns: repeat(auto-fill, 255px);
   grid-auto-flow: column;
   grid-gap: 10px;
 }
 
-.board {
-  //
-}
-
 .list {
   width: 250px;
+  overflow: hidden;
   border: 1px solid black;
   border-radius: 5px;
   height: fit-content;
-  overflow: hidden;
+  max-height: 80vh;
 }
 
 .listContainer {
+  // max-height: calc(100% - 3.5em);
+  height: fit-content;
+  max-height: 70vh;
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;

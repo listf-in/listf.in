@@ -65,6 +65,7 @@ const List: FC<ListProps> = ({
         getBoard(e, list.id);
       }}
     >
+      {/* <div className={'listContainerContainer'}> */}
       {list['name']}
       <DeleteButton
         boardID={list.id}
@@ -85,15 +86,16 @@ const List: FC<ListProps> = ({
               />
             );
           })}
-        <div className='listItem addBoardForm'>
-          <AddBoardForm
-            parent={list.id}
-            placeholder={'Add List Item'}
-            client={client}
-            callback={refreshTopBoard}
-          />
-        </div>
       </div>
+      <div className='listItem addBoardForm'>
+        <AddBoardForm
+          parent={list.id}
+          placeholder={'Add List Item'}
+          client={client}
+          callback={refreshTopBoard}
+        />
+      </div>
+      {/* </div> */}
     </div>
   );
 };

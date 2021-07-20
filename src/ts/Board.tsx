@@ -7,6 +7,7 @@ import DepthBar from './DepthBar';
 import ShareButton from './ShareButton';
 import AddShareButton from './AddShareButton';
 import { gql } from '@apollo/client';
+import HorizontalScroll from 'react-scroll-horizontal';
 
 type BoardProps = {
   boardFetch: Function;
