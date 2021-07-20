@@ -61,7 +61,7 @@ html {
 
 .listContainer {
   // max-height: calc(100% - 3.5em);
-  height: fit-content;
+  // height: fit-content;
   max-height: 70vh;
   width: 100%;
   overflow-x: hidden;
@@ -73,6 +73,8 @@ html {
   min-height: 2.5em;
   border: 1px solid black;
   border-radius: 5px;
+  margin-left: 5px;
+  margin-bottom: 5px;
 }
 
 .AddBoardForm {
