@@ -163,7 +163,8 @@ const App: FC<AppProps> = ({ client }) => {
                       name: "${user.name}'s Home Board",
                       owner: {
                         email: "${user.email}"
-                      }
+                      },
+                      home: true
                     }
                   }
                 ]) {
