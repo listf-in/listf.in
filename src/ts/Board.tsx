@@ -68,6 +68,7 @@ const Board: FC<BoardProps> = ({
                     listItems: [
                       {
                         id: "${value}"
+                        home: false
                       }
                     ]
                   }

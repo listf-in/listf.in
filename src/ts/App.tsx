@@ -72,6 +72,7 @@ const App: FC<AppProps> = ({ client }) => {
                 email
                 name
               }
+              home
               listItems {
                 id
                 name
