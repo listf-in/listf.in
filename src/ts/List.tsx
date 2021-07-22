@@ -5,36 +5,14 @@ import '../sass/styles.scss';
 import AddBoardForm from './AddBoardForm';
 import DeleteButton from './DeleteButton';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
+import {Boardtype} from './Interfaces';
 
 type ListProps = {
   boardFetch: Function;
   client: ApolloClient<NormalizedCacheObject>;
   parent: string;
   addHistory: Function;
-  list: {
-    id: string;
-    name: string;
-    owner?: {
-      id: string;
-      name: string;
-    };
-    listItems?: {
-      id: string;
-      name: string;
-      owner?: {
-        id: string;
-        name: string;
-      };
-      listItems?: {
-        id: string;
-        name: string;
-        owner?: {
-          id: string;
-          name: string;
-        };
-      }[];
-    }[];
-  };
+  list: Boardtype;
 };
 
 const List: FC<ListProps> = ({

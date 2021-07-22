@@ -2,21 +2,14 @@ import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import React, { FC } from 'react';
 import '../sass/styles.scss';
 import DeleteButton from './DeleteButton';
+import {Boardtype} from './Interfaces';
 
 type ListItemProps = {
   getBoard: Function;
   client: ApolloClient<NormalizedCacheObject>;
   refreshTopBoard: Function;
   addMiddleBoard: Function;
-  item: {
-    id: string;
-    name: string;
-    owner?: {
-      id: string;
-      name: string;
-    };
-    listItems?: {}[];
-  };
+  item: Boardtype;
 };
 const ListItem: FC<ListItemProps> = ({
   item,

@@ -8,6 +8,7 @@ import ShareButton from './ShareButton';
 import AddShareButton from './AddShareButton';
 import { gql } from '@apollo/client';
 import HorizontalScroll from 'react-scroll-horizontal';
+import {Boardtype} from './Interfaces';
 
 type BoardProps = {
   boardFetch: Function;
@@ -17,30 +18,7 @@ type BoardProps = {
   prevBoardList: Array<object>;
   goBack: Function;
   setPrevBoardList: Function;
-  board: {
-    id: string;
-    name: string;
-    owner?: {
-      id: string;
-      name: string;
-    };
-    listItems?: {
-      id: string;
-      name: string;
-      owner?: {
-        id: string;
-        name: string;
-      };
-      listItems?: {
-        id: string;
-        name: string;
-        owner?: {
-          id: string;
-          name: string;
-        };
-      }[];
-    }[];
-  };
+  board : Boardtype;
 };
 
 const Board: FC<BoardProps> = ({
