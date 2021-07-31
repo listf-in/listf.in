@@ -40,7 +40,8 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
                         },
                         members: {
                           email: "${user.email}"
-                        }
+                        },
+                        home: false
                       }
                     ]
                   }

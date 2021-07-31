@@ -7,8 +7,7 @@ import DepthBar from './DepthBar';
 import ShareButton from './ShareButton';
 import AddShareButton from './AddShareButton';
 import { gql } from '@apollo/client';
-import HorizontalScroll from 'react-scroll-horizontal';
-import {Boardtype} from './Interfaces';
+import { Boardtype } from './Interfaces';
 
 type BoardProps = {
   boardFetch: Function;
@@ -18,7 +17,7 @@ type BoardProps = {
   prevBoardList: Array<object>;
   goBack: Function;
   setPrevBoardList: Function;
-  board : Boardtype;
+  board: Boardtype;
 };
 
 const Board: FC<BoardProps> = ({
@@ -102,7 +101,7 @@ const Board: FC<BoardProps> = ({
       >
         Back
       </button>
-      <ShareButton id={board.id} />
+      {board.home ? null : <ShareButton id={board.id} />}
       <AddShareButton addToTopBoard={addToTopBoard} />
       <div id='mainBoard'>
         {board.listItems.map((list) => {

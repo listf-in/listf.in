@@ -5,7 +5,7 @@ import '../sass/styles.scss';
 import AddBoardForm from './AddBoardForm';
 import DeleteButton from './DeleteButton';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
-import {Boardtype} from './Interfaces';
+import { Boardtype } from './Interfaces';
 
 type ListProps = {
   boardFetch: Function;
@@ -43,7 +43,6 @@ const List: FC<ListProps> = ({
         getBoard(e, list.id);
       }}
     >
-      {/* <div className={'listContainerContainer'}> */}
       {list['name']}
       <DeleteButton
         boardID={list.id}
@@ -73,7 +72,6 @@ const List: FC<ListProps> = ({
           callback={refreshTopBoard}
         />
       </div>
-      {/* </div> */}
     </div>
   );
 };
