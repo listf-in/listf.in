@@ -108,6 +108,7 @@ const App: FC<AppProps> = ({ client }) => {
               homeBoard {
                 id
                 name
+                home
                 owner {
                   email
                   name
