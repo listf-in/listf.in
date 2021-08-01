@@ -11,14 +11,10 @@ import {
 } from '@apollo/client';
 import { useAuth0 } from '@auth0/auth0-react';
 import Board from './Board';
-import {Boardtype, User} from './Interfaces';
 
 type AppProps = {
   client: ApolloClient<NormalizedCacheObject>;
 };
-
-let board : Boardtype;
-let user : User;
 
 const App: FC<AppProps> = ({ client }) => {
   const { user } = useAuth0();
