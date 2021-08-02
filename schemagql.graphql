@@ -1,0 +1,53 @@
+const { gql } = require('apollo-server-express');
+module.exports = gql`
+
+type Query {
+  Board(id: ID!): Board
+}
+
+type Mutation {
+  CreateUser(name: String!, email: String!): User
+  AddToBoard(id: ID!, email: String!, name: String!): Board
+  RemoveFromBoard(id: ID!, parentId: ID!): Board
+  DeleteBoard(id: ID!): Board
+}
+
+type Board {
+  id: ID!
+  name: String!
+  owner: User!
+  members: [User]
+  listItems: [Board]
+  parents: [Board]
+  labels: [Label]
+  start: String
+  end: String
+  theme: String
+  home: Boolean
+}
+
+type Label {
+  id: ID!
+  name: String!
+  color: String!
+}
+
+type User {
+  name: String!
+  email: String!
+  avatar: String
+  friends: [User]
+  teams: [Team]
+  boards: [Board]
+  ownedBoards: [Board]
+  ownedTeams: [Team]
+  homeBoard: Board!
+}
+
+type Team {
+  id: ID!
+  name: String!
+  owner: User!
+  members: [User]
+}
+`;
