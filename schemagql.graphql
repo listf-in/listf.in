@@ -13,6 +13,10 @@ type Mutation {
   DeleteBoard(id: ID!): Board
 }
 
+type Subscription {
+  BoardUpdate(id: ID!): Board
+}
+
 type Board {
   id: ID!
   name: String!

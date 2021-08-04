@@ -37,7 +37,9 @@ const app = express();
 
 app.use('/graphql', express.json());
 
-const apolloServer = new ApolloServer({ schema: myGraphQLSchema });
+const apolloServer = new ApolloServer({ typeDefs: myGraphQLSchema });
+await server.start();
+
 apolloServer.applyMiddleware({ app });
 
 const pubsub = new PubSub();
@@ -48,7 +50,7 @@ server.listen(PORT, () => {
     {
       execute,
       subscribe,
-      schema: myGraphQLSchema,
+      typeDefs: myGraphQLSchema,
     },
     {
       server: server,
