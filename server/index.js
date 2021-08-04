@@ -30,7 +30,7 @@ const { createServer } = require('http');
 const { execute, subscribe } = require('graphql');
 const { PubSub } = require('graphql-subscriptions');
 const { SubscriptionServer } = require('subscriptions-transport-ws');
-const { myGraphQLSchema } = require('../schemagql.graphql');
+const myGraphQLSchema = require('../schemagql.graphql');
 
 const PORT = 3080;
 const app = express();
