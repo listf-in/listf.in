@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-// const path = require('path');
+const path = require('path');
 // const express = require('express');
 // const { ApolloServer } = require('apollo-server-express');
 
@@ -35,15 +35,20 @@ const myGraphQLSchema = require('../schemagql.graphql');
 const PORT = 3080;
 const app = express();
 
+app.use('/', express.static(path.join(__dirname, '../build')));
+
 app.use('/graphql', express.json());
 
 const apolloServer = new ApolloServer({ typeDefs: myGraphQLSchema });
-await server.start();
+async function startApolloServer() {
+  await server.start();
+}
 
-apolloServer.applyMiddleware({ app });
+startApolloServer();
 
 const pubsub = new PubSub();
 const server = createServer(app);
+// apolloServer.applyMiddleware({ app });
 
 server.listen(PORT, () => {
   new SubscriptionServer(
