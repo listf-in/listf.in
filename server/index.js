@@ -2,14 +2,42 @@
 const path = require('path');
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
+const { createServer } = require('http');
+const { execute, subscribe } = require('graphql');
+const { SubscriptionServer } = require('subscriptions-transport-ws');
+const { makeExecutableSchema } = require('@graphql-tools/schema');
 
-const port = process.env.PORT || 3080;
-const app = express();
+const typeDefs = require('../schemagql.graphql');
+var resolvers;
 
-app.use('/', express.static(path.join(__dirname, '../build')));
+const port = process.env.PORT || 3081;
 
-const http = require('http').Server(app);
+(async function () {
+  const app = express();
 
-http.listen(port, () => {
-  console.log(`listening on port ${port}`);
-});
+  const httpServer = createServer(app);
+
+  const schema = makeExecutableSchema({
+    typeDefs,
+    resolvers,
+  });
+
+  const server = new ApolloServer({
+    schema,
+  });
+
+  await server.start();
+
+  server.applyMiddleware({ app });
+
+  SubscriptionServer.create(
+    { schema, execute, subscribe },
+    { server: httpServer, path: server.graphqlPath }
+  );
+
+  app.use('/', express.static(path.join(__dirname, '../build')));
+
+  httpServer.listen(port, () =>
+    console.log(`Server is now running on http://localhost:${port}/graphql`)
+  );
+})();
