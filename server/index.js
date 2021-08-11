@@ -10,7 +10,7 @@ const { makeExecutableSchema } = require('@graphql-tools/schema');
 const typeDefs = require('../schemagql.graphql');
 var resolvers;
 
-const port = process.env.PORT || 3081;
+const port = process.env.PORT || 3080;
 
 (async function () {
   const app = express();
