@@ -90,112 +90,116 @@ const App: FC<AppProps> = ({ client }) => {
   };
 
   const userFetch = (email: string): void => {
-    axios
-      .get('/user', {
-        data: email,
-      })
-      .then((res) => {
-        //get board info
-        //or
-        //error
-      });
-
-    // client
-    //   .query({
-    //     query: gql`
-    //       query {
-    //         getUser(email: "${email}") {
-    //           name
-    //           email
-    //           avatar
-    //           boards {
-    //             id
-    //             name
-    //             owner {
-    //               email
-    //               name
-    //             }
-    //           }
-    //           homeBoard {
-    //             id
-    //             name
-    //             home
-    //             owner {
-    //               email
-    //               name
-    //             }
-    //             listItems {
-    //               id
-    //               name
-    //               owner {
-    //                 email
-    //                 name
-    //               }
-    //               listItems {
-    //                 id
-    //                 name
-    //                 owner {
-    //                   email
-    //                   name
-    //                 }
-
-    //               }
-    //             }
-    //           }
-    //         }
-    //       }
-    //     `,
+    // axios
+    //   .get('/user', {
+    //     data: email,
     //   })
-    //   .then((result) => {
-    //     setBoard(result.data.getUser.homeBoard);
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     //get board info
+    //     //or
+    //     //error
     //   })
     //   .catch((err) => {
-    //     if (err === err) {
-    //       //check to see if correct error
-    //       client
-    //         .mutate({
-    //           mutation: gql`mutation {
-    //             addUser(input: [
-    //               {
-    //                 name: "${user.name}",
-    //                 email: "${user.email}",
-    //                 homeBoard: {
-    //                   name: "${user.name}'s Home Board",
-    //                   owner: {
-    //                     email: "${user.email}"
-    //                   },
-    //                   home: true
-    //                 }
-    //               }
-    //             ]) {
-    //               user {
-    //                 name
-    //                 email
-    //                 avatar
-    //                 homeBoard {
-    //                   id
-    //                   name
-    //                   owner	{
-    //                     name
-    //                   }
-    //                   listItems {
-    //                     id
-    //                     name
-    //                   }
-    //                 }
-    //               }
-    //             }
-    //           }
-    //           `,
-    //         })
-    //         .then((result) => {
-    //           setBoard(result.data.addUser.user[0].homeBoard);
-    //         })
-    //         .catch((err) => {
-    //           console.log(err);
-    //         });
-    //     }
+    //     console.log(err);
     //   });
+
+    client
+      .query({
+        query: gql`
+          query {
+            getUser(email: "${email}") {
+              name
+              email
+              avatar
+              boards {
+                id
+                name
+                owner {
+                  email
+                  name
+                }
+              }
+              homeBoard {
+                id
+                name
+                home
+                owner {
+                  email
+                  name
+                }
+                listItems {
+                  id
+                  name
+                  owner {
+                    email
+                    name
+                  }
+                  listItems {
+                    id
+                    name
+                    owner {
+                      email
+                      name
+                    }
+
+                  }
+                }
+              }
+            }
+          }
+        `,
+      })
+      .then((result) => {
+        setBoard(result.data.getUser.homeBoard);
+      })
+      .catch((err) => {
+        if (err === err) {
+          //check to see if correct error
+          client
+            .mutate({
+              mutation: gql`mutation {
+                addUser(input: [
+                  {
+                    name: "${user.name}",
+                    email: "${user.email}",
+                    homeBoard: {
+                      name: "${user.name}'s Home Board",
+                      owner: {
+                        email: "${user.email}"
+                      },
+                      home: true
+                    }
+                  }
+                ]) {
+                  user {
+                    name
+                    email
+                    avatar
+                    homeBoard {
+                      id
+                      name
+                      owner	{
+                        name
+                      }
+                      listItems {
+                        id
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+              `,
+            })
+            .then((result) => {
+              setBoard(result.data.addUser.user[0].homeBoard);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      });
   };
 
   useEffect(() => {
