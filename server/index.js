@@ -10,7 +10,7 @@ const { makeExecutableSchema } = require('@graphql-tools/schema');
 const typeDefs = require('../schemagql.graphql');
 var resolvers;
 
-const port = process.env.PORT || 3081;
+const port = process.env.PORT || 3080;
 
 (async function () {
   const app = express();
@@ -36,6 +36,11 @@ const port = process.env.PORT || 3081;
   );
 
   app.use('/', express.static(path.join(__dirname, '../build')));
+
+  app.get('/user', (req, res) => {
+    //get user from db
+    res.send('user and board info');
+  });
 
   httpServer.listen(port, () =>
     console.log(`Server is now running on http://localhost:${port}/graphql`)

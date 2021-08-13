@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import '../sass/styles.scss';
-import Login from './Login';
+import axios from 'axios';
 import {
   ApolloClient,
   // InMemoryCache,
@@ -10,6 +10,7 @@ import {
   NormalizedCacheObject,
 } from '@apollo/client';
 import { useAuth0 } from '@auth0/auth0-react';
+import Login from './Login';
 import Board from './Board';
 
 type AppProps = {
@@ -89,6 +90,20 @@ const App: FC<AppProps> = ({ client }) => {
   };
 
   const userFetch = (email: string): void => {
+    // axios
+    //   .get('/user', {
+    //     data: email,
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     //get board info
+    //     //or
+    //     //error
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+
     client
       .query({
         query: gql`
