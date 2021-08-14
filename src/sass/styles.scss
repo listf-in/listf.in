@@ -57,6 +57,14 @@ html {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.267);
 }
 
+.list .deleteButton {
+  visibility: hidden;
+}
+
+.list:hover .deleteButton {
+  visibility: visible;
+}
+
 .listContainer {
   max-height: 70vh;
   width: 100%;
@@ -77,9 +85,19 @@ html {
   }
 }
 
+.list .listItem .deleteButton {
+  visibility: hidden;
+}
+
+.list .listItem:hover .deleteButton {
+  visibility: visible;
+}
+
 .AddBoardForm {
   min-height: 2em;
   overflow: hidden;
+  opacity: 50%;
+  background-color: inherit;
 }
 
 .AddBoardFormInput {
@@ -97,9 +115,10 @@ html {
   background-color: inherit;
   border: none;
   border-radius: 5px;
+  color: gray;
 
   &:hover {
-    background-color: rgba(73, 73, 73, 0.322);
+    background-color: rgba(114, 113, 113, 0.322);
   }
 }
 
