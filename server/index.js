@@ -9,6 +9,7 @@ const { makeExecutableSchema } = require('@graphql-tools/schema');
 
 const typeDefs = require('./schemagql.graphql');
 const resolvers = require('./resolvers');
+const apollo = require('./apollo');
 
 const port = process.env.PORT || 3080;
 
@@ -34,8 +35,9 @@ const port = process.env.PORT || 3080;
     { schema, execute, subscribe },
     { server: httpServer, path: server.graphqlPath }
   );
-
+  app.use(express.json());
   app.use('/', express.static(path.join(__dirname, '../build')));
+  app.use(apollo);
 
   app.get('/user', (req, res) => {
     //get user from db

@@ -151,9 +151,11 @@ const App: FC<AppProps> = ({ client }) => {
         `,
       })
       .then((result) => {
+        debugger;
         setBoard(result.data.getUser.homeBoard);
       })
       .catch((err) => {
+        debugger;
         if (err === err) {
           //check to see if correct error
           client
