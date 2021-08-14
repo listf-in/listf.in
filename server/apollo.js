@@ -16,8 +16,7 @@ const client = new ApolloClient({
 });
 
 const query = async (req, res) => {
-  debugger;
-
+  client.cache.reset();
   if (!req.body || !req.body.query) {
     res.sendStatus(500);
     return;
@@ -42,31 +41,25 @@ const query = async (req, res) => {
 };
 
 const mutate = async (req, res) => {
-  debugger;
   if (!req.body || !req.body.query) {
     res.sendStatus(500);
     return;
   }
 
-  const query = gql(req.body.query);
+  const mutation = gql(req.body.query);
   let variables = undefined;
   if (req.body.variables && Object.keys(req.body.variables).length !== 0) {
     variables = JSON.parse(decodeURIComponent(req.body.variables));
   }
 
   try {
-    debugger;
-
     const result = await client.mutate({
-      query,
+      mutation,
       variables,
     });
-    debugger;
 
     res.json(result);
   } catch (err) {
-    debugger;
-
     console.log(err);
     res.sendStatus(500).send(JSON.stringify(err));
   }
