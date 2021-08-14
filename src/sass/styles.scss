@@ -6,7 +6,7 @@
 body,
 html {
   overflow: hidden;
-  //
+  // background-color: rgb(197, 197, 197);
 }
 
 #root {
@@ -53,10 +53,12 @@ html {
 .list {
   width: 250px;
   overflow: hidden;
-  border: 1px solid black;
+  // border: 1px solid black;
   border-radius: 5px;
   height: fit-content;
   max-height: 80vh;
+  background-color: #ebecf0;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.267);
 }
 
 .listContainer {
@@ -71,10 +73,12 @@ html {
 .listItem {
   width: 225px;
   min-height: 2.5em;
-  border: 1px solid black;
+  // border: 1px solid black;
   border-radius: 5px;
   margin-left: 5px;
   margin-bottom: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.267);
 }
 
 .AddBoardForm {
@@ -94,6 +98,13 @@ html {
 .deleteButton {
   display: inline;
   float: right;
+  background-color: inherit;
+  border: none;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: rgba(73, 73, 73, 0.322);
+  }
 }
 
 .backButton {
