@@ -7,8 +7,8 @@ const { execute, subscribe } = require('graphql');
 const { SubscriptionServer } = require('subscriptions-transport-ws');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 
-const typeDefs = require('../schemagql.graphql');
-var resolvers;
+const typeDefs = require('./schemagql.graphql');
+const resolvers = require('./resolvers');
 
 const port = process.env.PORT || 3080;
 
