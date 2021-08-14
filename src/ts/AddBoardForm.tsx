@@ -49,6 +49,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
                   board {
                     id
                     name
+                    home
                     owner {
                       email
                       name

@@ -11,7 +11,7 @@ import {
 } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: 'http://144.126.217.146:8080/graphql',
+  uri: '/',
   cache: new InMemoryCache(),
 });
 
@@ -25,3 +25,4 @@ ReactDOM.render(
   </Auth0Provider>,
   document.getElementById('root')
 );
+//
