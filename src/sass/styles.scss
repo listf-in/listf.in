@@ -6,17 +6,14 @@
 body,
 html {
   overflow: hidden;
-  //
 }
 
 #root {
   overflow: hidden;
-  //
 }
 
 #app {
   overflow: hidden;
-  //
 }
 
 #loginButton {
@@ -53,15 +50,22 @@ html {
 .list {
   width: 250px;
   overflow: hidden;
-  border: 1px solid black;
   border-radius: 5px;
   height: fit-content;
   max-height: 80vh;
+  background-color: #ebecf0;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.267);
+}
+
+.list .deleteButton {
+  visibility: hidden;
+}
+
+.list:hover .deleteButton {
+  visibility: visible;
 }
 
 .listContainer {
-  // max-height: calc(100% - 3.5em);
-  // height: fit-content;
   max-height: 70vh;
   width: 100%;
   overflow-x: hidden;
@@ -71,15 +75,29 @@ html {
 .listItem {
   width: 225px;
   min-height: 2.5em;
-  border: 1px solid black;
   border-radius: 5px;
   margin-left: 5px;
   margin-bottom: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.267);
+  &:hover {
+    background-color: #f6f6f8;
+  }
+}
+
+.list .listItem .deleteButton {
+  visibility: hidden;
+}
+
+.list .listItem:hover .deleteButton {
+  visibility: visible;
 }
 
 .AddBoardForm {
   min-height: 2em;
   overflow: hidden;
+  opacity: 50%;
+  background-color: inherit;
 }
 
 .AddBoardFormInput {
@@ -94,6 +112,14 @@ html {
 .deleteButton {
   display: inline;
   float: right;
+  background-color: inherit;
+  border: none;
+  border-radius: 5px;
+  color: gray;
+
+  &:hover {
+    background-color: rgba(114, 113, 113, 0.322);
+  }
 }
 
 .backButton {
