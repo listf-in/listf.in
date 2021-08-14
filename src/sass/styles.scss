@@ -6,17 +6,14 @@
 body,
 html {
   overflow: hidden;
-  // background-color: rgb(197, 197, 197);
 }
 
 #root {
   overflow: hidden;
-  //
 }
 
 #app {
   overflow: hidden;
-  //
 }
 
 #loginButton {
@@ -53,7 +50,6 @@ html {
 .list {
   width: 250px;
   overflow: hidden;
-  // border: 1px solid black;
   border-radius: 5px;
   height: fit-content;
   max-height: 80vh;
@@ -62,8 +58,6 @@ html {
 }
 
 .listContainer {
-  // max-height: calc(100% - 3.5em);
-  // height: fit-content;
   max-height: 70vh;
   width: 100%;
   overflow-x: hidden;
@@ -73,12 +67,14 @@ html {
 .listItem {
   width: 225px;
   min-height: 2.5em;
-  // border: 1px solid black;
   border-radius: 5px;
   margin-left: 5px;
   margin-bottom: 5px;
   background-color: white;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.267);
+  &:hover {
+    background-color: #f6f6f8;
+  }
 }
 
 .AddBoardForm {
