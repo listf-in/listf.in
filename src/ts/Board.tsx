@@ -8,6 +8,7 @@ import ShareButton from './ShareButton';
 import AddShareButton from './AddShareButton';
 import { gql } from '@apollo/client';
 import { Boardtype } from './Interfaces';
+import EditButton from './EditButton';
 
 type BoardProps = {
   boardFetch: Function;
@@ -101,6 +102,13 @@ const Board: FC<BoardProps> = ({
       >
         Back
       </button>
+      <EditButton
+        client={client}
+        boardID={board.id}
+        boardName={board.name}
+        callback={() => {}}
+        setForm={() => {}}
+      />
       {board.home ? null : <ShareButton id={board.id} />}
       <AddShareButton addToTopBoard={addToTopBoard} />
       <div id='mainBoard'>

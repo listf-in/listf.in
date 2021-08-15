@@ -58,19 +58,22 @@ html {
 }
 
 .listTitle {
-  width: 225px;
+  width: 200px;
   font-size: 1.2em;
   font-weight: bold;
   display: inline-block;
   margin: 10px 0 10px 5px;
 }
 
-.list .deleteButton {
+.list .deleteButton,
+.list .editButton {
+  float: right;
   visibility: hidden;
   display: inline;
 }
 
-.list:hover .deleteButton {
+.list:hover .deleteButton,
+.list:hover .editButton {
   visibility: visible;
 }
 
@@ -92,20 +95,27 @@ html {
   &:hover {
     background-color: #f6f6f8;
   }
+  display: grid;
+  grid-template-columns: auto 20px 20px;
 }
 
-.list .listItem .deleteButton {
+.list .listItem .deleteButton,
+.list .listItem .editButton {
   visibility: hidden;
 }
 
-.list .listItem:hover .deleteButton {
+.list .listItem:hover .deleteButton,
+.list .listItem:hover .editButton {
   visibility: visible;
 }
 
 .listItemName {
   display: inline-block;
-  width: 200px;
+  width: 210px;
   margin: 0.75em 0 0.75em 5px;
+  grid-column: 1 / 4;
+  grid-row: 1;
+  z-index: 3;
 }
 
 .AddBoardForm {
@@ -124,18 +134,29 @@ html {
   padding: 0;
 }
 
-.deleteButton {
+.deleteButton,
+.editButton {
   display: inline;
-  float: right;
   background-color: inherit;
   border: none;
   border-radius: 5px;
   color: gray;
   width: 20px;
-
+  grid-row: 1;
+  height: 20px;
   &:hover {
     background-color: rgba(114, 113, 113, 0.322);
   }
+}
+
+.deleteButton {
+  grid-column: 3;
+  z-index: 4;
+}
+
+.editButton {
+  grid-column: 2;
+  z-index: 4;
 }
 
 .backButton {

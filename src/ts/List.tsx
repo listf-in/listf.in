@@ -6,6 +6,7 @@ import AddBoardForm from './AddBoardForm';
 import DeleteButton from './DeleteButton';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import { Boardtype } from './Interfaces';
+import EditButton from './EditButton';
 
 type ListProps = {
   boardFetch: Function;
@@ -48,6 +49,13 @@ const List: FC<ListProps> = ({
         boardID={list.id}
         client={client}
         callback={refreshTopBoard}
+      />
+      <EditButton
+        client={client}
+        boardID={list.id}
+        boardName={list.name}
+        callback={() => {}}
+        setForm={() => {}}
       />
       <div className='listContainer'>
         {list['listItems'] &&

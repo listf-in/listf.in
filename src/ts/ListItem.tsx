@@ -2,6 +2,7 @@ import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import React, { FC } from 'react';
 import '../sass/styles.scss';
 import DeleteButton from './DeleteButton';
+import EditButton from './EditButton';
 import { Boardtype } from './Interfaces';
 
 type ListItemProps = {
@@ -27,6 +28,13 @@ const ListItem: FC<ListItemProps> = ({
       }}
     >
       <p className='listItemName'>{item['name']}</p>
+      <EditButton
+        client={client}
+        boardID={item.id}
+        boardName={item.name}
+        callback={() => {}}
+        setForm={() => {}}
+      />
       <DeleteButton
         boardID={item.id}
         client={client}
