@@ -57,8 +57,17 @@ html {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.267);
 }
 
+.listTitle {
+  width: 225px;
+  font-size: 1.2em;
+  font-weight: bold;
+  display: inline-block;
+  margin: 10px 0 10px 5px;
+}
+
 .list .deleteButton {
   visibility: hidden;
+  display: inline;
 }
 
 .list:hover .deleteButton {
@@ -93,6 +102,12 @@ html {
   visibility: visible;
 }
 
+.listItemName {
+  display: inline-block;
+  width: 200px;
+  margin: 0.75em 0 0.75em 5px;
+}
+
 .AddBoardForm {
   min-height: 2em;
   overflow: hidden;
@@ -116,6 +131,7 @@ html {
   border: none;
   border-radius: 5px;
   color: gray;
+  width: 20px;
 
   &:hover {
     background-color: rgba(114, 113, 113, 0.322);

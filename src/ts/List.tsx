@@ -43,7 +43,7 @@ const List: FC<ListProps> = ({
         getBoard(e, list.id);
       }}
     >
-      {list['name']}
+      <h5 className='listTitle'>{list['name']}</h5>
       <DeleteButton
         boardID={list.id}
         client={client}

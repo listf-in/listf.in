@@ -2,7 +2,7 @@ import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import React, { FC } from 'react';
 import '../sass/styles.scss';
 import DeleteButton from './DeleteButton';
-import {Boardtype} from './Interfaces';
+import { Boardtype } from './Interfaces';
 
 type ListItemProps = {
   getBoard: Function;
@@ -26,7 +26,7 @@ const ListItem: FC<ListItemProps> = ({
         getBoard(e, item.id);
       }}
     >
-      {item['name']}
+      <p className='listItemName'>{item['name']}</p>
       <DeleteButton
         boardID={item.id}
         client={client}

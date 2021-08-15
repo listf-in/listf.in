@@ -39,11 +39,6 @@ const port = process.env.PORT || 3080;
   app.use('/', express.static(path.join(__dirname, '../build')));
   app.use(apollo);
 
-  app.get('/user', (req, res) => {
-    //get user from db
-    res.send('user and board info');
-  });
-
   httpServer.listen(port, () =>
     console.log(`Server is now running on http://localhost:${port}/graphql`)
   );
