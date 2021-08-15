@@ -90,20 +90,6 @@ const App: FC<AppProps> = ({ client }) => {
   };
 
   const userFetch = (email: string): void => {
-    // axios
-    //   .get('/user', {
-    //     data: email,
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     //get board info
-    //     //or
-    //     //error
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
     client
       .query({
         query: gql`
@@ -154,8 +140,7 @@ const App: FC<AppProps> = ({ client }) => {
         setBoard(result.data.getUser.homeBoard);
       })
       .catch((err) => {
-        if (err === err) {
-          //check to see if correct error
+        if (err.message === `Cannot read property 'homeBoard' of null`) {
           client
             .mutate({
               mutation: gql`mutation {
