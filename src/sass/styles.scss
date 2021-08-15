@@ -132,6 +132,7 @@ html {
   outline: none;
   border: none;
   padding: 0;
+  margin-left: 5px;
 }
 
 .deleteButton,
@@ -144,6 +145,7 @@ html {
   width: 20px;
   grid-row: 1;
   height: 20px;
+  background-color: rgba(119, 136, 153, 0.103);
   &:hover {
     background-color: rgba(114, 113, 113, 0.322);
   }
