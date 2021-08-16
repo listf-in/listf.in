@@ -4,11 +4,17 @@ import '../sass/styles.scss';
 
 type DeleteButtonProps = {
   boardID: string;
+  parentID: string;
   callback: Function;
   client: ApolloClient<NormalizedCacheObject>;
 };
 
-const DeleteButton: FC<DeleteButtonProps> = ({ boardID, client, callback }) => {
+const DeleteButton: FC<DeleteButtonProps> = ({
+  boardID,
+  parentID,
+  client,
+  callback,
+}) => {
   const deleteFromParentBoard = (
     e: React.MouseEvent<HTMLElement, MouseEvent>,
     boardID: string
@@ -17,12 +23,20 @@ const DeleteButton: FC<DeleteButtonProps> = ({ boardID, client, callback }) => {
     client
       .mutate({
         mutation: gql`mutation{
-          deleteBoard(filter: {
-            id: "${boardID}"
-          }) {
+          updateBoard(input: {
+           filter: {
+              id: "${parentID}"
+            },
+            remove: {
+              listItems: {
+                id: "${boardID}"
+              }
+            }
+
+        }){
             board {
-              name
               id
+              name
             }
           }
         }
@@ -45,3 +59,18 @@ const DeleteButton: FC<DeleteButtonProps> = ({ boardID, client, callback }) => {
 };
 
 export default DeleteButton;
+
+// former delete function
+// .mutate({
+//   mutation: gql`mutation{
+//     deleteBoard(filter: {
+//       id: "${boardID}"
+//     }) {
+//       board {
+//         name
+//         id
+//       }
+//     }
+//   }
+//   `,
+// })
