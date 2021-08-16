@@ -39,9 +39,12 @@ const Board: FC<BoardProps> = ({
     e: React.FormEvent<HTMLFormElement>,
     value: string
   ) => {
-    client
-      .mutate({
-        mutation: gql`mutation {
+    if (value === 'board.id') {
+      //error message about adding board to itself
+    } else {
+      client
+        .mutate({
+          mutation: gql`mutation {
                 updateBoard(input:
                   { filter: {
                     id: "${board.id}"
@@ -82,13 +85,14 @@ const Board: FC<BoardProps> = ({
                 }
               }
               `,
-      })
-      .then((result) => {
-        setBoard(result.data.updateBoard.board[0]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        })
+        .then((result) => {
+          setBoard(result.data.updateBoard.board[0]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
