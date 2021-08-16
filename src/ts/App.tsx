@@ -34,6 +34,8 @@ const App: FC<AppProps> = ({ client }) => {
 
   const [prevBoardList, setPrevBoardList] = useState([]);
 
+  const [editing, setEditing] = React.useState('');
+
   const goBack = (e) => {
     e.preventDefault();
     const bBoard = prevBoardList[prevBoardList.length - 1];
@@ -82,6 +84,7 @@ const App: FC<AppProps> = ({ client }) => {
       })
       .then((result) => {
         setBoard(result.data.getBoard);
+        setEditing('');
       })
       .catch((err) => {
         console.log(err);
@@ -205,6 +208,8 @@ const App: FC<AppProps> = ({ client }) => {
           goBack={goBack}
           prevBoardList={prevBoardList}
           setPrevBoardList={setPrevBoardList}
+          editing={editing}
+          setEditing={setEditing}
         />
       )}
     </>

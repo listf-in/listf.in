@@ -19,6 +19,8 @@ type BoardProps = {
   goBack: Function;
   setPrevBoardList: Function;
   board: Boardtype;
+  editing: string;
+  setEditing: Function;
 };
 
 const Board: FC<BoardProps> = ({
@@ -30,9 +32,9 @@ const Board: FC<BoardProps> = ({
   prevBoardList,
   goBack,
   setPrevBoardList,
+  editing,
+  setEditing,
 }) => {
-  const [editing, setEditing] = React.useState('');
-
   const addToTopBoard = (
     e: React.FormEvent<HTMLFormElement>,
     value: string

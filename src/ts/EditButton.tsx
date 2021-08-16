@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 import '../sass/styles.scss';
 
 type EditButtonProps = {
@@ -15,12 +16,10 @@ const EditButton: FC<EditButtonProps> = ({ boardID, callback }) => {
   };
 
   return (
-    <button
-      className={'editButton clickable'}
+    <i
+      className='fas fa-pen-square shareButtons editButton clickable'
       onClick={(e) => editBoardFormer(e)}
-    >
-      E
-    </button>
+    ></i>
   );
 };
 
