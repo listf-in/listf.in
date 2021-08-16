@@ -10,7 +10,7 @@ type DeleteButtonProps = {
 
 const DeleteButton: FC<DeleteButtonProps> = ({ boardID, client, callback }) => {
   const deleteFromParentBoard = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    e: React.MouseEvent<HTMLElement, MouseEvent>,
     boardID: string
   ) => {
     e.stopPropagation();
@@ -37,7 +37,10 @@ const DeleteButton: FC<DeleteButtonProps> = ({ boardID, client, callback }) => {
   };
 
   return (
-    <i className='fas fa-window-close shareButtons deleteButton clickable'></i>
+    <i
+      className='fas fa-window-close shareButtons deleteButton clickable'
+      onClick={(e) => deleteFromParentBoard(e, boardID)}
+    ></i>
   );
 };
 
