@@ -1,6 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
 import '../sass/styles.scss';
-import axios from 'axios';
 import {
   ApolloClient,
   // InMemoryCache,
