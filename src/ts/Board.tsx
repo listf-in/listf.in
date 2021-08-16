@@ -96,7 +96,22 @@ const Board: FC<BoardProps> = ({
         boardFetch={boardFetch}
         setPrevBoardList={setPrevBoardList}
       />
-      {board.name}
+      {editing === board.id ? (
+        <AddBoardForm
+          parent={board.id}
+          placeholder={'Change List Name'}
+          client={client}
+          callback={() => {
+            boardFetch(board.id);
+          }}
+          edit={true}
+          initValue={board.name}
+          setEditing={setEditing}
+          boardID={board.id}
+        />
+      ) : (
+        board.name
+      )}
       <button
         className={'backButton clickable'}
         onClick={goBack}
@@ -104,7 +119,7 @@ const Board: FC<BoardProps> = ({
       >
         Back
       </button>
-      <EditButton boardID={board.id} callback={() => {}} />
+      <EditButton boardID={board.id} callback={setEditing} />
       {board.home ? null : <ShareButton id={board.id} />}
       <AddShareButton addToTopBoard={addToTopBoard} />
       <div id='mainBoard'>
