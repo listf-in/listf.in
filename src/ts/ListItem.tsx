@@ -2,6 +2,7 @@ import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import React, { FC } from 'react';
 import '../sass/styles.scss';
 import DeleteButton from './DeleteButton';
+import EditButton from './EditButton';
 import { Boardtype } from './Interfaces';
 
 type ListItemProps = {
@@ -10,6 +11,7 @@ type ListItemProps = {
   refreshTopBoard: Function;
   addMiddleBoard: Function;
   item: Boardtype;
+  setEditing: Function;
 };
 const ListItem: FC<ListItemProps> = ({
   item,
@@ -17,6 +19,7 @@ const ListItem: FC<ListItemProps> = ({
   client,
   refreshTopBoard,
   addMiddleBoard,
+  setEditing,
 }) => {
   return (
     <div
@@ -27,6 +30,7 @@ const ListItem: FC<ListItemProps> = ({
       }}
     >
       <p className='listItemName'>{item['name']}</p>
+      <EditButton client={client} boardID={item.id} callback={setEditing} />
       <DeleteButton
         boardID={item.id}
         client={client}

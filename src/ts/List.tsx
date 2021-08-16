@@ -6,6 +6,7 @@ import AddBoardForm from './AddBoardForm';
 import DeleteButton from './DeleteButton';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import { Boardtype } from './Interfaces';
+import EditButton from './EditButton';
 
 type ListProps = {
   boardFetch: Function;
@@ -22,6 +23,8 @@ const List: FC<ListProps> = ({
   parent,
   addHistory,
 }) => {
+  const [editing, setEditing] = React.useState('');
+
   const getBoard = (e: React.MouseEvent<HTMLElement>, id: string): void => {
     e.stopPropagation();
     boardFetch(id);
@@ -49,10 +52,24 @@ const List: FC<ListProps> = ({
         client={client}
         callback={refreshTopBoard}
       />
+      <EditButton client={client} boardID={list.id} callback={() => {}} />
       <div className='listContainer'>
         {list['listItems'] &&
-          list['listItems'].map((item) => {
-            return (
+          list['listItems'].map((item) =>
+            item.id === editing ? (
+              <div className='listItem addBoardForm'>
+                <AddBoardForm
+                  parent={list.id}
+                  placeholder={'Change Board Name'}
+                  client={client}
+                  callback={refreshTopBoard}
+                  edit={true}
+                  boardID={item.id}
+                  setEditing={setEditing}
+                  initValue={item.name}
+                />
+              </div>
+            ) : (
               <ListItem
                 key={item['name']}
                 item={item}
@@ -60,9 +77,10 @@ const List: FC<ListProps> = ({
                 client={client}
                 refreshTopBoard={refreshTopBoard}
                 addMiddleBoard={addMiddleBoard}
+                setEditing={setEditing}
               />
-            );
-          })}
+            )
+          )}
       </div>
       <div className='listItem addBoardForm'>
         <AddBoardForm

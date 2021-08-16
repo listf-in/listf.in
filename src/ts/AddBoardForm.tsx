@@ -8,6 +8,10 @@ type AddBoardFormProps = {
   placeholder: string;
   client: ApolloClient<NormalizedCacheObject>;
   callback: Function;
+  edit?: boolean;
+  boardID?: string;
+  setEditing?: Function;
+  initValue?: string;
 };
 
 const AddBoardForm: FC<AddBoardFormProps> = ({
@@ -15,15 +19,15 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
   placeholder,
   client,
   callback,
+  edit = false,
+  boardID,
+  setEditing,
+  initValue = '',
 }) => {
-  const [formValue, setFormValue] = useState('');
+  const [formValue, setFormValue] = useState(initValue);
   const { user } = useAuth0();
 
-  const addToParentBoard = (
-    e: React.FormEvent<HTMLFormElement>,
-    value: string
-  ) => {
-    e.preventDefault();
+  const addToParentBoard = (e: React.FormEvent<HTMLFormElement>) => {
     client
       .mutate({
         mutation: gql`mutation {
@@ -34,7 +38,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
                   set: {
                     listItems: [
                       {
-                        name: "${value}",
+                        name: "${formValue}",
                         owner: {
                           email: "${user.email}"
                         },
@@ -84,11 +88,48 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
     setFormValue('');
   };
 
+  const editBoard = (e: React.FormEvent<HTMLFormElement>) => {
+    client
+      .mutate({
+        mutation: gql`mutation{
+          updateBoard(input: {filter: {
+            id: "${boardID}",
+          },
+          set: {
+            name: "${formValue}"
+          }}
+            ) {
+            board {
+              name
+              id
+            }
+          }
+        }
+        `,
+      })
+      .then(() => {
+        callback(e);
+        setEditing('');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const onSubmitFilter = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (formValue.length > 0 && edit) {
+      editBoard(e);
+    } else if (formValue.length > 0) {
+      addToParentBoard(e);
+    }
+  };
+
   return (
     <form
       className='AddBoardForm'
       onClick={(e) => e.stopPropagation()}
-      onSubmit={(e) => addToParentBoard(e, formValue)}
+      onSubmit={onSubmitFilter}
     >
       <input
         className={'AddBoardFormInput'}
