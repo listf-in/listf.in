@@ -39,7 +39,7 @@ const Board: FC<BoardProps> = ({
     e: React.FormEvent<HTMLFormElement>,
     value: string
   ) => {
-    if (value === 'board.id') {
+    if (value === board.id) {
       //error message about adding board to itself
     } else {
       client
