@@ -31,6 +31,8 @@ const Board: FC<BoardProps> = ({
   goBack,
   setPrevBoardList,
 }) => {
+  const [editing, setEditing] = React.useState('');
+
   const addToTopBoard = (
     e: React.FormEvent<HTMLFormElement>,
     value: string
@@ -102,12 +104,27 @@ const Board: FC<BoardProps> = ({
       >
         Back
       </button>
-      <EditButton client={client} boardID={board.id} callback={() => {}} />
+      <EditButton boardID={board.id} callback={() => {}} />
       {board.home ? null : <ShareButton id={board.id} />}
       <AddShareButton addToTopBoard={addToTopBoard} />
       <div id='mainBoard'>
-        {board.listItems.map((list) => {
-          return (
+        {board.listItems.map((list) =>
+          list.id === editing ? (
+            <div className='list addBoardForm'>
+              <AddBoardForm
+                parent={board.id}
+                placeholder={'Change List Name'}
+                client={client}
+                callback={() => {
+                  boardFetch(board.id);
+                }}
+                edit={true}
+                initValue={list.name}
+                setEditing={setEditing}
+                boardID={list.id}
+              />
+            </div>
+          ) : (
             <List
               key={list.name}
               list={list}
@@ -115,9 +132,11 @@ const Board: FC<BoardProps> = ({
               client={client}
               parent={board.id}
               addHistory={addHistory}
+              editing={editing}
+              setEditing={setEditing}
             />
-          );
-        })}
+          )
+        )}
         <div className='list addBoardForm'>
           <AddBoardForm
             parent={board.id}

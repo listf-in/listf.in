@@ -14,6 +14,8 @@ type ListProps = {
   parent: string;
   addHistory: Function;
   list: Boardtype;
+  editing: string;
+  setEditing: Function;
 };
 
 const List: FC<ListProps> = ({
@@ -22,9 +24,9 @@ const List: FC<ListProps> = ({
   client,
   parent,
   addHistory,
+  editing,
+  setEditing,
 }) => {
-  const [editing, setEditing] = React.useState('');
-
   const getBoard = (e: React.MouseEvent<HTMLElement>, id: string): void => {
     e.stopPropagation();
     boardFetch(id);
@@ -52,7 +54,7 @@ const List: FC<ListProps> = ({
         client={client}
         callback={refreshTopBoard}
       />
-      <EditButton client={client} boardID={list.id} callback={() => {}} />
+      <EditButton boardID={list.id} callback={setEditing} />
       <div className='listContainer'>
         {list['listItems'] &&
           list['listItems'].map((item) =>
