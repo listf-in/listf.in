@@ -37,12 +37,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({ boardID, client, callback }) => {
   };
 
   return (
-    <button
-      className={'deleteButton clickable'}
-      onClick={(e) => deleteFromParentBoard(e, boardID)}
-    >
-      X
-    </button>
+    <i className='fas fa-window-close shareButtons deleteButton clickable'></i>
   );
 };
 
