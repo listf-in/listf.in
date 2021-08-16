@@ -51,6 +51,7 @@ const List: FC<ListProps> = ({
       <h5 className='listTitle'>{list['name']}</h5>
       <DeleteButton
         boardID={list.id}
+        parentID={parent}
         client={client}
         callback={refreshTopBoard}
       />
@@ -75,6 +76,7 @@ const List: FC<ListProps> = ({
               <ListItem
                 key={item['name']}
                 item={item}
+                parentID={list.id}
                 getBoard={getBoard}
                 client={client}
                 refreshTopBoard={refreshTopBoard}

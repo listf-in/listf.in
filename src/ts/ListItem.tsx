@@ -11,10 +11,12 @@ type ListItemProps = {
   refreshTopBoard: Function;
   addMiddleBoard: Function;
   item: Boardtype;
+  parentID: string;
   setEditing: Function;
 };
 const ListItem: FC<ListItemProps> = ({
   item,
+  parentID,
   getBoard,
   client,
   refreshTopBoard,
@@ -35,6 +37,7 @@ const ListItem: FC<ListItemProps> = ({
         boardID={item.id}
         client={client}
         callback={refreshTopBoard}
+        parentID={parentID}
       />
     </div>
   );
