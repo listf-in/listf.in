@@ -11,6 +11,7 @@ type ListItemProps = {
   refreshTopBoard: Function;
   addMiddleBoard: Function;
   item: Boardtype;
+  setEditing: Function;
 };
 const ListItem: FC<ListItemProps> = ({
   item,
@@ -18,6 +19,7 @@ const ListItem: FC<ListItemProps> = ({
   client,
   refreshTopBoard,
   addMiddleBoard,
+  setEditing,
 }) => {
   return (
     <div
@@ -28,13 +30,7 @@ const ListItem: FC<ListItemProps> = ({
       }}
     >
       <p className='listItemName'>{item['name']}</p>
-      <EditButton
-        client={client}
-        boardID={item.id}
-        boardName={item.name}
-        callback={() => {}}
-        setForm={() => {}}
-      />
+      <EditButton client={client} boardID={item.id} callback={setEditing} />
       <DeleteButton
         boardID={item.id}
         client={client}

@@ -6,13 +6,13 @@ import AddBoardForm from './AddBoardForm';
 import DepthBar from './DepthBar';
 import ShareButton from './ShareButton';
 import AddShareButton from './AddShareButton';
-import { gql } from '@apollo/client';
+import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 import { Boardtype } from './Interfaces';
 import EditButton from './EditButton';
 
 type BoardProps = {
   boardFetch: Function;
-  client: object;
+  client: ApolloClient<NormalizedCacheObject>;
   setBoard: Function;
   addHistory: Function;
   prevBoardList: Array<object>;
@@ -102,13 +102,7 @@ const Board: FC<BoardProps> = ({
       >
         Back
       </button>
-      <EditButton
-        client={client}
-        boardID={board.id}
-        boardName={board.name}
-        callback={() => {}}
-        setForm={() => {}}
-      />
+      <EditButton client={client} boardID={board.id} callback={() => {}} />
       {board.home ? null : <ShareButton id={board.id} />}
       <AddShareButton addToTopBoard={addToTopBoard} />
       <div id='mainBoard'>
