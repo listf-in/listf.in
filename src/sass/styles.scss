@@ -138,17 +138,8 @@ html {
 .deleteButton,
 .editButton {
   display: inline;
-  // background-color: inherit;
-  // border: none;
-  // border-radius: 5px;
-  // color: gray;
-  // width: 20px;
   grid-row: 1;
   height: 16px;
-  // background-color: rgba(119, 136, 153, 0.103);
-  // &:hover {
-  //   background-color: rgba(114, 113, 113, 0.322);
-  // }
 }
 
 .deleteButton {
