@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 import '../sass/styles.scss';
 import List from './List';
@@ -95,6 +96,11 @@ const Board: FC<BoardProps> = ({
     }
   };
 
+  const onDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
+    // e.preventDefault();
+    // e.stopPropagation();
+  };
+
   return (
     <div className='board'>
       <DepthBar
@@ -128,45 +134,49 @@ const Board: FC<BoardProps> = ({
       <EditButton boardID={board.id} callback={setEditing} />
       {board.home ? null : <ShareButton id={board.id} />}
       <AddShareButton addToTopBoard={addToTopBoard} />
-      <div id='mainBoard'>
-        {board.listItems.map((list) =>
-          list.id === editing ? (
-            <div className='list addBoardForm'>
-              <AddBoardForm
-                parent={board.id}
-                placeholder={'Change List Name'}
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div id='mainBoard'>
+          {board.listItems.map((list) =>
+            list.id === editing ? (
+              <div className='list addBoardForm'>
+                <AddBoardForm
+                  parent={board.id}
+                  placeholder={'Change List Name'}
+                  client={client}
+                  callback={() => {
+                    boardFetch(board.id);
+                  }}
+                  edit={true}
+                  initValue={list.name}
+                  setEditing={setEditing}
+                  boardID={list.id}
+                />
+              </div>
+            ) : (
+              <List
+                key={list.name}
+                list={list}
+                boardFetch={boardFetch}
                 client={client}
-                callback={() => {
-                  boardFetch(board.id);
-                }}
-                edit={true}
-                initValue={list.name}
+                parent={board.id}
+                addHistory={addHistory}
+                editing={editing}
                 setEditing={setEditing}
-                boardID={list.id}
               />
-            </div>
-          ) : (
-            <List
-              key={list.name}
-              list={list}
-              boardFetch={boardFetch}
-              client={client}
+            )
+          )}
+          <div className='list addBoardForm'>
+            <AddBoardForm
               parent={board.id}
-              addHistory={addHistory}
-              editing={editing}
-              setEditing={setEditing}
+              placeholder={'Add List'}
+              client={client}
+              callback={(e, result) =>
+                setBoard(result.data.updateBoard.board[0])
+              }
             />
-          )
-        )}
-        <div className='list addBoardForm'>
-          <AddBoardForm
-            parent={board.id}
-            placeholder={'Add List'}
-            client={client}
-            callback={(e, result) => setBoard(result.data.updateBoard.board[0])}
-          />
+          </div>
         </div>
-      </div>
+      </DragDropContext>
     </div>
   );
 };
