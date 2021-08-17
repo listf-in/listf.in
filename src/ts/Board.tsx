@@ -40,7 +40,7 @@ const Board: FC<BoardProps> = ({
     value: string
   ) => {
     if (value === board.id) {
-      //error message about adding board to itself
+      window.alert('You cannot add a board to itself!');
     } else {
       client
         .mutate({
