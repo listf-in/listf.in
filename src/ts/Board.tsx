@@ -96,9 +96,71 @@ const Board: FC<BoardProps> = ({
     }
   };
 
-  const onDragEnd = (context, something) => {
+  const onDragEnd = (context) => {
     //delete from prev location
-    //add to new location
+    // debugger;
+    if (context.draggableId === context.destination.droppableId) {
+      window.alert('You cannot add a board to itself!');
+    } else {
+      client
+        .mutate({
+          mutation: gql`mutation{
+          updateBoard(input: {
+           filter: {
+              id: "${context.source.droppableId}"
+            },
+            remove: {
+              listItems: {
+                id: "${context.draggableId}"
+              }
+            }
+
+        }){
+            board {
+              id
+              name
+            }
+          }
+        }
+        `,
+        })
+        .then(() => {
+          // debugger;
+          client
+            .mutate({
+              mutation: gql`mutation {
+                updateBoard(input:
+                  { filter: {
+                    id: "${context.destination.droppableId}"
+                  },
+                  set: {
+                    listItems: [
+                      {
+                        id: "${context.draggableId}"
+                      }
+                    ]
+
+                  }
+                }) {
+                  board {
+                    id
+                    name
+                  }
+                }
+            }
+              `,
+            })
+            .then(() => {
+              boardFetch(board.id);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -134,7 +196,7 @@ const Board: FC<BoardProps> = ({
       <EditButton boardID={board.id} callback={setEditing} />
       {board.home ? null : <ShareButton id={board.id} />}
       <AddShareButton addToTopBoard={addToTopBoard} />
-      <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd}>
         <div id='mainBoard'>
           {board.listItems.map((list) =>
             list.id === editing ? (
