@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import React, { FC, MouseEventHandler } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 import '../sass/styles.scss';
 import List from './List';
@@ -17,7 +17,7 @@ type BoardProps = {
   setBoard: Function;
   addHistory: Function;
   prevBoardList: Array<object>;
-  goBack: Function;
+  goBack: MouseEventHandler<HTMLButtonElement>;
   setPrevBoardList: Function;
   board: Boardtype;
   editing: string;
@@ -96,9 +96,9 @@ const Board: FC<BoardProps> = ({
     }
   };
 
-  const onDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
-    // e.preventDefault();
-    // e.stopPropagation();
+  const onDragEnd = (context, something) => {
+    //delete from prev location
+    //add to new location
   };
 
   return (
@@ -134,7 +134,7 @@ const Board: FC<BoardProps> = ({
       <EditButton boardID={board.id} callback={setEditing} />
       {board.home ? null : <ShareButton id={board.id} />}
       <AddShareButton addToTopBoard={addToTopBoard} />
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
         <div id='mainBoard'>
           {board.listItems.map((list) =>
             list.id === editing ? (

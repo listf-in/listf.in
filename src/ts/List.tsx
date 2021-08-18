@@ -47,13 +47,17 @@ const List: FC<ListProps> = ({
         <div
           {...provided.droppableProps}
           ref={provided.innerRef}
-          className='list clickable'
-          onClick={(e) => {
-            addHistory();
-            getBoard(e, list.id);
-          }}
+          className='list'
         >
-          <h5 className='listTitle'>{list['name']}</h5>
+          <h5
+            onClick={(e) => {
+              addHistory();
+              getBoard(e, list.id);
+            }}
+            className='listTitle clickable'
+          >
+            {list['name']}
+          </h5>
           <DeleteButton
             boardID={list.id}
             parentID={parent}

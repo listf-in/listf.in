@@ -27,7 +27,7 @@ const ListItem: FC<ListItemProps> = ({
   index,
 }) => {
   return (
-    <Draggable draggableId={item.id} index={index}>
+    <Draggable draggableId={item.id} index={index} className=' clickable'>
       {(provided) => (
         <div
           {...provided.draggableProps}
@@ -39,7 +39,7 @@ const ListItem: FC<ListItemProps> = ({
             getBoard(e, item.id);
           }}
         >
-          <p className='listItemName'>{item['name']}</p>
+          <p className='listItemName'>{item.name}</p>
           <EditButton client={client} boardID={item.id} callback={setEditing} />
           <DeleteButton
             boardID={item.id}
