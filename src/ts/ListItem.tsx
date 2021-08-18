@@ -1,5 +1,6 @@
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import React, { FC } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 import '../sass/styles.scss';
 import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
@@ -13,6 +14,7 @@ type ListItemProps = {
   item: Boardtype;
   parentID: string;
   setEditing: Function;
+  index: number;
 };
 const ListItem: FC<ListItemProps> = ({
   item,
@@ -22,24 +24,32 @@ const ListItem: FC<ListItemProps> = ({
   refreshTopBoard,
   addMiddleBoard,
   setEditing,
+  index,
 }) => {
   return (
-    <div
-      className='listItem clickable'
-      onClick={(e) => {
-        addMiddleBoard();
-        getBoard(e, item.id);
-      }}
-    >
-      <p className='listItemName'>{item['name']}</p>
-      <EditButton client={client} boardID={item.id} callback={setEditing} />
-      <DeleteButton
-        boardID={item.id}
-        client={client}
-        callback={refreshTopBoard}
-        parentID={parentID}
-      />
-    </div>
+    <Draggable draggableId={item.id} index={index} className=' clickable'>
+      {(provided) => (
+        <div
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+          className='listItem clickable'
+          onClick={(e) => {
+            addMiddleBoard();
+            getBoard(e, item.id);
+          }}
+        >
+          <p className='listItemName'>{item.name}</p>
+          <EditButton client={client} boardID={item.id} callback={setEditing} />
+          <DeleteButton
+            boardID={item.id}
+            client={client}
+            callback={refreshTopBoard}
+            parentID={parentID}
+          />
+        </div>
+      )}
+    </Draggable>
   );
 };
 

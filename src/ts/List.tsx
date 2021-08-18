@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Droppable } from 'react-beautiful-dnd';
 
 import ListItem from './ListItem';
 import '../sass/styles.scss';
@@ -41,60 +42,72 @@ const List: FC<ListProps> = ({
   };
 
   return (
-    <div
-      className='list clickable'
-      onClick={(e) => {
-        addHistory();
-        getBoard(e, list.id);
-      }}
-    >
-      <h5 className='listTitle'>{list['name']}</h5>
-      <DeleteButton
-        boardID={list.id}
-        parentID={parent}
-        client={client}
-        callback={refreshTopBoard}
-      />
-      <EditButton boardID={list.id} callback={setEditing} />
-      <div className='listContainer'>
-        {list['listItems'] &&
-          list['listItems'].map((item) =>
-            item.id === editing ? (
-              <div className='listItem addBoardForm'>
-                <AddBoardForm
-                  parent={list.id}
-                  placeholder={'Change Board Name'}
-                  client={client}
-                  callback={refreshTopBoard}
-                  edit={true}
-                  boardID={item.id}
-                  setEditing={setEditing}
-                  initValue={item.name}
-                />
-              </div>
-            ) : (
-              <ListItem
-                key={item['name']}
-                item={item}
-                parentID={list.id}
-                getBoard={getBoard}
-                client={client}
-                refreshTopBoard={refreshTopBoard}
-                addMiddleBoard={addMiddleBoard}
-                setEditing={setEditing}
-              />
-            )
-          )}
-      </div>
-      <div className='listItem addBoardForm'>
-        <AddBoardForm
-          parent={list.id}
-          placeholder={'Add List Item'}
-          client={client}
-          callback={refreshTopBoard}
-        />
-      </div>
-    </div>
+    <Droppable droppableId={list.id}>
+      {(provided) => (
+        <div
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+          className='list'
+        >
+          <h5
+            onClick={(e) => {
+              addHistory();
+              getBoard(e, list.id);
+            }}
+            className='listTitle clickable'
+          >
+            {list['name']}
+          </h5>
+          <DeleteButton
+            boardID={list.id}
+            parentID={parent}
+            client={client}
+            callback={refreshTopBoard}
+          />
+          <EditButton boardID={list.id} callback={setEditing} />
+          <div className='listContainer'>
+            {list['listItems'] &&
+              list['listItems'].map((item, i) =>
+                item.id === editing ? (
+                  <div className='listItem addBoardForm'>
+                    <AddBoardForm
+                      parent={list.id}
+                      placeholder={'Change Board Name'}
+                      client={client}
+                      callback={refreshTopBoard}
+                      edit={true}
+                      boardID={item.id}
+                      setEditing={setEditing}
+                      initValue={item.name}
+                    />
+                  </div>
+                ) : (
+                  <ListItem
+                    key={item['name']}
+                    item={item}
+                    parentID={list.id}
+                    getBoard={getBoard}
+                    client={client}
+                    refreshTopBoard={refreshTopBoard}
+                    addMiddleBoard={addMiddleBoard}
+                    setEditing={setEditing}
+                    index={i}
+                  />
+                )
+              )}
+            {provided.placeholder}
+          </div>
+          <div className='listItem addBoardForm'>
+            <AddBoardForm
+              parent={list.id}
+              placeholder={'Add List Item'}
+              client={client}
+              callback={refreshTopBoard}
+            />
+          </div>
+        </div>
+      )}
+    </Droppable>
   );
 };
 
