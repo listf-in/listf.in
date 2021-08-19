@@ -97,8 +97,6 @@ const Board: FC<BoardProps> = ({
   };
 
   const onDragEnd = (context) => {
-    //delete from prev location
-    // debugger;
     if (context.draggableId === context.destination.droppableId) {
       window.alert('You cannot add a board to itself!');
     } else {
@@ -121,15 +119,7 @@ const Board: FC<BoardProps> = ({
               name
             }
           }
-        }
-        `,
-        })
-        .then(() => {
-          // debugger;
-          client
-            .mutate({
-              mutation: gql`mutation {
-                updateBoard(input:
+        updateBoard(input:
                   { filter: {
                     id: "${context.destination.droppableId}"
                   },
@@ -147,15 +137,11 @@ const Board: FC<BoardProps> = ({
                     name
                   }
                 }
-            }
-              `,
-            })
-            .then(() => {
-              boardFetch(board.id);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+        }
+        `,
+        })
+        .then(() => {
+          boardFetch(board.id);
         })
         .catch((err) => {
           console.log(err);
