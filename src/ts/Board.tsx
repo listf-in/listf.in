@@ -100,6 +100,8 @@ const Board: FC<BoardProps> = ({
     if (context.draggableId === context.destination.droppableId) {
       window.alert('You cannot add a board to itself!');
     } else {
+      //update state to reflect new board order
+
       client
         .mutate({
           mutation: gql`mutation{
@@ -135,12 +137,32 @@ const Board: FC<BoardProps> = ({
                   board {
                     id
                     name
+                    owner {
+                      email
+                      name
+                    }
+                    listItems {
+                      id
+                      name
+                      owner {
+                        email
+                        name
+                      }
+                      listItems {
+                        id
+                        name
+                        owner {
+                          email
+                          name
+                        }
+                      }
+                    }
                   }
                 }
         }
         `,
         })
-        .then(() => {
+        .then((results) => {
           boardFetch(board.id);
         })
         .catch((err) => {
