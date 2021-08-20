@@ -4,6 +4,7 @@ type Board @withSubscription {
   owner: User! @hasInverse(field: ownedBoards)
   members: [User] @hasInverse(field: boards)
   listItems: [Board] @hasInverse(field: parents)
+  order: [String]
   parents: [Board] @hasInverse(field: listItems)
   labels: [Label]
   start: DateTime

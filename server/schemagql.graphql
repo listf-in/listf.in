@@ -23,6 +23,7 @@ type Board {
   owner: User!
   members: [User]
   listItems: [Board]
+  order: [String]
   parents: [Board]
   labels: [Label]
   start: String
