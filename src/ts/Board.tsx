@@ -141,6 +141,7 @@ const Board: FC<BoardProps> = ({
                       email
                       name
                     }
+                    order
                     listItems {
                       id
                       name
@@ -148,6 +149,7 @@ const Board: FC<BoardProps> = ({
                         email
                         name
                       }
+                      order
                       listItems {
                         id
                         name

@@ -29,6 +29,7 @@ const App: FC<AppProps> = ({ client }) => {
         name: '',
       },
     ],
+    order: [],
     listItems: [],
   });
 
@@ -62,6 +63,7 @@ const App: FC<AppProps> = ({ client }) => {
                 name
               }
               home
+              order
               listItems {
                 id
                 name
@@ -69,6 +71,7 @@ const App: FC<AppProps> = ({ client }) => {
                   email
                   name
                 }
+                order
                 listItems {
                   id
                   name
@@ -116,6 +119,7 @@ const App: FC<AppProps> = ({ client }) => {
                   email
                   name
                 }
+                order
                 listItems {
                   id
                   name
@@ -123,6 +127,7 @@ const App: FC<AppProps> = ({ client }) => {
                     email
                     name
                   }
+                  order
                   listItems {
                     id
                     name
@@ -173,6 +178,7 @@ const App: FC<AppProps> = ({ client }) => {
                         id
                         name
                       }
+                      order
                     }
                   }
                 }
