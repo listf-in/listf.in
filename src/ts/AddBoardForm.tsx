@@ -5,6 +5,7 @@ import '../sass/styles.scss';
 
 type AddBoardFormProps = {
   parent: string;
+  index: number;
   placeholder: string;
   client: ApolloClient<NormalizedCacheObject>;
   callback: Function;
@@ -16,6 +17,7 @@ type AddBoardFormProps = {
 
 const AddBoardForm: FC<AddBoardFormProps> = ({
   parent,
+  index,
   placeholder,
   client,
   callback,
@@ -38,14 +40,17 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
                   set: {
                     listItems: [
                       {
-                        name: "${formValue}",
-                        owner: {
-                          email: "${user.email}"
-                        },
-                        members: {
-                          email: "${user.email}"
-                        },
-                        home: false
+                        index: ${index},
+                        board:{
+                          name: "${formValue}",
+                          owner: {
+                            email: "${user.email}"
+                          },
+                          members: {
+                            email: "${user.email}"
+                          },
+                          home: false
+                        }
                       }
                     ]
                   }
@@ -53,27 +58,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
                   board {
                     id
                     name
-                    home
-                    owner {
-                      email
-                      name
-                    }
-                    listItems {
-                      id
-                      name
-                      owner {
-                        email
-                        name
-                      }
-                      listItems {
-                        id
-                        name
-                        owner {
-                          email
-                          name
-                        }
-                      }
-                    }
+
                   }
                 }
               }

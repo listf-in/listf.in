@@ -29,7 +29,6 @@ const App: FC<AppProps> = ({ client }) => {
         name: '',
       },
     ],
-    order: [],
     listItems: [],
   });
 
@@ -63,21 +62,27 @@ const App: FC<AppProps> = ({ client }) => {
                 name
               }
               home
-              order
               listItems {
                 id
-                name
-                owner {
-                  email
-                  name
-                }
-                order
-                listItems {
+                index
+                board {
                   id
                   name
                   owner {
                     email
                     name
+                  }
+                  listItems {
+                    id
+                    index
+                    board {
+                      id
+                      name
+                      owner {
+                        email
+                        name
+                      }
+                    }
                   }
                 }
               }
@@ -114,28 +119,33 @@ const App: FC<AppProps> = ({ client }) => {
               homeBoard {
                 id
                 name
-                home
                 owner {
                   email
                   name
                 }
-                order
+                home
                 listItems {
                   id
-                  name
-                  owner {
-                    email
-                    name
-                  }
-                  order
-                  listItems {
+                  index
+                  board {
                     id
                     name
                     owner {
                       email
                       name
                     }
-
+                    listItems {
+                      id
+                      index
+                      board {
+                        id
+                        name
+                        owner {
+                          email
+                          name
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -144,9 +154,11 @@ const App: FC<AppProps> = ({ client }) => {
         `,
       })
       .then((result) => {
+        // debugger;
         setBoard(result.data.getUser.homeBoard);
       })
       .catch((err) => {
+        // debugger;
         if (err.message === `Cannot read property 'homeBoard' of null`) {
           client
             .mutate({
@@ -176,9 +188,15 @@ const App: FC<AppProps> = ({ client }) => {
                       }
                       listItems {
                         id
-                        name
+                        index
+                        board {
+                          id
+                          name
+                          owner {
+                            name
+                          }
+                        }
                       }
-                      order
                     }
                   }
                 }

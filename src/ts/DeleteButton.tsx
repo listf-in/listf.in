@@ -20,6 +20,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({
     boardID: string
   ) => {
     e.stopPropagation();
+    // full refactor to delete index container
     client
       .mutate({
         mutation: gql`mutation{

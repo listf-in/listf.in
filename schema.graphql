@@ -3,14 +3,18 @@ type Board @withSubscription {
   name: String!
   owner: User! @hasInverse(field: ownedBoards)
   members: [User] @hasInverse(field: boards)
-  listItems: [Board] @hasInverse(field: parents)
-  order: [String]
-  parents: [Board] @hasInverse(field: listItems)
+  listItems: [Order]
   labels: [Label]
   start: DateTime
   end: DateTime
   theme: String
   home: Boolean
+}
+
+type Order {
+  id: ID!
+  index: Int
+  board: Board!
 }
 
 type Label {

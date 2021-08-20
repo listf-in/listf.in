@@ -53,8 +53,12 @@ const Board: FC<BoardProps> = ({
                   set: {
                     listItems: [
                       {
-                        id: "${value}"
-                        home: false
+                        index: ${index}
+                        board:
+                        {
+                          id: "${value}"
+                          home: false
+                        }
                       }
                     ]
                   }
@@ -68,17 +72,25 @@ const Board: FC<BoardProps> = ({
                     }
                     listItems {
                       id
-                      name
-                      owner {
-                        email
-                        name
-                      }
-                      listItems {
+                      index
+                      board {
                         id
                         name
                         owner {
                           email
                           name
+                        }
+                        listItems {
+                          id
+                          index
+                          board {
+                            id
+                            name
+                            owner {
+                              email
+                              name
+                            }
+                          }
                         }
                       }
                     }
@@ -101,68 +113,67 @@ const Board: FC<BoardProps> = ({
       window.alert('You cannot add a board to itself!');
     } else {
       //update state to reflect new board order
-
+      //update this for moves within board or between boards
+      //full refactor of these equations to add index and new structure
       client
         .mutate({
-          mutation: gql`mutation{
-          updateBoard(input: {
-           filter: {
-              id: "${context.source.droppableId}"
-            },
-            remove: {
-              listItems: {
-                id: "${context.draggableId}"
-              }
-            }
-
-        }){
-            board {
-              id
-              name
-            }
-          }
-        updateBoard(input:
-                  { filter: {
-                    id: "${context.destination.droppableId}"
-                  },
-                  set: {
-                    listItems: [
-                      {
-                        id: "${context.draggableId}"
-                      }
-                    ]
-
-                  }
-                }) {
-                  board {
-                    id
-                    name
-                    owner {
-                      email
-                      name
-                    }
-                    order
-                    listItems {
-                      id
-                      name
-                      owner {
-                        email
-                        name
-                      }
-                      order
-                      listItems {
-                        id
-                        name
-                        owner {
-                          email
-                          name
-                        }
-                      }
-                    }
-                  }
-                }
-        }
-        `,
+          //   mutation: gql`mutation{
+          //   updateBoard(input: {
+          //    filter: {
+          //       id: "${context.source.droppableId}"
+          //     },
+          //     remove: {
+          //       listItems: {
+          //         id: "${context.draggableId}"
+          //       }
+          //     }
+          // }){
+          //     board {
+          //       id
+          //       name
+          //     }
+          //   }
+          // updateBoard(input:
+          //           { filter: {
+          //             id: "${context.destination.droppableId}"
+          //           },
+          //           set: {
+          //             listItems: [
+          //               {
+          //                 id: "${context.draggableId}"
+          //               }
+          //             ]
+          //           }
+          //         }) {
+          //           board {
+          //             id
+          //             name
+          //             owner {
+          //               email
+          //               name
+          //             }
+          //             order
+          //             listItems {
+          //               id
+          //               name
+          //               owner {
+          //                 email
+          //                 name
+          //               }
+          //               order
+          //               listItems {
+          //                 id
+          //                 name
+          //                 owner {
+          //                   email
+          //                   name
+          //                 }
+          //               }
+          //             }
+          //           }
+          //         }
+          // }
+          // `,
         })
         .then((results) => {
           boardFetch(board.id);
