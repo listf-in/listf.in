@@ -53,11 +53,10 @@ const Board: FC<BoardProps> = ({
                   set: {
                     listItems: [
                       {
-                        index: ${index}
+                        index: ${board.listItems.length}
                         board:
                         {
                           id: "${value}"
-                          home: false
                         }
                       }
                     ]
@@ -203,6 +202,7 @@ const Board: FC<BoardProps> = ({
           initValue={board.name}
           setEditing={setEditing}
           boardID={board.id}
+          index={board.listItems.length}
         />
       ) : (
         board.name
@@ -220,7 +220,7 @@ const Board: FC<BoardProps> = ({
       <DragDropContext onDragEnd={onDragEnd}>
         <div id='mainBoard'>
           {board.listItems.map((list) =>
-            list.id === editing ? (
+            list.board.id === editing ? (
               <div className='list addBoardForm'>
                 <AddBoardForm
                   parent={board.id}
@@ -230,15 +230,16 @@ const Board: FC<BoardProps> = ({
                     boardFetch(board.id);
                   }}
                   edit={true}
-                  initValue={list.name}
+                  initValue={list.board.name}
                   setEditing={setEditing}
-                  boardID={list.id}
+                  boardID={list.board.id}
+                  index={list.index}
                 />
               </div>
             ) : (
               <List
-                key={list.name}
-                list={list}
+                key={list.board.name}
+                list={list.board}
                 boardFetch={boardFetch}
                 client={client}
                 parent={board.id}

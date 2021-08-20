@@ -68,7 +68,7 @@ const List: FC<ListProps> = ({
           <div className='listContainer'>
             {list['listItems'] &&
               list['listItems'].map((item, i) =>
-                item.id === editing ? (
+                item.board.id === editing ? (
                   <div className='listItem addBoardForm'>
                     <AddBoardForm
                       parent={list.id}
@@ -76,15 +76,15 @@ const List: FC<ListProps> = ({
                       client={client}
                       callback={refreshTopBoard}
                       edit={true}
-                      boardID={item.id}
+                      boardID={item.board.id}
                       setEditing={setEditing}
-                      initValue={item.name}
+                      initValue={item.board.name}
                     />
                   </div>
                 ) : (
                   <ListItem
-                    key={item['name']}
-                    item={item}
+                    key={item.board.id}
+                    item={item.board}
                     parentID={list.id}
                     getBoard={getBoard}
                     client={client}
@@ -103,6 +103,7 @@ const List: FC<ListProps> = ({
               placeholder={'Add List Item'}
               client={client}
               callback={refreshTopBoard}
+              index={list.listItems.length}
             />
           </div>
         </div>

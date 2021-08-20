@@ -30,6 +30,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
   const { user } = useAuth0();
 
   const addToParentBoard = (e: React.FormEvent<HTMLFormElement>) => {
+    debugger;
     client
       .mutate({
         mutation: gql`mutation {
@@ -40,7 +41,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
                   set: {
                     listItems: [
                       {
-                        index: ${index},
+                        index: ${index || 0},
                         board:{
                           name: "${formValue}",
                           owner: {
