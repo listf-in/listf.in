@@ -4,7 +4,7 @@ export interface Boardtype {
   name: string;
   members: User[];
   listItems: Ordertype[];
-  home: Boolean;
+  home: boolean;
 }
 
 export interface Ordertype {

@@ -25,6 +25,7 @@ const App: FC<AppProps> = ({ client }) => {
     id: '',
     owner: { id: '', name: '' },
     name: '',
+    home: true,
     members: [
       {
         id: '',
