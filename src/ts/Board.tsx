@@ -261,7 +261,11 @@ const Board: FC<BoardProps> = ({
               callback={(e, result) => {
                 setBoard(result);
               }}
-              index={board.listItems.length}
+              index={
+                board.listItems.length
+                  ? board.listItems[board.listItems.length - 1].index + 1
+                  : 0
+              }
             />
           </div>
         </div>

@@ -115,7 +115,11 @@ const List: FC<ListProps> = ({
               placeholder={'Add List Item'}
               client={client}
               callback={refreshTopBoard}
-              index={list.listItems.length}
+              index={
+                list.listItems.length
+                  ? list.listItems[list.listItems.length - 1].index + 1
+                  : 0
+              }
             />
           </div>
         </div>
