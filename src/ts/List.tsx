@@ -8,7 +8,6 @@ import DeleteButton from './DeleteButton';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import { Boardtype, Ordertype } from './Interfaces';
 import EditButton from './EditButton';
-import { container } from 'webpack';
 
 type ListProps = {
   boardFetch: Function;
@@ -19,7 +18,6 @@ type ListProps = {
   container: Ordertype;
   editing: string;
   setEditing: Function;
-  parentBoard: Boardtype;
 };
 
 const List: FC<ListProps> = ({
@@ -31,7 +29,6 @@ const List: FC<ListProps> = ({
   addHistory,
   editing,
   setEditing,
-  parentBoard,
 }) => {
   const getBoard = (e: React.MouseEvent<HTMLElement>, id: string): void => {
     e.stopPropagation();
@@ -72,7 +69,7 @@ const List: FC<ListProps> = ({
           <EditButton boardID={list.id} callback={setEditing} />
           <div className='listContainer'>
             {list['listItems'] &&
-              list['listItems'].map((item) =>
+              list['listItems'].map((item, i) =>
                 item.board.id === editing ? (
                   <div className='listItem addBoardForm'>
                     <AddBoardForm
@@ -99,7 +96,7 @@ const List: FC<ListProps> = ({
                     refreshTopBoard={refreshTopBoard}
                     addMiddleBoard={addMiddleBoard}
                     setEditing={setEditing}
-                    index={item.index}
+                    index={i}
                     list={list}
                   />
                 )

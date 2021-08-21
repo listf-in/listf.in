@@ -110,71 +110,101 @@ const Board: FC<BoardProps> = ({
   const onDragEnd = (context) => {
     if (context.draggableId === context.destination.droppableId) {
       window.alert('You cannot add a board to itself!');
+    } else if (
+      context.destination.droppableId === context.source.droppableId &&
+      context.source.index === context.destination.index
+    ) {
+      return;
     } else {
       //update state to reflect new board order
-      //update this for moves within board or between boards
-      //full refactor of these equations to add index and new structure
+      let index;
+      let same = context.destination.droppableId === context.source.droppableId;
+      let up = context.destination.index > context.source.index;
+
+      for (let i = 0; i < board.listItems.length; i++) {
+        if (board.listItems[i].board.id === context.destination.droppableId) {
+          if (
+            board.listItems[i].board.listItems[context.destination.index - 1]
+          ) {
+            if (board.listItems[i].board.listItems[context.destination.index]) {
+              const above =
+                board.listItems[i].board.listItems[
+                  context.destination.index - 1
+                ].index;
+              const below =
+                board.listItems[i].board.listItems[context.destination.index]
+                  .index;
+              index = below - (below - above) / 2;
+            } else {
+              index =
+                board.listItems[i].board.listItems[
+                  context.destination.index - 1
+                ].index + 1;
+            }
+          } else {
+            if (board.listItems[i].board.listItems[context.destination.index]) {
+              index =
+                board.listItems[i].board.listItems[context.destination.index]
+                  .index - 1;
+            } else {
+              index = 0;
+            }
+          }
+          break;
+        }
+      }
+
       client
         .mutate({
-          //   mutation: gql`mutation{
-          //   updateBoard(input: {
-          //    filter: {
-          //       id: "${context.source.droppableId}"
-          //     },
-          //     remove: {
-          //       listItems: {
-          //         id: "${context.draggableId}"
-          //       }
-          //     }
-          // }){
-          //     board {
-          //       id
-          //       name
-          //     }
-          //   }
-          // updateBoard(input:
-          //           { filter: {
-          //             id: "${context.destination.droppableId}"
-          //           },
-          //           set: {
-          //             listItems: [
-          //               {
-          //                 id: "${context.draggableId}"
-          //               }
-          //             ]
-          //           }
-          //         }) {
-          //           board {
-          //             id
-          //             name
-          //             owner {
-          //               email
-          //               name
-          //             }
-          //             order
-          //             listItems {
-          //               id
-          //               name
-          //               owner {
-          //                 email
-          //                 name
-          //               }
-          //               order
-          //               listItems {
-          //                 id
-          //                 name
-          //                 owner {
-          //                   email
-          //                   name
-          //                 }
-          //               }
-          //             }
-          //           }
-          //         }
-          // }
-          // `,
+          mutation: gql`mutation{
+            updateBoard(input:
+              { filter: {
+                id: "${context.source.droppableId}"
+              },
+              remove: {
+                listItems: {
+                  id: "${context.draggableId}"
+                }
+              }
+          }){
+              board {
+                id
+                name
+              }
+            }
+          updateOrder(input:
+            { filter: {
+              id: "${context.draggableId}"
+            },
+            set: {
+              index: ${index}
+            }
+          }) {
+            order{
+              id
+            }
+          }
+          updateBoard(input:
+            { filter: {
+              id: "${context.destination.droppableId}"
+            },
+            set: {
+              listItems: [
+                {
+                  id: "${context.draggableId}"
+                }
+              ]
+            }
+          }) {
+            board {
+              id
+              name
+            }
+          }
+        }
+        `,
         })
-        .then((results) => {
+        .then(() => {
           boardFetch(board.id);
         })
         .catch((err) => {
@@ -182,6 +212,7 @@ const Board: FC<BoardProps> = ({
         });
     }
   };
+
   return (
     <div className='board'>
       <DepthBar
@@ -247,7 +278,6 @@ const Board: FC<BoardProps> = ({
                 addHistory={addHistory}
                 editing={editing}
                 setEditing={setEditing}
-                parentBoard={board}
                 container={list}
               />
             )
