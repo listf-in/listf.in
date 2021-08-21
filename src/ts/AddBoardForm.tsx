@@ -98,9 +98,10 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
       })
       .then((result) => {
         if (top) {
-          result = orderBoard(result.data.updateBoard.board[0]);
+          callback(e, orderBoard(result.data.updateBoard.board[0]));
+        } else {
+          callback(e, result);
         }
-        callback(e, result);
       })
       .catch((err) => {
         console.log(err);
