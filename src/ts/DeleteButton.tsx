@@ -19,8 +19,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({
   callback,
 }) => {
   const deleteFromParentBoard = (
-    e: React.MouseEvent<HTMLElement, MouseEvent>,
-    boardID: string
+    e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     e.stopPropagation();
     // full refactor to delete index container
@@ -34,7 +33,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({
             },
             remove: {
               listItems: {
-                id: "${boardID}"
+                id: "${container.id}"
               }
             }
 
@@ -58,7 +57,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({
   return (
     <i
       className='fas fa-window-close shareButtons deleteButton clickable'
-      onClick={(e) => deleteFromParentBoard(e, boardID)}
+      onClick={(e) => deleteFromParentBoard(e)}
     ></i>
   );
 };

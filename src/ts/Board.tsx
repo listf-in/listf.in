@@ -239,7 +239,7 @@ const Board: FC<BoardProps> = ({
               </div>
             ) : (
               <List
-                key={list.board.name}
+                key={list.board.id}
                 list={list.board}
                 boardFetch={boardFetch}
                 client={client}
