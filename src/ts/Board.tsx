@@ -182,7 +182,6 @@ const Board: FC<BoardProps> = ({
         });
     }
   };
-
   return (
     <div className='board'>
       <DepthBar
@@ -193,6 +192,7 @@ const Board: FC<BoardProps> = ({
       {editing === board.id ? (
         <AddBoardForm
           parent={board.id}
+          top={true}
           placeholder={'Change List Name'}
           client={client}
           callback={() => {
@@ -224,6 +224,7 @@ const Board: FC<BoardProps> = ({
               <div className='list addBoardForm'>
                 <AddBoardForm
                   parent={board.id}
+                  top={true}
                   placeholder={'Change List Name'}
                   client={client}
                   callback={() => {
@@ -252,11 +253,12 @@ const Board: FC<BoardProps> = ({
           <div className='list addBoardForm'>
             <AddBoardForm
               parent={board.id}
+              top={true}
               placeholder={'Add List'}
               client={client}
-              callback={(e, result) =>
-                setBoard(result.data.updateBoard.board[0])
-              }
+              callback={(e, result) => {
+                setBoard(result);
+              }}
               index={board.listItems.length}
             />
           </div>

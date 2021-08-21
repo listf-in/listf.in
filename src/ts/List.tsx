@@ -72,6 +72,7 @@ const List: FC<ListProps> = ({
                   <div className='listItem addBoardForm'>
                     <AddBoardForm
                       parent={list.id}
+                      top={false}
                       placeholder={'Change Board Name'}
                       client={client}
                       callback={refreshTopBoard}
@@ -79,6 +80,7 @@ const List: FC<ListProps> = ({
                       boardID={item.board.id}
                       setEditing={setEditing}
                       initValue={item.board.name}
+                      index={i}
                     />
                   </div>
                 ) : (
@@ -100,6 +102,7 @@ const List: FC<ListProps> = ({
           <div className='listItem addBoardForm'>
             <AddBoardForm
               parent={list.id}
+              top={false}
               placeholder={'Add List Item'}
               client={client}
               callback={refreshTopBoard}

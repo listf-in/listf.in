@@ -11,6 +11,8 @@ import {
 import { useAuth0 } from '@auth0/auth0-react';
 import Login from './Login';
 import Board from './Board';
+import orderBoard from './sharedMethods';
+import { Boardtype } from './Interfaces';
 
 type AppProps = {
   client: ApolloClient<NormalizedCacheObject>;
@@ -91,7 +93,8 @@ const App: FC<AppProps> = ({ client }) => {
         `,
       })
       .then((result) => {
-        setBoard(result.data.getBoard);
+        const board = orderBoard(result.data.getBoard);
+        setBoard(board);
         setEditing('');
       })
       .catch((err) => {

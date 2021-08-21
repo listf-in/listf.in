@@ -3,8 +3,11 @@ import { useAuth0 } from '@auth0/auth0-react';
 import React, { FC, useState } from 'react';
 import '../sass/styles.scss';
 
+import orderBoard from './sharedMethods';
+
 type AddBoardFormProps = {
   parent: string;
+  top: boolean;
   index: number;
   placeholder: string;
   client: ApolloClient<NormalizedCacheObject>;
@@ -17,6 +20,7 @@ type AddBoardFormProps = {
 
 const AddBoardForm: FC<AddBoardFormProps> = ({
   parent,
+  top,
   index,
   placeholder,
   client,
@@ -93,6 +97,9 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
               `,
       })
       .then((result) => {
+        if (top) {
+          result = orderBoard(result.data.updateBoard.board[0]);
+        }
         callback(e, result);
       })
       .catch((err) => {
