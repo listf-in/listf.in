@@ -64,12 +64,10 @@ const List: FC<ListProps> = ({
             {list.name}
           </h5>
           <DeleteButton
-            boardID={list.id}
             parentID={parent}
             client={client}
             callback={refreshTopBoard}
             container={container}
-            parent={parentBoard}
           />
           <EditButton boardID={list.id} callback={setEditing} />
           <div className='listContainer'>

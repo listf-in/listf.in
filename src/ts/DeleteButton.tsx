@@ -4,7 +4,6 @@ import '../sass/styles.scss';
 import { Ordertype } from './Interfaces';
 
 type DeleteButtonProps = {
-  boardID: string;
   parentID: string;
   container: Ordertype;
   callback: Function;
@@ -12,7 +11,6 @@ type DeleteButtonProps = {
 };
 
 const DeleteButton: FC<DeleteButtonProps> = ({
-  boardID,
   parentID,
   client,
   container,
@@ -22,8 +20,6 @@ const DeleteButton: FC<DeleteButtonProps> = ({
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     e.stopPropagation();
-    // full refactor to delete index container
-    //and change all proceding index's
     client
       .mutate({
         mutation: gql`mutation{

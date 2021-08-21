@@ -46,12 +46,10 @@ const ListItem: FC<ListItemProps> = ({
           <p className='listItemName'>{item.name}</p>
           <EditButton boardID={item.id} callback={setEditing} />
           <DeleteButton
-            boardID={item.id}
             client={client}
             callback={refreshTopBoard}
             parentID={parentID}
             container={container}
-            parent={list}
           />
         </div>
       )}
