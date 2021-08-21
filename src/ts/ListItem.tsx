@@ -40,7 +40,7 @@ const ListItem: FC<ListItemProps> = ({
           }}
         >
           <p className='listItemName'>{item.name}</p>
-          <EditButton client={client} boardID={item.id} callback={setEditing} />
+          <EditButton boardID={item.id} callback={setEditing} />
           <DeleteButton
             boardID={item.id}
             client={client}
