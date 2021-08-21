@@ -241,6 +241,7 @@ const Board: FC<BoardProps> = ({
               <List
                 key={list.board.name}
                 list={list.board}
+                index={list.index}
                 boardFetch={boardFetch}
                 client={client}
                 parent={board.id}

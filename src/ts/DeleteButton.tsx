@@ -1,10 +1,12 @@
 import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 import React, { FC } from 'react';
 import '../sass/styles.scss';
+import { Ordertype } from './Interfaces';
 
 type DeleteButtonProps = {
   boardID: string;
   parentID: string;
+  container: Ordertype;
   callback: Function;
   client: ApolloClient<NormalizedCacheObject>;
 };
@@ -13,6 +15,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({
   boardID,
   parentID,
   client,
+  container,
   callback,
 }) => {
   const deleteFromParentBoard = (
@@ -21,6 +24,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({
   ) => {
     e.stopPropagation();
     // full refactor to delete index container
+    //and change all proceding index's
     client
       .mutate({
         mutation: gql`mutation{
