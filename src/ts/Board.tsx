@@ -257,6 +257,7 @@ const Board: FC<BoardProps> = ({
               callback={(e, result) =>
                 setBoard(result.data.updateBoard.board[0])
               }
+              index={board.listItems.length}
             />
           </div>
         </div>
