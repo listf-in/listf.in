@@ -19,6 +19,7 @@ type ListProps = {
   container: Ordertype;
   editing: string;
   setEditing: Function;
+  parentBoard: Boardtype;
 };
 
 const List: FC<ListProps> = ({
@@ -30,6 +31,7 @@ const List: FC<ListProps> = ({
   addHistory,
   editing,
   setEditing,
+  parentBoard,
 }) => {
   const getBoard = (e: React.MouseEvent<HTMLElement>, id: string): void => {
     e.stopPropagation();
@@ -67,6 +69,7 @@ const List: FC<ListProps> = ({
             client={client}
             callback={refreshTopBoard}
             container={container}
+            parent={parentBoard}
           />
           <EditButton boardID={list.id} callback={setEditing} />
           <div className='listContainer'>
@@ -99,6 +102,7 @@ const List: FC<ListProps> = ({
                     addMiddleBoard={addMiddleBoard}
                     setEditing={setEditing}
                     index={item.index}
+                    list={list}
                   />
                 )
               )}
