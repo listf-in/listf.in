@@ -53,8 +53,11 @@ const Board: FC<BoardProps> = ({
                   set: {
                     listItems: [
                       {
-                        id: "${value}"
-                        home: false
+                        index: ${board.listItems.length}
+                        board:
+                        {
+                          id: "${value}"
+                        }
                       }
                     ]
                   }
@@ -68,17 +71,25 @@ const Board: FC<BoardProps> = ({
                     }
                     listItems {
                       id
-                      name
-                      owner {
-                        email
-                        name
-                      }
-                      listItems {
+                      index
+                      board {
                         id
                         name
                         owner {
                           email
                           name
+                        }
+                        listItems {
+                          id
+                          index
+                          board {
+                            id
+                            name
+                            owner {
+                              email
+                              name
+                            }
+                          }
                         }
                       }
                     }
@@ -97,25 +108,103 @@ const Board: FC<BoardProps> = ({
   };
 
   const onDragEnd = (context) => {
-    //delete from prev location
-    // debugger;
     if (context.draggableId === context.destination.droppableId) {
       window.alert('You cannot add a board to itself!');
+    } else if (
+      context.destination.droppableId === context.source.droppableId &&
+      context.source.index === context.destination.index
+    ) {
+      return;
     } else {
+      //update state to reflect new board order
+      let index;
+      const same =
+        context.destination.droppableId === context.source.droppableId;
+      const up = context.destination.index > context.source.index;
+      const mod = same && up ? 1 : 0;
+
+      for (let i = 0; i < board.listItems.length; i++) {
+        if (board.listItems[i].board.id === context.destination.droppableId) {
+          if (
+            board.listItems[i].board.listItems[
+              context.destination.index - 1 + mod
+            ]
+          ) {
+            if (
+              board.listItems[i].board.listItems[
+                context.destination.index + mod
+              ]
+            ) {
+              const above =
+                board.listItems[i].board.listItems[
+                  context.destination.index - 1 + mod
+                ].index;
+              const below =
+                board.listItems[i].board.listItems[
+                  context.destination.index + mod
+                ].index;
+              index = below - (below - above) / 2;
+            } else {
+              index =
+                board.listItems[i].board.listItems[
+                  context.destination.index - 1 + mod
+                ].index + 1;
+            }
+          } else {
+            if (board.listItems[i].board.listItems[context.destination.index]) {
+              index =
+                board.listItems[i].board.listItems[context.destination.index]
+                  .index - 1;
+            } else {
+              index = 0;
+            }
+          }
+          break;
+        }
+      }
+
       client
         .mutate({
           mutation: gql`mutation{
-          updateBoard(input: {
-           filter: {
-              id: "${context.source.droppableId}"
-            },
-            remove: {
-              listItems: {
-                id: "${context.draggableId}"
+            updateBoard(input:
+              { filter: {
+                id: "${context.source.droppableId}"
+              },
+              remove: {
+                listItems: {
+                  id: "${context.draggableId}"
+                }
+              }
+          }){
+              board {
+                id
+                name
               }
             }
-
-        }){
+          updateOrder(input:
+            { filter: {
+              id: "${context.draggableId}"
+            },
+            set: {
+              index: ${index}
+            }
+          }) {
+            order{
+              id
+            }
+          }
+          updateBoard(input:
+            { filter: {
+              id: "${context.destination.droppableId}"
+            },
+            set: {
+              listItems: [
+                {
+                  id: "${context.draggableId}"
+                }
+              ]
+            }
+          }) {
             board {
               id
               name
@@ -125,37 +214,7 @@ const Board: FC<BoardProps> = ({
         `,
         })
         .then(() => {
-          // debugger;
-          client
-            .mutate({
-              mutation: gql`mutation {
-                updateBoard(input:
-                  { filter: {
-                    id: "${context.destination.droppableId}"
-                  },
-                  set: {
-                    listItems: [
-                      {
-                        id: "${context.draggableId}"
-                      }
-                    ]
-
-                  }
-                }) {
-                  board {
-                    id
-                    name
-                  }
-                }
-            }
-              `,
-            })
-            .then(() => {
-              boardFetch(board.id);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+          boardFetch(board.id);
         })
         .catch((err) => {
           console.log(err);
@@ -173,6 +232,7 @@ const Board: FC<BoardProps> = ({
       {editing === board.id ? (
         <AddBoardForm
           parent={board.id}
+          top={true}
           placeholder={'Change List Name'}
           client={client}
           callback={() => {
@@ -182,6 +242,7 @@ const Board: FC<BoardProps> = ({
           initValue={board.name}
           setEditing={setEditing}
           boardID={board.id}
+          index={board.listItems.length}
         />
       ) : (
         board.name
@@ -199,41 +260,50 @@ const Board: FC<BoardProps> = ({
       <DragDropContext onDragEnd={onDragEnd}>
         <div id='mainBoard'>
           {board.listItems.map((list) =>
-            list.id === editing ? (
+            list.board.id === editing ? (
               <div className='list addBoardForm'>
                 <AddBoardForm
                   parent={board.id}
+                  top={true}
                   placeholder={'Change List Name'}
                   client={client}
                   callback={() => {
                     boardFetch(board.id);
                   }}
                   edit={true}
-                  initValue={list.name}
+                  initValue={list.board.name}
                   setEditing={setEditing}
-                  boardID={list.id}
+                  boardID={list.board.id}
+                  index={list.index}
                 />
               </div>
             ) : (
               <List
-                key={list.name}
-                list={list}
+                key={list.board.id}
+                list={list.board}
                 boardFetch={boardFetch}
                 client={client}
                 parent={board.id}
                 addHistory={addHistory}
                 editing={editing}
                 setEditing={setEditing}
+                container={list}
               />
             )
           )}
           <div className='list addBoardForm'>
             <AddBoardForm
               parent={board.id}
+              top={true}
               placeholder={'Add List'}
               client={client}
-              callback={(e, result) =>
-                setBoard(result.data.updateBoard.board[0])
+              callback={(e, result) => {
+                setBoard(result);
+              }}
+              index={
+                board.listItems.length
+                  ? board.listItems[board.listItems.length - 1].index + 1
+                  : 0
               }
             />
           </div>

@@ -6,7 +6,7 @@ import '../sass/styles.scss';
 import AddBoardForm from './AddBoardForm';
 import DeleteButton from './DeleteButton';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
-import { Boardtype } from './Interfaces';
+import { Boardtype, Ordertype } from './Interfaces';
 import EditButton from './EditButton';
 
 type ListProps = {
@@ -15,12 +15,14 @@ type ListProps = {
   parent: string;
   addHistory: Function;
   list: Boardtype;
+  container: Ordertype;
   editing: string;
   setEditing: Function;
 };
 
 const List: FC<ListProps> = ({
   list,
+  container,
   boardFetch,
   client,
   parent,
@@ -56,35 +58,38 @@ const List: FC<ListProps> = ({
             }}
             className='listTitle clickable'
           >
-            {list['name']}
+            {list.name}
           </h5>
           <DeleteButton
-            boardID={list.id}
             parentID={parent}
             client={client}
             callback={refreshTopBoard}
+            container={container}
           />
           <EditButton boardID={list.id} callback={setEditing} />
           <div className='listContainer'>
             {list['listItems'] &&
               list['listItems'].map((item, i) =>
-                item.id === editing ? (
+                item.board.id === editing ? (
                   <div className='listItem addBoardForm'>
                     <AddBoardForm
                       parent={list.id}
+                      top={false}
                       placeholder={'Change Board Name'}
                       client={client}
                       callback={refreshTopBoard}
                       edit={true}
-                      boardID={item.id}
+                      boardID={item.board.id}
                       setEditing={setEditing}
-                      initValue={item.name}
+                      initValue={item.board.name}
+                      index={item.index}
                     />
                   </div>
                 ) : (
                   <ListItem
-                    key={item['name']}
-                    item={item}
+                    key={item.board.id}
+                    item={item.board}
+                    container={item}
                     parentID={list.id}
                     getBoard={getBoard}
                     client={client}
@@ -92,6 +97,7 @@ const List: FC<ListProps> = ({
                     addMiddleBoard={addMiddleBoard}
                     setEditing={setEditing}
                     index={i}
+                    list={list}
                   />
                 )
               )}
@@ -100,9 +106,15 @@ const List: FC<ListProps> = ({
           <div className='listItem addBoardForm'>
             <AddBoardForm
               parent={list.id}
+              top={false}
               placeholder={'Add List Item'}
               client={client}
               callback={refreshTopBoard}
+              index={
+                list.listItems.length
+                  ? list.listItems[list.listItems.length - 1].index + 1
+                  : 0
+              }
             />
           </div>
         </div>

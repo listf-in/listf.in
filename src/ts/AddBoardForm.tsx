@@ -3,8 +3,12 @@ import { useAuth0 } from '@auth0/auth0-react';
 import React, { FC, useState } from 'react';
 import '../sass/styles.scss';
 
+import orderBoard from './sharedMethods';
+
 type AddBoardFormProps = {
   parent: string;
+  top: boolean;
+  index: number;
   placeholder: string;
   client: ApolloClient<NormalizedCacheObject>;
   callback: Function;
@@ -16,6 +20,8 @@ type AddBoardFormProps = {
 
 const AddBoardForm: FC<AddBoardFormProps> = ({
   parent,
+  top,
+  index,
   placeholder,
   client,
   callback,
@@ -38,14 +44,17 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
                   set: {
                     listItems: [
                       {
-                        name: "${formValue}",
-                        owner: {
-                          email: "${user.email}"
-                        },
-                        members: {
-                          email: "${user.email}"
-                        },
-                        home: false
+                        index: ${index || 0},
+                        board:{
+                          name: "${formValue}",
+                          owner: {
+                            email: "${user.email}"
+                          },
+                          members: {
+                            email: "${user.email}"
+                          },
+                          home: false
+                        }
                       }
                     ]
                   }
@@ -53,24 +62,32 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
                   board {
                     id
                     name
-                    home
                     owner {
                       email
                       name
                     }
+                    home
                     listItems {
                       id
-                      name
-                      owner {
-                        email
-                        name
-                      }
-                      listItems {
+                      index
+                      board {
                         id
                         name
                         owner {
                           email
                           name
+                        }
+                        listItems {
+                          id
+                          index
+                          board {
+                            id
+                            name
+                            owner {
+                              email
+                              name
+                            }
+                          }
                         }
                       }
                     }
@@ -80,7 +97,11 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
               `,
       })
       .then((result) => {
-        callback(e, result);
+        if (top) {
+          callback(e, orderBoard(result.data.updateBoard.board[0]));
+        } else {
+          callback(e, result);
+        }
       })
       .catch((err) => {
         console.log(err);

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const gql = require('graphql-tag');
 const ApolloClient = require('apollo-client').ApolloClient;
 const fetch = require('node-fetch');

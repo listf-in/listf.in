@@ -8,9 +8,7 @@ type EditButtonProps = {
 };
 
 const EditButton: FC<EditButtonProps> = ({ boardID, callback }) => {
-  const editBoardFormer = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const editBoardFormer = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.stopPropagation();
     callback(boardID);
   };

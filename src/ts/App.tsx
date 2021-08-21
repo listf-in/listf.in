@@ -11,6 +11,7 @@ import {
 import { useAuth0 } from '@auth0/auth0-react';
 import Login from './Login';
 import Board from './Board';
+import orderBoard from './sharedMethods';
 
 type AppProps = {
   client: ApolloClient<NormalizedCacheObject>;
@@ -23,6 +24,7 @@ const App: FC<AppProps> = ({ client }) => {
     id: '',
     owner: { id: '', name: '' },
     name: '',
+    home: true,
     members: [
       {
         id: '',
@@ -64,17 +66,25 @@ const App: FC<AppProps> = ({ client }) => {
               home
               listItems {
                 id
-                name
-                owner {
-                  email
-                  name
-                }
-                listItems {
+                index
+                board {
                   id
                   name
                   owner {
                     email
                     name
+                  }
+                  listItems {
+                    id
+                    index
+                    board {
+                      id
+                      name
+                      owner {
+                        email
+                        name
+                      }
+                    }
                   }
                 }
               }
@@ -83,7 +93,8 @@ const App: FC<AppProps> = ({ client }) => {
         `,
       })
       .then((result) => {
-        setBoard(result.data.getBoard);
+        const board = orderBoard(result.data.getBoard);
+        setBoard(board);
         setEditing('');
       })
       .catch((err) => {
@@ -111,26 +122,33 @@ const App: FC<AppProps> = ({ client }) => {
               homeBoard {
                 id
                 name
-                home
                 owner {
                   email
                   name
                 }
+                home
                 listItems {
                   id
-                  name
-                  owner {
-                    email
-                    name
-                  }
-                  listItems {
+                  index
+                  board {
                     id
                     name
                     owner {
                       email
                       name
                     }
-
+                    listItems {
+                      id
+                      index
+                      board {
+                        id
+                        name
+                        owner {
+                          email
+                          name
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -171,7 +189,14 @@ const App: FC<AppProps> = ({ client }) => {
                       }
                       listItems {
                         id
-                        name
+                        index
+                        board {
+                          id
+                          name
+                          owner {
+                            name
+                          }
+                        }
                       }
                     }
                   }

@@ -1,23 +1,23 @@
 import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 import React, { FC } from 'react';
 import '../sass/styles.scss';
+import { Ordertype } from './Interfaces';
 
 type DeleteButtonProps = {
-  boardID: string;
   parentID: string;
+  container: Ordertype;
   callback: Function;
   client: ApolloClient<NormalizedCacheObject>;
 };
 
 const DeleteButton: FC<DeleteButtonProps> = ({
-  boardID,
   parentID,
   client,
+  container,
   callback,
 }) => {
   const deleteFromParentBoard = (
-    e: React.MouseEvent<HTMLElement, MouseEvent>,
-    boardID: string
+    e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     e.stopPropagation();
     client
@@ -29,7 +29,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({
             },
             remove: {
               listItems: {
-                id: "${boardID}"
+                id: "${container.id}"
               }
             }
 
@@ -53,7 +53,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({
   return (
     <i
       className='fas fa-window-close shareButtons deleteButton clickable'
-      onClick={(e) => deleteFromParentBoard(e, boardID)}
+      onClick={(e) => deleteFromParentBoard(e)}
     ></i>
   );
 };

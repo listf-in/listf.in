@@ -4,7 +4,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import '../sass/styles.scss';
 import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
-import { Boardtype } from './Interfaces';
+import { Boardtype, Ordertype } from './Interfaces';
 
 type ListItemProps = {
   getBoard: Function;
@@ -12,12 +12,15 @@ type ListItemProps = {
   refreshTopBoard: Function;
   addMiddleBoard: Function;
   item: Boardtype;
+  list: Boardtype;
+  container: Ordertype;
   parentID: string;
   setEditing: Function;
   index: number;
 };
 const ListItem: FC<ListItemProps> = ({
   item,
+  container,
   parentID,
   getBoard,
   client,
@@ -27,7 +30,7 @@ const ListItem: FC<ListItemProps> = ({
   index,
 }) => {
   return (
-    <Draggable draggableId={item.id} index={index} className=' clickable'>
+    <Draggable draggableId={container.id} index={index} className=' clickable'>
       {(provided) => (
         <div
           {...provided.draggableProps}
@@ -40,12 +43,12 @@ const ListItem: FC<ListItemProps> = ({
           }}
         >
           <p className='listItemName'>{item.name}</p>
-          <EditButton client={client} boardID={item.id} callback={setEditing} />
+          <EditButton boardID={item.id} callback={setEditing} />
           <DeleteButton
-            boardID={item.id}
             client={client}
             callback={refreshTopBoard}
             parentID={parentID}
+            container={container}
           />
         </div>
       )}
