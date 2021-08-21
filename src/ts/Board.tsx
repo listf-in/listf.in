@@ -118,27 +118,36 @@ const Board: FC<BoardProps> = ({
     } else {
       //update state to reflect new board order
       let index;
-      let same = context.destination.droppableId === context.source.droppableId;
-      let up = context.destination.index > context.source.index;
+      const same =
+        context.destination.droppableId === context.source.droppableId;
+      const up = context.destination.index > context.source.index;
+      const mod = same && up ? 1 : 0;
 
       for (let i = 0; i < board.listItems.length; i++) {
         if (board.listItems[i].board.id === context.destination.droppableId) {
           if (
-            board.listItems[i].board.listItems[context.destination.index - 1]
+            board.listItems[i].board.listItems[
+              context.destination.index - 1 + mod
+            ]
           ) {
-            if (board.listItems[i].board.listItems[context.destination.index]) {
+            if (
+              board.listItems[i].board.listItems[
+                context.destination.index + mod
+              ]
+            ) {
               const above =
                 board.listItems[i].board.listItems[
-                  context.destination.index - 1
+                  context.destination.index - 1 + mod
                 ].index;
               const below =
-                board.listItems[i].board.listItems[context.destination.index]
-                  .index;
+                board.listItems[i].board.listItems[
+                  context.destination.index + mod
+                ].index;
               index = below - (below - above) / 2;
             } else {
               index =
                 board.listItems[i].board.listItems[
-                  context.destination.index - 1
+                  context.destination.index - 1 + mod
                 ].index + 1;
             }
           } else {
