@@ -17,19 +17,23 @@ type Subscription {
   BoardUpdate(id: ID!): Board
 }
 
-type Board {
+type Board @withSubscription {
   id: ID!
   name: String!
-  owner: User!
-  members: [User]
-  listItems: [Board]
-  order: [String]
-  parents: [Board]
+  owner: User! @hasInverse(field: ownedBoards)
+  members: [User] @hasInverse(field: boards)
+  listItems: [Order]
   labels: [Label]
-  start: String
-  end: String
+  start: DateTime
+  end: DateTime
   theme: String
   home: Boolean
+}
+
+type Order {
+  id: ID!
+  index: Int
+  board: Board!
 }
 
 type Label {
@@ -39,21 +43,21 @@ type Label {
 }
 
 type User {
-  name: String!
-  email: String!
+  name: String! @search
+  email: String! @id
   avatar: String
-  friends: [User]
-  teams: [Team]
-  boards: [Board]
-  ownedBoards: [Board]
-  ownedTeams: [Team]
+  friends: [User] @hasInverse(field: friends)
+  teams: [Team] @hasInverse(field: members)
+  boards: [Board] @hasInverse(field: members)
+  ownedBoards: [Board] @hasInverse(field: owner)
+  ownedTeams: [Team] @hasInverse(field: owner)
   homeBoard: Board!
 }
 
 type Team {
   id: ID!
   name: String!
-  owner: User!
-  members: [User]
+  owner: User! @hasInverse(field: ownedTeams)
+  members: [User] @hasInverse(field: teams)
 }
-`;
+`
