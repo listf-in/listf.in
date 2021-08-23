@@ -1,5 +1,6 @@
 import React, { FC, MouseEventHandler } from 'react';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 
 import '../sass/styles.scss';
 import List from './List';
@@ -7,7 +8,6 @@ import AddBoardForm from './AddBoardForm';
 import DepthBar from './DepthBar';
 import ShareButton from './ShareButton';
 import AddShareButton from './AddShareButton';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 import { Boardtype } from './Interfaces';
 import EditButton from './EditButton';
 
@@ -258,56 +258,71 @@ const Board: FC<BoardProps> = ({
       {board.home ? null : <ShareButton id={board.id} />}
       <AddShareButton addToTopBoard={addToTopBoard} />
       <DragDropContext onDragEnd={onDragEnd}>
-        <div id='mainBoard'>
-          {board.listItems.map((list) =>
-            list.board.id === editing ? (
+        <Droppable
+          droppableId={board.id}
+          direction={'horizontal'}
+          type={'column'}
+        >
+          {(provided) => (
+            <div
+              id='mainBoard'
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {board.listItems.map((list, i) =>
+                list.board.id === editing ? (
+                  <div className='list addBoardForm'>
+                    <AddBoardForm
+                      parent={board.id}
+                      top={true}
+                      placeholder={'Change List Name'}
+                      client={client}
+                      callback={() => {
+                        boardFetch(board.id);
+                      }}
+                      edit={true}
+                      initValue={list.board.name}
+                      setEditing={setEditing}
+                      boardID={list.board.id}
+                      index={list.index}
+                    />
+                  </div>
+                ) : (
+                  <List
+                    key={list.board.id}
+                    list={list.board}
+                    boardFetch={boardFetch}
+                    client={client}
+                    parent={board.id}
+                    addHistory={addHistory}
+                    editing={editing}
+                    setEditing={setEditing}
+                    container={list}
+                    index={i}
+                  />
+                )
+              )}
+              {provided.placeholder}
+
               <div className='list addBoardForm'>
                 <AddBoardForm
                   parent={board.id}
                   top={true}
-                  placeholder={'Change List Name'}
+                  placeholder={'Add List'}
                   client={client}
-                  callback={() => {
-                    boardFetch(board.id);
+                  callback={(e, result) => {
+                    setBoard(result);
                   }}
-                  edit={true}
-                  initValue={list.board.name}
-                  setEditing={setEditing}
-                  boardID={list.board.id}
-                  index={list.index}
+                  index={
+                    board.listItems.length
+                      ? board.listItems[board.listItems.length - 1].index + 1
+                      : 0
+                  }
                 />
               </div>
-            ) : (
-              <List
-                key={list.board.id}
-                list={list.board}
-                boardFetch={boardFetch}
-                client={client}
-                parent={board.id}
-                addHistory={addHistory}
-                editing={editing}
-                setEditing={setEditing}
-                container={list}
-              />
-            )
+            </div>
           )}
-          <div className='list addBoardForm'>
-            <AddBoardForm
-              parent={board.id}
-              top={true}
-              placeholder={'Add List'}
-              client={client}
-              callback={(e, result) => {
-                setBoard(result);
-              }}
-              index={
-                board.listItems.length
-                  ? board.listItems[board.listItems.length - 1].index + 1
-                  : 0
-              }
-            />
-          </div>
-        </div>
+        </Droppable>
       </DragDropContext>
     </div>
   );
