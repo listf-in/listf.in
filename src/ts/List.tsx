@@ -46,14 +46,14 @@ const List: FC<ListProps> = ({
   };
 
   return (
-    <Draggable draggableId={list.id} index={index}>
+    <Draggable draggableId={container.id} index={index}>
       {(provided) => (
         <div
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <Droppable droppableId={list.id}>
+          <Droppable droppableId={list.id} type={'item'}>
             {(provided) => (
               <div
                 {...provided.droppableProps}

@@ -30,12 +30,7 @@ const ListItem: FC<ListItemProps> = ({
   index,
 }) => {
   return (
-    <Draggable
-      draggableId={container.id}
-      index={index}
-      className=' clickable'
-      type={item}
-    >
+    <Draggable draggableId={container.id} index={index} className=' clickable'>
       {(provided) => (
         <div
           {...provided.draggableProps}

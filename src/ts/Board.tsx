@@ -123,49 +123,52 @@ const Board: FC<BoardProps> = ({
       const up = context.destination.index > context.source.index;
       const mod = same && up ? 1 : 0;
 
-      for (let i = 0; i < board.listItems.length; i++) {
-        if (board.listItems[i].board.id === context.destination.droppableId) {
-          if (
-            board.listItems[i].board.listItems[
-              context.destination.index - 1 + mod
-            ]
-          ) {
+      if (context.type === 'item') {
+        for (let i = 0; i < board.listItems.length; i++) {
+          if (board.listItems[i].board.id === context.destination.droppableId) {
             if (
               board.listItems[i].board.listItems[
-                context.destination.index + mod
+                context.destination.index - 1 + mod
               ]
             ) {
-              const above =
-                board.listItems[i].board.listItems[
-                  context.destination.index - 1 + mod
-                ].index;
-              const below =
+              if (
                 board.listItems[i].board.listItems[
                   context.destination.index + mod
-                ].index;
-              index = below - (below - above) / 2;
+                ]
+              ) {
+                const above =
+                  board.listItems[i].board.listItems[
+                    context.destination.index - 1 + mod
+                  ].index;
+                const below =
+                  board.listItems[i].board.listItems[
+                    context.destination.index + mod
+                  ].index;
+                index = below - (below - above) / 2;
+              } else {
+                index =
+                  board.listItems[i].board.listItems[
+                    context.destination.index - 1 + mod
+                  ].index + 1;
+              }
             } else {
-              index =
-                board.listItems[i].board.listItems[
-                  context.destination.index - 1 + mod
-                ].index + 1;
-            }
-          } else {
-            if (board.listItems[i].board.listItems[context.destination.index]) {
-              index =
+              if (
                 board.listItems[i].board.listItems[context.destination.index]
-                  .index - 1;
-            } else {
-              index = 0;
+              ) {
+                index =
+                  board.listItems[i].board.listItems[context.destination.index]
+                    .index - 1;
+              } else {
+                index = 0;
+              }
             }
+            break;
           }
-          break;
         }
-      }
 
-      client
-        .mutate({
-          mutation: gql`mutation{
+        client
+          .mutate({
+            mutation: gql`mutation{
             updateBoard(input:
               { filter: {
                 id: "${context.source.droppableId}"
@@ -212,13 +215,58 @@ const Board: FC<BoardProps> = ({
           }
         }
         `,
-        })
-        .then(() => {
-          boardFetch(board.id);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+          })
+          .then(() => {
+            boardFetch(board.id);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        if (board.listItems[context.destination.index - 1 + mod]) {
+          if (board.listItems[context.destination.index + mod]) {
+            const above =
+              board.listItems[context.destination.index - 1 + mod].index;
+            const below =
+              board.listItems[context.destination.index + mod].index;
+            index = below - (below - above) / 2;
+          } else {
+            index =
+              board.listItems[context.destination.index - 1 + mod].index + 1;
+          }
+        } else {
+          if (board.listItems[context.destination.index]) {
+            index = board.listItems[context.destination.index].index - 1;
+          } else {
+            index = 0;
+          }
+        }
+
+        client
+          .mutate({
+            mutation: gql`mutation{
+              updateOrder(input:
+                { filter: {
+                  id: "${context.draggableId}"
+                },
+                set: {
+                  index: ${index}
+                }
+              }) {
+                order{
+                  id
+                }
+              }
+            }
+            `,
+          })
+          .then(() => {
+            boardFetch(board.id);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     }
   };
 
@@ -261,7 +309,7 @@ const Board: FC<BoardProps> = ({
         <Droppable
           droppableId={board.id}
           direction={'horizontal'}
-          type={'column'}
+          type={'list'}
         >
           {(provided) => (
             <div
