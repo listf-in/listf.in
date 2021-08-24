@@ -35,6 +35,7 @@ const port = process.env.PORT || 3080;
     { schema, execute, subscribe },
     { server: httpServer, path: server.graphqlPath }
   );
+
   app.use(express.json());
   app.use('/', express.static(path.join(__dirname, '../build')));
   app.use(apollo);
