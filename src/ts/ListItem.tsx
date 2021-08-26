@@ -9,7 +9,6 @@ import { Boardtype, Ordertype } from './Interfaces';
 type ListItemProps = {
   setActiveBoard: Function;
   client: ApolloClient<NormalizedCacheObject>;
-  refreshTopBoard: Function;
   addMiddleBoard: Function;
   item: Boardtype;
   list: Boardtype;
@@ -24,7 +23,6 @@ const ListItem: FC<ListItemProps> = ({
   parentID,
   setActiveBoard,
   client,
-  refreshTopBoard,
   addMiddleBoard,
   setEditing,
   index,
@@ -46,7 +44,6 @@ const ListItem: FC<ListItemProps> = ({
           <EditButton boardID={item.id} callback={setEditing} />
           <DeleteButton
             client={client}
-            callback={refreshTopBoard}
             parentID={parentID}
             container={container}
           />

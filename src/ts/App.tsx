@@ -2,9 +2,6 @@ import React, { FC, useState, useEffect } from 'react';
 import '../sass/styles.scss';
 import {
   ApolloClient,
-  // InMemoryCache,
-  // ApolloProvider,
-  // useQuery,
   gql,
   NormalizedCacheObject,
   useSubscription,
@@ -61,46 +58,10 @@ const App: FC<AppProps> = ({ client }) => {
               name
               email
               avatar
-              boards {
-                id
-                name
-                owner {
-                  email
-                  name
-                }
-              }
               homeBoard {
                 id
-                name
-                owner {
-                  email
-                  name
-                }
-                home
-                listItems {
-                  id
-                  index
-                  board {
-                    id
-                    name
-                    owner {
-                      email
-                      name
-                    }
-                    listItems {
-                      id
-                      index
-                      board {
-                        id
-                        name
-                        owner {
-                          email
-                          name
-                        }
-                      }
-                    }
-                  }
-                }
+
+
               }
             }
           }
@@ -133,21 +94,6 @@ const App: FC<AppProps> = ({ client }) => {
                     avatar
                     homeBoard {
                       id
-                      name
-                      owner	{
-                        name
-                      }
-                      listItems {
-                        id
-                        index
-                        board {
-                          id
-                          name
-                          owner {
-                            name
-                          }
-                        }
-                      }
                     }
                   }
                 }
@@ -223,7 +169,6 @@ const App: FC<AppProps> = ({ client }) => {
         <Board
           client={client}
           board={board}
-          setBoard={setBoard}
           setActiveBoard={setActiveBoard}
           addHistory={addHistory}
           goBack={goBack}

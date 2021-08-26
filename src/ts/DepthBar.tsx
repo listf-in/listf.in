@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import '../sass/styles.scss';
+import { Boardtype } from './Interfaces';
 
 type depthBarProps = {
-  prevBoardList: Array<object>;
+  prevBoardList: Boardtype[];
   setActiveBoard: Function;
   setPrevBoardList: Function;
 };
@@ -28,7 +29,7 @@ const DepthBar: FC<depthBarProps> = ({
       </span>
     );
   });
-  return depthBarItems;
+  return <>{depthBarItems}</>;
 };
 
 export default DepthBar;

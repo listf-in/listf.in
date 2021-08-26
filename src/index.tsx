@@ -6,25 +6,11 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  useQuery,
-  gql,
   split,
   HttpLink,
 } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
-
-// const client = new ApolloClient({
-//   uri: '/',
-//   cache: new InMemoryCache(),
-// });
-
-// const subClient = new WebSocketLink({
-//   uri: 'ws://144.126.217.146:8080/graphql',
-//   options: {
-//     reconnect: true,
-//   },
-// });
 
 const httpLink = new HttpLink({
   uri: '/',
