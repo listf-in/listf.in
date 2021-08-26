@@ -20,7 +20,7 @@ type AppProps = {
 
 const App: FC<AppProps> = ({ client }) => {
   const { user } = useAuth0();
-  const [homeBoard, setHomeBoard] = useState('');
+  const [activeBoard, setActiveBoard] = useState('');
 
   const [board, setBoard] = useState({
     id: '',
@@ -44,64 +44,12 @@ const App: FC<AppProps> = ({ client }) => {
     e.preventDefault();
     const bBoard = prevBoardList[prevBoardList.length - 1];
     setPrevBoardList(prevBoardList.slice(0, prevBoardList.length - 1));
-    boardFetch(bBoard.id);
+    setActiveBoard(bBoard.id);
   };
 
   const addHistory = (brd?: object) => {
     const newHist = brd ? [board, brd] : [board];
     setPrevBoardList(prevBoardList.concat(newHist));
-  };
-
-  const boardFetch = (id: string): void => {
-    // client.cache.reset();
-    // client
-    //   .query({
-    //     query: gql`
-    //       query {
-    //         getBoard(id: "${id}") {
-    //           id
-    //           name
-    //           owner {
-    //             email
-    //             name
-    //           }
-    //           home
-    //           listItems {
-    //             id
-    //             index
-    //             board {
-    //               id
-    //               name
-    //               owner {
-    //                 email
-    //                 name
-    //               }
-    //               listItems {
-    //                 id
-    //                 index
-    //                 board {
-    //                   id
-    //                   name
-    //                   owner {
-    //                     email
-    //                     name
-    //                   }
-    //                 }
-    //               }
-    //             }
-    //           }
-    //         }
-    //       }
-    //     `,
-    //   })
-    //   .then((result) => {
-    //     const board = orderBoard(result.data.getBoard);
-    //     setBoard(board);
-    //     setEditing('');
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   };
 
   const userFetch = (email: string): void => {
@@ -159,8 +107,7 @@ const App: FC<AppProps> = ({ client }) => {
         `,
       })
       .then((result) => {
-        setHomeBoard(result.data.getUser.homeBoard.id);
-        // setBoard(result.data.getUser.homeBoard);
+        setActiveBoard(result.data.getUser.homeBoard.id);
       })
       .catch((err) => {
         if (err.message === `Cannot read property 'homeBoard' of null`) {
@@ -208,7 +155,7 @@ const App: FC<AppProps> = ({ client }) => {
               `,
             })
             .then((result) => {
-              // setBoard(result.data.addUser.user[0].homeBoard);
+              setActiveBoard(result.data.addUser.user[0].homeBoard.id);
             })
             .catch((err) => {
               console.log(err);
@@ -225,7 +172,7 @@ const App: FC<AppProps> = ({ client }) => {
 
   const boardSub = gql`
     subscription {
-      getBoard(id: "${homeBoard}") {
+      getBoard(id: "${activeBoard}") {
         id
         name
         owner {
@@ -277,7 +224,7 @@ const App: FC<AppProps> = ({ client }) => {
           client={client}
           board={board}
           setBoard={setBoard}
-          boardFetch={boardFetch}
+          setActiveBoard={setActiveBoard}
           addHistory={addHistory}
           goBack={goBack}
           prevBoardList={prevBoardList}

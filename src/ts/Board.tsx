@@ -12,7 +12,7 @@ import { Boardtype } from './Interfaces';
 import EditButton from './EditButton';
 
 type BoardProps = {
-  boardFetch: Function;
+  setActiveBoard: Function;
   client: ApolloClient<NormalizedCacheObject>;
   setBoard: Function;
   addHistory: Function;
@@ -26,7 +26,7 @@ type BoardProps = {
 
 const Board: FC<BoardProps> = ({
   board,
-  boardFetch,
+  setActiveBoard,
   client,
   setBoard,
   addHistory,
@@ -99,7 +99,7 @@ const Board: FC<BoardProps> = ({
               `,
         })
         .then((result) => {
-          setBoard(result.data.updateBoard.board[0]);
+          setActiveBoard(result.data.updateBoard.board[0].id);
         })
         .catch((err) => {
           console.log(err);
@@ -217,7 +217,7 @@ const Board: FC<BoardProps> = ({
         `,
           })
           .then(() => {
-            boardFetch(board.id);
+            setActiveBoard(board.id);
           })
           .catch((err) => {
             console.log(err);
@@ -261,7 +261,7 @@ const Board: FC<BoardProps> = ({
             `,
           })
           .then(() => {
-            boardFetch(board.id);
+            setActiveBoard(board.id);
           })
           .catch((err) => {
             console.log(err);
@@ -274,7 +274,7 @@ const Board: FC<BoardProps> = ({
     <div className='board'>
       <DepthBar
         prevBoardList={prevBoardList}
-        boardFetch={boardFetch}
+        setActiveBoard={setActiveBoard}
         setPrevBoardList={setPrevBoardList}
       />
       {editing === board.id ? (
@@ -284,7 +284,7 @@ const Board: FC<BoardProps> = ({
           placeholder={'Change List Name'}
           client={client}
           callback={() => {
-            boardFetch(board.id);
+            setActiveBoard(board.id);
           }}
           edit={true}
           initValue={board.name}
@@ -326,7 +326,7 @@ const Board: FC<BoardProps> = ({
                       placeholder={'Change List Name'}
                       client={client}
                       callback={() => {
-                        boardFetch(board.id);
+                        setActiveBoard(board.id);
                       }}
                       edit={true}
                       initValue={list.board.name}
@@ -339,7 +339,7 @@ const Board: FC<BoardProps> = ({
                   <List
                     key={list.board.id}
                     list={list.board}
-                    boardFetch={boardFetch}
+                    setActiveBoard={setActiveBoard}
                     client={client}
                     parent={board.id}
                     addHistory={addHistory}

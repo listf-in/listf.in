@@ -7,7 +7,7 @@ import EditButton from './EditButton';
 import { Boardtype, Ordertype } from './Interfaces';
 
 type ListItemProps = {
-  getBoard: Function;
+  setActiveBoard: Function;
   client: ApolloClient<NormalizedCacheObject>;
   refreshTopBoard: Function;
   addMiddleBoard: Function;
@@ -22,7 +22,7 @@ const ListItem: FC<ListItemProps> = ({
   item,
   container,
   parentID,
-  getBoard,
+  setActiveBoard,
   client,
   refreshTopBoard,
   addMiddleBoard,
@@ -37,9 +37,9 @@ const ListItem: FC<ListItemProps> = ({
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           className='listItem clickable'
-          onClick={(e) => {
+          onClick={() => {
             addMiddleBoard();
-            getBoard(e, item.id);
+            setActiveBoard(item.id);
           }}
         >
           <p className='listItemName'>{item.name}</p>

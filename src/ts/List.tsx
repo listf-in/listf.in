@@ -10,7 +10,7 @@ import { Boardtype, Ordertype } from './Interfaces';
 import EditButton from './EditButton';
 
 type ListProps = {
-  boardFetch: Function;
+  setActiveBoard: Function;
   client: ApolloClient<NormalizedCacheObject>;
   parent: string;
   addHistory: Function;
@@ -24,7 +24,7 @@ type ListProps = {
 const List: FC<ListProps> = ({
   list,
   container,
-  boardFetch,
+  setActiveBoard,
   client,
   parent,
   addHistory,
@@ -34,7 +34,7 @@ const List: FC<ListProps> = ({
 }) => {
   const getBoard = (e: React.MouseEvent<HTMLElement>, id: string): void => {
     e.stopPropagation();
-    boardFetch(id);
+    setActiveBoard(id);
   };
 
   const refreshTopBoard = (e: React.MouseEvent<HTMLElement>) => {
@@ -100,7 +100,7 @@ const List: FC<ListProps> = ({
                           item={item.board}
                           container={item}
                           parentID={list.id}
-                          getBoard={getBoard}
+                          setActiveBoard={setActiveBoard}
                           client={client}
                           refreshTopBoard={refreshTopBoard}
                           addMiddleBoard={addMiddleBoard}
