@@ -7,6 +7,7 @@ import {
   // useQuery,
   gql,
   NormalizedCacheObject,
+  useSubscription,
 } from '@apollo/client';
 import { useAuth0 } from '@auth0/auth0-react';
 import Login from './Login';
@@ -219,6 +220,47 @@ const App: FC<AppProps> = ({ client }) => {
       userFetch(user.email);
     }
   }, [user]);
+
+  const boardSub = gql`
+    subscription {
+      getBoard(id: "${board.id}") {
+        id
+        name
+        owner {
+          email
+          name
+        }
+        home
+        listItems {
+          id
+          index
+          board {
+            id
+            name
+            owner {
+              email
+              name
+            }
+            listItems {
+              id
+              index
+              board {
+                id
+                name
+                owner {
+                  email
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const { data, loading } = useSubscription(boardSub, {});
+  console.log(data);
 
   return (
     <>

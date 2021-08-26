@@ -67,7 +67,6 @@ const mutate = async (req, res) => {
 };
 
 const apollo = async (req, res, next) => {
-  debugger;
   if (req.body.query) {
     if (req.body.query.startsWith('mutation')) {
       await mutate(req, res);
