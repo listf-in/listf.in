@@ -1,17 +1,17 @@
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 import React, { FC } from 'react';
 import '../sass/styles.scss';
+import { Boardtype } from './Interfaces';
 
 type depthBarProps = {
-  prevBoardList: Array<object>;
-  boardFetch: Function;
+  prevBoardList: Boardtype[];
+  setActiveBoard: Function;
   setPrevBoardList: Function;
 };
 
 const DepthBar: FC<depthBarProps> = ({
   prevBoardList,
   setPrevBoardList,
-  boardFetch,
+  setActiveBoard,
 }) => {
   const depthBarItems = prevBoardList.map((depth) => {
     return (
@@ -19,7 +19,7 @@ const DepthBar: FC<depthBarProps> = ({
         className={'clickable depthBarItem'}
         key={depth.id}
         onClick={() => {
-          boardFetch(depth.id);
+          setActiveBoard(depth.id);
           setPrevBoardList(
             prevBoardList.slice(0, prevBoardList.indexOf(depth))
           );
@@ -29,7 +29,7 @@ const DepthBar: FC<depthBarProps> = ({
       </span>
     );
   });
-  return depthBarItems;
+  return <>{depthBarItems}</>;
 };
 
 export default DepthBar;

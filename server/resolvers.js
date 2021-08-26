@@ -9,4 +9,9 @@ module.exports = {
   Mutation: {
     //
   },
+  Subscription: {
+    BoardUpdate(a, b, c, d) {
+      debugger;
+    },
+  },
 };

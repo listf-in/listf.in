@@ -3,15 +3,11 @@ import { useAuth0 } from '@auth0/auth0-react';
 import React, { FC, useState } from 'react';
 import '../sass/styles.scss';
 
-import orderBoard from './sharedMethods';
-
 type AddBoardFormProps = {
   parent: string;
-  top: boolean;
   index: number;
   placeholder: string;
   client: ApolloClient<NormalizedCacheObject>;
-  callback: Function;
   edit?: boolean;
   boardID?: string;
   setEditing?: Function;
@@ -20,11 +16,9 @@ type AddBoardFormProps = {
 
 const AddBoardForm: FC<AddBoardFormProps> = ({
   parent,
-  top,
   index,
   placeholder,
   client,
-  callback,
   edit = false,
   boardID,
   setEditing,
@@ -33,7 +27,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
   const [formValue, setFormValue] = useState(initValue);
   const { user } = useAuth0();
 
-  const addToParentBoard = (e: React.FormEvent<HTMLFormElement>) => {
+  const addToParentBoard = () => {
     client
       .mutate({
         mutation: gql`mutation {
@@ -61,55 +55,19 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
                 }) {
                   board {
                     id
-                    name
-                    owner {
-                      email
-                      name
-                    }
-                    home
-                    listItems {
-                      id
-                      index
-                      board {
-                        id
-                        name
-                        owner {
-                          email
-                          name
-                        }
-                        listItems {
-                          id
-                          index
-                          board {
-                            id
-                            name
-                            owner {
-                              email
-                              name
-                            }
-                          }
-                        }
-                      }
-                    }
                   }
                 }
               }
               `,
       })
-      .then((result) => {
-        if (top) {
-          callback(e, orderBoard(result.data.updateBoard.board[0]));
-        } else {
-          callback(e, result);
-        }
-      })
+      .then(() => {})
       .catch((err) => {
         console.log(err);
       });
     setFormValue('');
   };
 
-  const editBoard = (e: React.FormEvent<HTMLFormElement>) => {
+  const editBoard = () => {
     client
       .mutate({
         mutation: gql`mutation{
@@ -129,7 +87,6 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
         `,
       })
       .then(() => {
-        callback(e);
         setEditing('');
       })
       .catch((err) => {
@@ -140,9 +97,9 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
   const onSubmitFilter = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formValue.length > 0 && edit) {
-      editBoard(e);
+      editBoard();
     } else if (formValue.length > 0) {
-      addToParentBoard(e);
+      addToParentBoard();
     }
   };
 

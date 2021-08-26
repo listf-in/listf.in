@@ -12,11 +12,10 @@ import { Boardtype } from './Interfaces';
 import EditButton from './EditButton';
 
 type BoardProps = {
-  boardFetch: Function;
+  setActiveBoard: Function;
   client: ApolloClient<NormalizedCacheObject>;
-  setBoard: Function;
   addHistory: Function;
-  prevBoardList: Array<object>;
+  prevBoardList: Boardtype[];
   goBack: MouseEventHandler<HTMLButtonElement>;
   setPrevBoardList: Function;
   board: Boardtype;
@@ -26,9 +25,8 @@ type BoardProps = {
 
 const Board: FC<BoardProps> = ({
   board,
-  boardFetch,
+  setActiveBoard,
   client,
-  setBoard,
   addHistory,
   prevBoardList,
   goBack,
@@ -64,42 +62,14 @@ const Board: FC<BoardProps> = ({
                 }) {
                   board {
                     id
-                    name
-                    owner {
-                      email
-                      name
-                    }
-                    listItems {
-                      id
-                      index
-                      board {
-                        id
-                        name
-                        owner {
-                          email
-                          name
-                        }
-                        listItems {
-                          id
-                          index
-                          board {
-                            id
-                            name
-                            owner {
-                              email
-                              name
-                            }
-                          }
-                        }
-                      }
-                    }
                   }
                 }
               }
               `,
         })
-        .then((result) => {
-          setBoard(result.data.updateBoard.board[0]);
+        .then(() => {
+          //error handling
+          // setActiveBoard(result.data.updateBoard.board[0].id);
         })
         .catch((err) => {
           console.log(err);
@@ -217,7 +187,8 @@ const Board: FC<BoardProps> = ({
         `,
           })
           .then(() => {
-            boardFetch(board.id);
+            //error handling
+            // setActiveBoard(board.id);
           })
           .catch((err) => {
             console.log(err);
@@ -261,7 +232,8 @@ const Board: FC<BoardProps> = ({
             `,
           })
           .then(() => {
-            boardFetch(board.id);
+            //error handling
+            // setActiveBoard(board.id);
           })
           .catch((err) => {
             console.log(err);
@@ -274,18 +246,14 @@ const Board: FC<BoardProps> = ({
     <div className='board'>
       <DepthBar
         prevBoardList={prevBoardList}
-        boardFetch={boardFetch}
+        setActiveBoard={setActiveBoard}
         setPrevBoardList={setPrevBoardList}
       />
       {editing === board.id ? (
         <AddBoardForm
           parent={board.id}
-          top={true}
           placeholder={'Change List Name'}
           client={client}
-          callback={() => {
-            boardFetch(board.id);
-          }}
           edit={true}
           initValue={board.name}
           setEditing={setEditing}
@@ -322,12 +290,8 @@ const Board: FC<BoardProps> = ({
                   <div className='list addBoardForm'>
                     <AddBoardForm
                       parent={board.id}
-                      top={true}
                       placeholder={'Change List Name'}
                       client={client}
-                      callback={() => {
-                        boardFetch(board.id);
-                      }}
                       edit={true}
                       initValue={list.board.name}
                       setEditing={setEditing}
@@ -339,7 +303,7 @@ const Board: FC<BoardProps> = ({
                   <List
                     key={list.board.id}
                     list={list.board}
-                    boardFetch={boardFetch}
+                    setActiveBoard={setActiveBoard}
                     client={client}
                     parent={board.id}
                     addHistory={addHistory}
@@ -355,12 +319,8 @@ const Board: FC<BoardProps> = ({
               <div className='list addBoardForm'>
                 <AddBoardForm
                   parent={board.id}
-                  top={true}
                   placeholder={'Add List'}
                   client={client}
-                  callback={(e, result) => {
-                    setBoard(result);
-                  }}
                   index={
                     board.listItems.length
                       ? board.listItems[board.listItems.length - 1].index + 1

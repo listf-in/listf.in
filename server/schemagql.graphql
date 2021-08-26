@@ -22,14 +22,18 @@ type Board {
   name: String!
   owner: User!
   members: [User]
-  listItems: [Board]
-  order: [String]
-  parents: [Board]
+  listItems: [Order]
   labels: [Label]
   start: String
   end: String
   theme: String
   home: Boolean
+}
+
+type Order {
+  id: ID!
+  index: Int
+  board: Board!
 }
 
 type Label {

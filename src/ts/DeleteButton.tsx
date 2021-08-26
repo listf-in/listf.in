@@ -6,7 +6,6 @@ import { Ordertype } from './Interfaces';
 type DeleteButtonProps = {
   parentID: string;
   container: Ordertype;
-  callback: Function;
   client: ApolloClient<NormalizedCacheObject>;
 };
 
@@ -14,7 +13,6 @@ const DeleteButton: FC<DeleteButtonProps> = ({
   parentID,
   client,
   container,
-  callback,
 }) => {
   const deleteFromParentBoard = (
     e: React.MouseEvent<HTMLElement, MouseEvent>
@@ -42,9 +40,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({
         }
         `,
       })
-      .then(() => {
-        callback(e);
-      })
+      .then(() => {})
       .catch((err) => {
         console.log(err);
       });

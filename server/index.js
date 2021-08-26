@@ -33,8 +33,9 @@ const port = process.env.PORT || 3080;
 
   SubscriptionServer.create(
     { schema, execute, subscribe },
-    { server: httpServer, path: server.graphqlPath }
+    { server: httpServer, path: '/subscriptions' }
   );
+
   app.use(express.json());
   app.use('/', express.static(path.join(__dirname, '../build')));
   app.use(apollo);

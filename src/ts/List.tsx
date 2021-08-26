@@ -10,7 +10,7 @@ import { Boardtype, Ordertype } from './Interfaces';
 import EditButton from './EditButton';
 
 type ListProps = {
-  boardFetch: Function;
+  setActiveBoard: Function;
   client: ApolloClient<NormalizedCacheObject>;
   parent: string;
   addHistory: Function;
@@ -24,7 +24,7 @@ type ListProps = {
 const List: FC<ListProps> = ({
   list,
   container,
-  boardFetch,
+  setActiveBoard,
   client,
   parent,
   addHistory,
@@ -32,15 +32,6 @@ const List: FC<ListProps> = ({
   setEditing,
   index,
 }) => {
-  const getBoard = (e: React.MouseEvent<HTMLElement>, id: string): void => {
-    e.stopPropagation();
-    boardFetch(id);
-  };
-
-  const refreshTopBoard = (e: React.MouseEvent<HTMLElement>) => {
-    getBoard(e, parent);
-  };
-
   const addMiddleBoard = () => {
     addHistory(list);
   };
@@ -61,9 +52,9 @@ const List: FC<ListProps> = ({
                 className='list'
               >
                 <h5
-                  onClick={(e) => {
+                  onClick={() => {
                     addHistory();
-                    getBoard(e, list.id);
+                    setActiveBoard(list.id);
                   }}
                   className='listTitle clickable'
                 >
@@ -72,7 +63,6 @@ const List: FC<ListProps> = ({
                 <DeleteButton
                   parentID={parent}
                   client={client}
-                  callback={refreshTopBoard}
                   container={container}
                 />
                 <EditButton boardID={list.id} callback={setEditing} />
@@ -83,10 +73,8 @@ const List: FC<ListProps> = ({
                         <div className='listItem addBoardForm'>
                           <AddBoardForm
                             parent={list.id}
-                            top={false}
                             placeholder={'Change Board Name'}
                             client={client}
-                            callback={refreshTopBoard}
                             edit={true}
                             boardID={item.board.id}
                             setEditing={setEditing}
@@ -100,9 +88,8 @@ const List: FC<ListProps> = ({
                           item={item.board}
                           container={item}
                           parentID={list.id}
-                          getBoard={getBoard}
+                          setActiveBoard={setActiveBoard}
                           client={client}
-                          refreshTopBoard={refreshTopBoard}
                           addMiddleBoard={addMiddleBoard}
                           setEditing={setEditing}
                           index={i}
@@ -115,10 +102,8 @@ const List: FC<ListProps> = ({
                 <div className='listItem addBoardForm'>
                   <AddBoardForm
                     parent={list.id}
-                    top={false}
                     placeholder={'Add List Item'}
                     client={client}
-                    callback={refreshTopBoard}
                     index={
                       list.listItems.length
                         ? list.listItems[list.listItems.length - 1].index + 1

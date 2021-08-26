@@ -67,12 +67,13 @@ const mutate = async (req, res) => {
 };
 
 const apollo = async (req, res, next) => {
-  if (req.body.query.startsWith('mutation')) {
-    await mutate(req, res);
-  } else {
-    await query(req, res);
+  if (req.body.query) {
+    if (req.body.query.startsWith('mutation')) {
+      await mutate(req, res);
+    } else if (req.body.query.startsWith('{')) {
+      await query(req, res);
+    }
   }
-
   next();
 };
 
