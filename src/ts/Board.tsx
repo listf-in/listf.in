@@ -136,6 +136,8 @@ const Board: FC<BoardProps> = ({
           }
         }
 
+        //update state to reflect new board order
+
         client
           .mutate({
             mutation: gql`mutation{
@@ -212,6 +214,8 @@ const Board: FC<BoardProps> = ({
             index = 0;
           }
         }
+
+        //update state to reflect new board order
 
         client
           .mutate({
