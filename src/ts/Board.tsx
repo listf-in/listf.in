@@ -250,6 +250,7 @@ const Board: FC<BoardProps> = ({
     let newBoard = Object.assign(board);
 
     let movedItem;
+    let newList;
 
     for (let list of newBoard.listItems) {
       if (list.board.id === context.source.droppableId) {
@@ -265,7 +266,7 @@ const Board: FC<BoardProps> = ({
 
     for (let list of newBoard.listItems) {
       if (list.board.id === context.destination.droppableId) {
-        let newList = Object.assign(list.board);
+        newList = Object.assign(list.board);
         newList.listItems = newList.listItems.splice(
           0,
           context.destination.index
@@ -276,6 +277,12 @@ const Board: FC<BoardProps> = ({
         );
       }
     }
+
+    //add list to new location
+
+    //find index of moved item in old list
+
+    //remove moved item from old list
   };
 
   return (
