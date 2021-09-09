@@ -135,8 +135,8 @@ const Board: FC<BoardProps> = ({
             break;
           }
         }
-
         //update state to reflect new board order
+        itemMover(context);
 
         client
           .mutate({
@@ -242,6 +242,38 @@ const Board: FC<BoardProps> = ({
           .catch((err) => {
             console.log(err);
           });
+      }
+    }
+  };
+
+  const itemMover = (context) => {
+    let newBoard = Object.assign(board);
+
+    let movedItem;
+
+    for (let list of newBoard.listItems) {
+      if (list.board.id === context.source.droppableId) {
+        for (let item of list.board.listItems) {
+          if (item.id === context.draggableId) {
+            movedItem = item;
+            break;
+          }
+        }
+        break;
+      }
+    }
+
+    for (let list of newBoard.listItems) {
+      if (list.board.id === context.destination.droppableId) {
+        let newList = Object.assign(list.board);
+        newList.listItems = newList.listItems.splice(
+          0,
+          context.destination.index
+        );
+        newList.listItems.push(movedItem);
+        newList.listItems = newList.listItems.concat(
+          list.board.listItems.splice(context.destination.index)
+        );
       }
     }
   };
