@@ -13,6 +13,7 @@ import EditButton from './EditButton';
 
 type BoardProps = {
   setActiveBoard: Function;
+  setBoard: Function;
   client: ApolloClient<NormalizedCacheObject>;
   addHistory: Function;
   prevBoardList: Boardtype[];
@@ -25,6 +26,7 @@ type BoardProps = {
 
 const Board: FC<BoardProps> = ({
   board,
+  setBoard,
   setActiveBoard,
   client,
   addHistory,
@@ -249,14 +251,23 @@ const Board: FC<BoardProps> = ({
   const itemMover = (context) => {
     let newBoard = Object.assign(board);
 
+    let fromList;
+    let fromIndex;
+
     let movedItem;
     let newList;
 
-    for (let list of newBoard.listItems) {
-      if (list.board.id === context.source.droppableId) {
-        for (let item of list.board.listItems) {
-          if (item.id === context.draggableId) {
-            movedItem = item;
+    let mod = 0;
+
+    for (let i = 0; i < newBoard.listItems.length; i++) {
+      if (newBoard.listItems[i].board.id === context.source.droppableId) {
+        for (let j = 0; j < newBoard.listItems[i].board.listItems.length; j++) {
+          if (
+            newBoard.listItems[i].board.listItems[j].id === context.draggableId
+          ) {
+            movedItem = newBoard.listItems[i].board.listItems[j];
+            fromList = i;
+            fromIndex = j;
             break;
           }
         }
@@ -264,25 +275,31 @@ const Board: FC<BoardProps> = ({
       }
     }
 
-    for (let list of newBoard.listItems) {
-      if (list.board.id === context.destination.droppableId) {
-        newList = Object.assign(list.board);
-        newList.listItems = newList.listItems.splice(
-          0,
-          context.destination.index
-        );
-        newList.listItems.push(movedItem);
-        newList.listItems = newList.listItems.concat(
-          list.board.listItems.splice(context.destination.index)
-        );
+    for (let i = 0; i < newBoard.listItems.length; i++) {
+      if (newBoard.listItems[i].board.id === context.destination.droppableId) {
+        if (
+          context.destination.droppableId === context.source.droppableId &&
+          context.destination.index > context.source.index
+        ) {
+          mod = 1;
+        }
+        newList = Object.assign(newBoard.listItems[i].board);
+        newList.listItems.splice(context.destination.index + mod, 0, movedItem);
+        newBoard.listItems[i].board = newList;
       }
     }
 
-    //add list to new location
+    mod = 0;
 
-    //find index of moved item in old list
+    if (
+      context.destination.droppableId === context.source.droppableId &&
+      context.destination.index < context.source.index
+    ) {
+      mod = 1;
+    }
 
-    //remove moved item from old list
+    newBoard.listItems[fromList].board.listItems.splice(fromIndex + mod, 1);
+    setBoard(newBoard);
   };
 
   return (
