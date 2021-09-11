@@ -249,13 +249,9 @@ const Board: FC<BoardProps> = ({
   };
 
   const itemMover = (context) => {
-    let newBoard = Object.assign(board);
+    const newBoard = Object.assign(board);
 
-    let fromList;
-    let fromIndex;
-
-    let movedItem;
-    let newList;
+    let fromList, fromIndex, movedItem, newList;
 
     let mod = 0;
 
