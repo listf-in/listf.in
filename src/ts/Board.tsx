@@ -137,7 +137,7 @@ const Board: FC<BoardProps> = ({
             break;
           }
         }
-        //update state to reflect new board order
+
         itemMover(context);
 
         client
@@ -217,7 +217,7 @@ const Board: FC<BoardProps> = ({
           }
         }
 
-        //update state to reflect new board order
+        listMover(context);
 
         client
           .mutate({
@@ -295,6 +295,18 @@ const Board: FC<BoardProps> = ({
     }
 
     newBoard.listItems[fromList].board.listItems.splice(fromIndex + mod, 1);
+    setBoard(newBoard);
+  };
+
+  const listMover = (context) => {
+    const newBoard = Object.assign(board);
+
+    newBoard.listItems.splice(
+      context.destination.index,
+      0,
+      newBoard.listItems.splice(context.source.index, 1)[0]
+    );
+
     setBoard(newBoard);
   };
 
