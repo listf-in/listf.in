@@ -13,6 +13,7 @@ import EditButton from './EditButton';
 
 type BoardProps = {
   setActiveBoard: Function;
+  setBoard: Function;
   client: ApolloClient<NormalizedCacheObject>;
   addHistory: Function;
   prevBoardList: Boardtype[];
@@ -25,6 +26,7 @@ type BoardProps = {
 
 const Board: FC<BoardProps> = ({
   board,
+  setBoard,
   setActiveBoard,
   client,
   addHistory,
@@ -136,6 +138,8 @@ const Board: FC<BoardProps> = ({
           }
         }
 
+        itemMover(context);
+
         client
           .mutate({
             mutation: gql`mutation{
@@ -213,6 +217,8 @@ const Board: FC<BoardProps> = ({
           }
         }
 
+        listMover(context);
+
         client
           .mutate({
             mutation: gql`mutation{
@@ -240,6 +246,68 @@ const Board: FC<BoardProps> = ({
           });
       }
     }
+  };
+
+  const itemMover = (context) => {
+    const newBoard = Object.assign(board);
+
+    let fromList, fromIndex, movedItem, newList;
+
+    let mod = 0;
+
+    for (let i = 0; i < newBoard.listItems.length; i++) {
+      if (newBoard.listItems[i].board.id === context.source.droppableId) {
+        for (let j = 0; j < newBoard.listItems[i].board.listItems.length; j++) {
+          if (
+            newBoard.listItems[i].board.listItems[j].id === context.draggableId
+          ) {
+            movedItem = newBoard.listItems[i].board.listItems[j];
+            fromList = i;
+            fromIndex = j;
+            break;
+          }
+        }
+        break;
+      }
+    }
+
+    for (let i = 0; i < newBoard.listItems.length; i++) {
+      if (newBoard.listItems[i].board.id === context.destination.droppableId) {
+        if (
+          context.destination.droppableId === context.source.droppableId &&
+          context.destination.index > context.source.index
+        ) {
+          mod = 1;
+        }
+        newList = Object.assign(newBoard.listItems[i].board);
+        newList.listItems.splice(context.destination.index + mod, 0, movedItem);
+        newBoard.listItems[i].board = newList;
+      }
+    }
+
+    mod = 0;
+
+    if (
+      context.destination.droppableId === context.source.droppableId &&
+      context.destination.index < context.source.index
+    ) {
+      mod = 1;
+    }
+
+    newBoard.listItems[fromList].board.listItems.splice(fromIndex + mod, 1);
+    setBoard(newBoard);
+  };
+
+  const listMover = (context) => {
+    const newBoard = Object.assign(board);
+
+    newBoard.listItems.splice(
+      context.destination.index,
+      0,
+      newBoard.listItems.splice(context.source.index, 1)[0]
+    );
+
+    setBoard(newBoard);
   };
 
   return (

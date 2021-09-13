@@ -169,6 +169,7 @@ const App: FC<AppProps> = ({ client }) => {
         <Board
           client={client}
           board={board}
+          setBoard={setBoard}
           setActiveBoard={setActiveBoard}
           addHistory={addHistory}
           goBack={goBack}
