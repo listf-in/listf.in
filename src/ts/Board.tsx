@@ -237,10 +237,6 @@ const Board: FC<BoardProps> = ({
             }
             `,
           })
-          .then(() => {
-            //error handling
-            // setActiveBoard(board.id);
-          })
           .catch((err) => {
             console.log(err);
           });
