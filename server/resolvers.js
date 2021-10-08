@@ -1,9 +1,9 @@
+/* eslint-disable no-undef */
 const dgraph = require('dgraph-js');
 const grpc = require('grpc');
-const PubSub = require('graphql-subscriptions');
-const pubsub = new PubSub.PubSub();
+const graphqlSubscriptions = require('graphql-subscriptions');
+const pubsub = new graphqlSubscriptions.PubSub();
 
-// eslint-disable-next-line no-undef
 module.exports = {
   Query: {
     //
@@ -13,7 +13,21 @@ module.exports = {
   },
   Subscription: {
     BoardUpdate: {
-      subscribe: () => pubsub.asyncIterator(['POST_CREATED']),
+      subscribe: () => {
+        return {
+          id: '',
+          owner: { id: '', name: '' },
+          name: 'wow',
+          home: true,
+          members: [
+            {
+              id: '',
+              name: '',
+            },
+          ],
+          listItems: [],
+        };
+      },
     },
   },
 };

@@ -116,7 +116,7 @@ const App: FC<AppProps> = ({ client }) => {
     }
   }, [user]);
 
-  const boardSub = gql`
+  const BoardUpdate = gql`
     subscription {
       getBoard(id: "${activeBoard}") {
         id
@@ -154,7 +154,7 @@ const App: FC<AppProps> = ({ client }) => {
     }
   `;
 
-  const { data, loading } = useSubscription(boardSub, {});
+  const { data, loading } = useSubscription(BoardUpdate, {});
   useEffect(() => {
     if (!loading && data) {
       setBoard(orderBoard(data.getBoard));

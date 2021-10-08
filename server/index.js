@@ -24,8 +24,19 @@ const port = process.env.PORT || 3080;
   });
 
   const subscriptionServer = SubscriptionServer.create(
-    { schema, execute, subscribe },
-    { server: httpServer, path: '/subscriptions' }
+    {
+      schema,
+      execute,
+      subscribe,
+      onConnect(connectionParams, webSocket, context) {
+        debugger;
+        console.log('Connected');
+      },
+      onDisconnect(webSocket, context) {
+        console.log('Disconnected!');
+      },
+    },
+    { server: httpServer, path: '/graphql' }
   );
 
   const server = new ApolloServer({
