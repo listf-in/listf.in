@@ -23,18 +23,29 @@ const port = process.env.PORT || 3080;
     resolvers,
   });
 
+  const subscriptionServer = SubscriptionServer.create(
+    { schema, execute, subscribe },
+    { server: httpServer, path: '/subscriptions' }
+  );
+
   const server = new ApolloServer({
     schema,
+    plugins: [
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              subscriptionServer.close();
+            },
+          };
+        },
+      },
+    ],
   });
 
   await server.start();
 
   server.applyMiddleware({ app });
-
-  SubscriptionServer.create(
-    { schema, execute, subscribe },
-    { server: httpServer, path: '/subscriptions' }
-  );
 
   app.use(express.json());
   app.use('/', express.static(path.join(__dirname, '../build')));
