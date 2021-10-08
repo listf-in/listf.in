@@ -10,6 +10,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import Login from './Login';
 import Board from './Board';
 import orderBoard from './sharedMethods';
+import Landing from './Landing';
 
 type AppProps = {
   client: ApolloClient<NormalizedCacheObject>;
@@ -179,7 +180,7 @@ const App: FC<AppProps> = ({ client }) => {
       />
     </>
   ) : (
-    <Login />
+    <Landing />
   );
 };
 
