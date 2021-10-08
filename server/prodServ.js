@@ -1,7 +1,9 @@
+/* eslint-disable no-undef */
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
 const express = require('express');
+const path = require('path');
 
 const app = express();
 
@@ -22,7 +24,7 @@ const credentials = {
   ca: ca,
 };
 
-app.use(express.static('public'));
+app.use('/', express.static(path.join(__dirname, '../build')));
 
 // Starting both http & https servers
 const httpServer = http.createServer(app);
