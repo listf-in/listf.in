@@ -162,24 +162,24 @@ const App: FC<AppProps> = ({ client }) => {
   }, [data]);
   console.log(data);
 
-  return (
+  return user ? (
     <>
       <Login />
-      {user && (
-        <Board
-          client={client}
-          board={board}
-          setBoard={setBoard}
-          setActiveBoard={setActiveBoard}
-          addHistory={addHistory}
-          goBack={goBack}
-          prevBoardList={prevBoardList}
-          setPrevBoardList={setPrevBoardList}
-          editing={editing}
-          setEditing={setEditing}
-        />
-      )}
+      <Board
+        client={client}
+        board={board}
+        setBoard={setBoard}
+        setActiveBoard={setActiveBoard}
+        addHistory={addHistory}
+        goBack={goBack}
+        prevBoardList={prevBoardList}
+        setPrevBoardList={setPrevBoardList}
+        editing={editing}
+        setEditing={setEditing}
+      />
     </>
+  ) : (
+    <Login />
   );
 };
 
