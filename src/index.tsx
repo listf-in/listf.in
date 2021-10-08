@@ -13,11 +13,11 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 
 const httpLink = new HttpLink({
-  uri: '/',
+  uri: 'https://icy-snowflake.us-west-2.aws.cloud.dgraph.io/graphql',
 });
 
 const wsLink = new WebSocketLink({
-  uri: 'ws://144.126.217.146:8080/graphql',
+  uri: 'wss://icy-snowflake.us-west-2.aws.cloud.dgraph.io/graphql',
   options: {
     reconnect: true,
   },
