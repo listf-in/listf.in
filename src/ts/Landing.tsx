@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import '../sass/styles.scss';
-import Login from './Login';
+import LoginButton from './LoginButton';
 
 const Landing: FC = () => {
   return (
     <div>
-      <Login />
+      <LoginButton />
     </div>
   );
 };
