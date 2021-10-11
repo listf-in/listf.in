@@ -2,12 +2,15 @@ import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { FC, useState } from 'react';
 import '../sass/styles.scss';
+import { Boardtype } from './Interfaces';
 
 type AddBoardFormProps = {
   parent: string;
   index: number;
   placeholder: string;
   client: ApolloClient<NormalizedCacheObject>;
+  setBoard: Function;
+  board: Boardtype;
   edit?: boolean;
   boardID?: string;
   setEditing?: Function;
@@ -23,11 +26,37 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
   boardID,
   setEditing,
   initValue = '',
+  setBoard,
+  board,
 }) => {
   const [formValue, setFormValue] = useState(initValue);
   const { user } = useAuth0();
 
+  const optAddBoard = () => {
+    if (parent === board.id) {
+      const newListItems = [...board.listItems];
+      newListItems.push({
+        id: 'temp',
+        index: index,
+        board: {
+          id: 'temp',
+          name: formValue,
+          home: false,
+          listItems: [],
+          members: [],
+          owner: {
+            id: 'temp',
+            email: '',
+            name: '',
+          },
+        },
+      });
+      setBoard({ ...board, listItems: newListItems });
+    }
+  };
+
   const addToParentBoard = () => {
+    optAddBoard();
     client
       .mutate({
         mutation: gql`mutation {

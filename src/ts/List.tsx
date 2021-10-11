@@ -19,6 +19,8 @@ type ListProps = {
   editing: string;
   setEditing: Function;
   index: number;
+  setBoard: Function;
+  board: Boardtype;
 };
 
 const List: FC<ListProps> = ({
@@ -31,6 +33,8 @@ const List: FC<ListProps> = ({
   editing,
   setEditing,
   index,
+  setBoard,
+  board,
 }) => {
   const addMiddleBoard = () => {
     addHistory(list);
@@ -80,6 +84,8 @@ const List: FC<ListProps> = ({
                             setEditing={setEditing}
                             initValue={item.board.name}
                             index={item.index}
+                            setBoard={setBoard}
+                            board={board}
                           />
                         </div>
                       ) : (
@@ -109,6 +115,8 @@ const List: FC<ListProps> = ({
                         ? list.listItems[list.listItems.length - 1].index + 1
                         : 0
                     }
+                    setBoard={setBoard}
+                    board={board}
                   />
                 </div>
               </div>

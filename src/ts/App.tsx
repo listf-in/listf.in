@@ -72,8 +72,6 @@ const App: FC<AppProps> = ({ client }) => {
         setActiveBoard(result.data.getUser.homeBoard.id);
       })
       .catch((err) => {
-        console.log(err);
-        console.log(err.message);
         if (err.message === `Cannot read property 'homeBoard' of null`) {
           client
             .mutate({

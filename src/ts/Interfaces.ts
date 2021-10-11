@@ -16,6 +16,7 @@ export interface Ordertype {
 export interface User {
   id: string;
   name: string;
+  email?: string;
   homeBoard?: Boardtype;
   boardList?: Boardtype[];
 }
