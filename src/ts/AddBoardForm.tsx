@@ -32,7 +32,31 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
   const [formValue, setFormValue] = useState(initValue);
   const { user } = useAuth0();
 
+  const optAddBoard = () => {
+    if (parent === board.id) {
+      const newListItems = [...board.listItems];
+      newListItems.push({
+        id: 'temp',
+        index: index,
+        board: {
+          id: 'temp',
+          name: formValue,
+          home: false,
+          listItems: [],
+          members: [],
+          owner: {
+            id: 'temp',
+            email: '',
+            name: '',
+          },
+        },
+      });
+      setBoard({ ...board, listItems: newListItems });
+    }
+  };
+
   const addToParentBoard = () => {
+    optAddBoard();
     client
       .mutate({
         mutation: gql`mutation {
