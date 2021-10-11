@@ -323,6 +323,7 @@ const Board: FC<BoardProps> = ({
           setEditing={setEditing}
           boardID={board.id}
           index={board.listItems.length}
+          setBoard={setBoard}
         />
       ) : (
         board.name
@@ -361,6 +362,7 @@ const Board: FC<BoardProps> = ({
                       setEditing={setEditing}
                       boardID={list.board.id}
                       index={list.index}
+                      setBoard={setBoard}
                     />
                   </div>
                 ) : (
@@ -375,6 +377,7 @@ const Board: FC<BoardProps> = ({
                     setEditing={setEditing}
                     container={list}
                     index={i}
+                    setBoard={setBoard}
                   />
                 )
               )}
@@ -390,6 +393,7 @@ const Board: FC<BoardProps> = ({
                       ? board.listItems[board.listItems.length - 1].index + 1
                       : 0
                   }
+                  setBoard={setBoard}
                 />
               </div>
             </div>

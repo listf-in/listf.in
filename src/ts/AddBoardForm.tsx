@@ -12,6 +12,7 @@ type AddBoardFormProps = {
   boardID?: string;
   setEditing?: Function;
   initValue?: string;
+  setBoard: Function;
 };
 
 const AddBoardForm: FC<AddBoardFormProps> = ({
@@ -23,6 +24,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
   boardID,
   setEditing,
   initValue = '',
+  setBoard,
 }) => {
   const [formValue, setFormValue] = useState(initValue);
   const { user } = useAuth0();
