@@ -2,17 +2,19 @@ import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { FC, useState } from 'react';
 import '../sass/styles.scss';
+import { Boardtype } from './Interfaces';
 
 type AddBoardFormProps = {
   parent: string;
   index: number;
   placeholder: string;
   client: ApolloClient<NormalizedCacheObject>;
+  setBoard: Function;
+  board: Boardtype;
   edit?: boolean;
   boardID?: string;
   setEditing?: Function;
   initValue?: string;
-  setBoard: Function;
 };
 
 const AddBoardForm: FC<AddBoardFormProps> = ({
@@ -25,6 +27,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
   setEditing,
   initValue = '',
   setBoard,
+  board,
 }) => {
   const [formValue, setFormValue] = useState(initValue);
   const { user } = useAuth0();

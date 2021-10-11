@@ -324,6 +324,7 @@ const Board: FC<BoardProps> = ({
           boardID={board.id}
           index={board.listItems.length}
           setBoard={setBoard}
+          board={board}
         />
       ) : (
         board.name
@@ -363,6 +364,7 @@ const Board: FC<BoardProps> = ({
                       boardID={list.board.id}
                       index={list.index}
                       setBoard={setBoard}
+                      board={board}
                     />
                   </div>
                 ) : (
@@ -378,6 +380,7 @@ const Board: FC<BoardProps> = ({
                     container={list}
                     index={i}
                     setBoard={setBoard}
+                    board={board}
                   />
                 )
               )}
@@ -394,6 +397,7 @@ const Board: FC<BoardProps> = ({
                       : 0
                   }
                   setBoard={setBoard}
+                  board={board}
                 />
               </div>
             </div>
