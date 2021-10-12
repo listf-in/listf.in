@@ -16,6 +16,8 @@ type ListItemProps = {
   parentID: string;
   setEditing: Function;
   index: number;
+  setBoard: Function;
+  board: Boardtype;
 };
 const ListItem: FC<ListItemProps> = ({
   item,
@@ -26,6 +28,8 @@ const ListItem: FC<ListItemProps> = ({
   addMiddleBoard,
   setEditing,
   index,
+  setBoard,
+  board,
 }) => {
   return (
     <Draggable draggableId={container.id} index={index} className=' clickable'>
@@ -46,6 +50,8 @@ const ListItem: FC<ListItemProps> = ({
             client={client}
             parentID={parentID}
             container={container}
+            setBoard={setBoard}
+            board={board}
           />
         </div>
       )}

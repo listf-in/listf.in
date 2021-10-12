@@ -1,23 +1,50 @@
 import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 import React, { FC } from 'react';
 import '../sass/styles.scss';
-import { Ordertype } from './Interfaces';
+import { Boardtype, Ordertype } from './Interfaces';
 
 type DeleteButtonProps = {
   parentID: string;
   container: Ordertype;
   client: ApolloClient<NormalizedCacheObject>;
+  setBoard: Function;
+  board: Boardtype;
 };
 
 const DeleteButton: FC<DeleteButtonProps> = ({
   parentID,
   client,
   container,
+  setBoard,
+  board,
 }) => {
+  const optDelete = () => {
+    if (parentID === board.id) {
+      board.listItems.forEach((item, i) => {
+        if (item.id === container.id) {
+          board.listItems.splice(i, 1);
+        }
+        setBoard({ ...board });
+      });
+    } else {
+      board.listItems.forEach((item, i) => {
+        if (item.board.id === parentID) {
+          board.listItems[i].board.listItems.forEach((item, i) => {
+            if (item.id === container.id) {
+              board.listItems[i].board.listItems.splice(i, 1);
+            }
+            setBoard({ ...board });
+          });
+        }
+      });
+    }
+  };
+
   const deleteFromParentBoard = (
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     e.stopPropagation();
+    optDelete();
     client
       .mutate({
         mutation: gql`mutation{
@@ -55,18 +82,3 @@ const DeleteButton: FC<DeleteButtonProps> = ({
 };
 
 export default DeleteButton;
-
-// former delete function
-// .mutate({
-//   mutation: gql`mutation{
-//     deleteBoard(filter: {
-//       id: "${boardID}"
-//     }) {
-//       board {
-//         name
-//         id
-//       }
-//     }
-//   }
-//   `,
-// })
