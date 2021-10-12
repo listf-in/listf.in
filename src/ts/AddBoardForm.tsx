@@ -52,6 +52,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
         },
       });
       setBoard({ ...board, listItems: newListItems });
+      return;
     }
   };
 

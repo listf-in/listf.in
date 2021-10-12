@@ -140,9 +140,36 @@ const Board: FC<BoardProps> = ({
 
         itemMover(context);
 
-        client
-          .mutate({
-            mutation: gql`mutation{
+        if (context.destination.id === context.source.id) {
+          client
+            .mutate({
+              mutation: gql`mutation{
+
+          updateOrder(input:
+            { filter: {
+              id: "${context.draggableId}"
+            },
+            set: {
+              index: ${index}
+            }
+          }) {
+            order{
+              id
+            }
+          }
+        `,
+            })
+            .then(() => {
+              // error handling
+              // setActiveBoard(board.id);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          client
+            .mutate({
+              mutation: gql`mutation{
             updateBoard(input:
               { filter: {
                 id: "${context.source.droppableId}"
@@ -189,14 +216,15 @@ const Board: FC<BoardProps> = ({
           }
         }
         `,
-          })
-          .then(() => {
-            //error handling
-            // setActiveBoard(board.id);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+            })
+            .then(() => {
+              //error handling
+              // setActiveBoard(board.id);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       } else {
         if (board.listItems[context.destination.index - 1 + mod]) {
           if (board.listItems[context.destination.index + mod]) {
