@@ -87,7 +87,6 @@ const Board: FC<BoardProps> = ({
     ) {
       return;
     } else {
-      //update state to reflect new board order
       let index;
       const same =
         context.destination.droppableId === context.source.droppableId;
@@ -156,6 +155,7 @@ const Board: FC<BoardProps> = ({
               id
             }
           }
+        }
         `,
             })
             .then(() => {
