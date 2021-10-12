@@ -29,9 +29,9 @@ const DeleteButton: FC<DeleteButtonProps> = ({
     } else {
       board.listItems.forEach((item, i) => {
         if (item.board.id === parentID) {
-          board.listItems[i].board.listItems.forEach((item, i) => {
+          board.listItems[i].board.listItems.forEach((item, j) => {
             if (item.id === container.id) {
-              board.listItems[i].board.listItems.splice(i, 1);
+              board.listItems[i].board.listItems.splice(j, 1);
             }
             setBoard({ ...board });
           });

@@ -33,9 +33,8 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
   const { user } = useAuth0();
 
   const optAddBoard = () => {
-    const newListItems = [...board.listItems];
     if (parent === board.id) {
-      newListItems.push({
+      board.listItems.push({
         id: 'temp',
         index: index,
         board: {
@@ -52,7 +51,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
         },
       });
     } else {
-      newListItems.forEach((item) => {
+      board.listItems.forEach((item) => {
         if (item.board.id === parent) {
           item.board.listItems.push({
             id: 'temp',
@@ -73,7 +72,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
         }
       });
     }
-    setBoard({ ...board, listItems: newListItems });
+    setBoard({ ...board });
   };
 
   const addToParentBoard = () => {
