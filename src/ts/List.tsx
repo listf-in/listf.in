@@ -68,6 +68,8 @@ const List: FC<ListProps> = ({
                   parentID={parent}
                   client={client}
                   container={container}
+                  setBoard={setBoard}
+                  board={board}
                 />
                 <EditButton boardID={list.id} callback={setEditing} />
                 <div className='listContainer'>
@@ -100,6 +102,8 @@ const List: FC<ListProps> = ({
                           setEditing={setEditing}
                           index={i}
                           list={list}
+                          board={board}
+                          setBoard={setBoard}
                         />
                       )
                     )}
