@@ -138,7 +138,7 @@ const Board: FC<BoardProps> = ({
 
         itemMover(context);
 
-        if (context.destination.id === context.source.id) {
+        if (context.destination.droppableId === context.source.droppableId) {
           client
             .mutate({
               mutation: gql`mutation{
