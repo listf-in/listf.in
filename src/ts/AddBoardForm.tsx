@@ -116,7 +116,29 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
     setFormValue('');
   };
 
+  const optEditBoard = () => {
+    if (parent === board.id) {
+      board.listItems.forEach((list) => {
+        if (list.board.id === boardID) {
+          list.board.name = formValue;
+        }
+      });
+    } else {
+      board.listItems.forEach((list) => {
+        if (list.board.id === parent) {
+          list.board.listItems.forEach((item) => {
+            if (item.board.id === boardID) {
+              item.board.name = formValue;
+            }
+          });
+        }
+      });
+    }
+    setBoard({ ...board });
+  };
+
   const editBoard = () => {
+    optEditBoard();
     client
       .mutate({
         mutation: gql`mutation{
