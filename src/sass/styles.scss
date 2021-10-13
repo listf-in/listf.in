@@ -91,7 +91,6 @@ h1.logo {
 
 .listItem {
   width: 225px;
-  min-height: 2.5em;
   border-radius: 5px;
   margin-left: 5px;
   margin-bottom: 5px;
@@ -117,7 +116,7 @@ h1.logo {
 .listItemName {
   display: inline-block;
   width: 210px;
-  margin: 0.75em 0 0.75em 5px;
+  margin: 0.5em 0 0.5em 5px;
   grid-column: 1 / 4;
   grid-row: 1;
   z-index: 3;
