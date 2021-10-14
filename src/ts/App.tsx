@@ -127,7 +127,7 @@ const App: FC<AppProps> = ({ client }) => {
           name
         }
         home
-        listItems {
+        listItems(filter: {has: board}) {
           id
           index
           board {
@@ -138,7 +138,7 @@ const App: FC<AppProps> = ({ client }) => {
               name
             }
             parents
-            listItems {
+            listItems(filter: {has: board}) {
               id
               index
               board {
