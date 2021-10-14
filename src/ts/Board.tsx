@@ -43,7 +43,6 @@ const Board: FC<BoardProps> = ({
     if (value === board.id) {
       window.alert('You cannot add a board to itself!');
     } else {
-      //increment the parents of the board
       client
         .mutate({
           mutation: gql`mutation {
@@ -66,14 +65,49 @@ const Board: FC<BoardProps> = ({
                   }
                 }) {
                   board {
-                    id
+                    listItems {
+                      index
+                      board {
+                        id
+                        parents
+                      }
+                    }
                   }
                 }
               }
               `,
         })
-        .then(() => {
-          //error handling
+        .then((data) => {
+          let parents =
+            data.data.updateBoard.board[0].listItems[
+              data.data.updateBoard.board[0].listItems.length - 1
+            ].board.parents;
+          parents = parents ? (parents += 1) : 2;
+
+          client
+            .mutate({
+              mutation: gql`mutation{
+                updateBoard(input: {filter: {
+                  id: "${value}",
+                },
+                set: {
+                  parents: ${parents}
+                }}
+                  ) {
+                  board {
+                    name
+                    id
+                  }
+                }
+              }
+              `,
+            })
+            .then(() => {
+              //
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);
