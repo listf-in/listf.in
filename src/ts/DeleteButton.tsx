@@ -45,10 +45,10 @@ const DeleteButton: FC<DeleteButtonProps> = ({
   ) => {
     e.stopPropagation();
     optDelete();
-    //check for parents and delete recursively through children
-    client
-      .mutate({
-        mutation: gql`mutation{
+    if (container.board.parents > 1) {
+      client
+        .mutate({
+          mutation: gql`mutation{
           updateBoard(input: {
            filter: {
               id: "${parentID}"
@@ -58,20 +58,58 @@ const DeleteButton: FC<DeleteButtonProps> = ({
                 id: "${container.id}"
               }
             }
-
         }){
-            board {
-              id
-              name
-            }
+          board {
+            id
+            name
           }
         }
-        `,
-      })
-      .then(() => {})
-      .catch((err) => {
-        console.log(err);
-      });
+        updateBoard(input: {
+           filter: {
+              id: "${container.board.id}"
+            },
+            set: {
+              parents: ${container.board.parents - 1}
+            }
+        }){
+          board {
+            id
+            name
+          }
+        }
+      }
+      `,
+        })
+        .then(() => {})
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      const [containersToDelete, boardsToDelete, parentsToLower] =
+        whatToDelete(container);
+      debugger;
+      // make a mutation for all items
+    }
+  };
+
+  const whatToDelete = (container) => {
+    let containers = [container.id];
+    let boards = [container.board.id];
+    let lowerParents = [];
+    container.board.listItems.forEach((cont) => {
+      if (cont.board.parents > 1) {
+        lowerParents.push(cont.board.id);
+      } else {
+        containers.push(cont.id);
+        boards.push(cont.board.id);
+        const [conts, boardies, notOrphans] = whatToDelete(cont);
+        containers = containers.concat(conts);
+        boards = boards.concat(boardies);
+        lowerParents = lowerParents.concat(notOrphans);
+      }
+    });
+
+    return [containers, boards, lowerParents];
   };
 
   return (
