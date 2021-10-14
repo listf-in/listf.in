@@ -5,6 +5,7 @@ export interface Boardtype {
   members: User[];
   listItems: Ordertype[];
   home: boolean;
+  parents?: number;
 }
 
 export interface Ordertype {

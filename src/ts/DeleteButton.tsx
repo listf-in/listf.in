@@ -45,6 +45,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({
   ) => {
     e.stopPropagation();
     optDelete();
+    //check for parents and delete recursively through children
     client
       .mutate({
         mutation: gql`mutation{

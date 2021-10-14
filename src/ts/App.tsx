@@ -137,6 +137,7 @@ const App: FC<AppProps> = ({ client }) => {
               email
               name
             }
+            parents
             listItems {
               id
               index
@@ -147,6 +148,7 @@ const App: FC<AppProps> = ({ client }) => {
                   email
                   name
                 }
+                parents
               }
             }
           }

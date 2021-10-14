@@ -96,6 +96,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
                           members: {
                             email: "${user.email}"
                           },
+                          parents: 1,
                           home: false
                         }
                       }

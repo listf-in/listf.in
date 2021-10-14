@@ -43,6 +43,7 @@ const Board: FC<BoardProps> = ({
     if (value === board.id) {
       window.alert('You cannot add a board to itself!');
     } else {
+      //increment the parents of the board
       client
         .mutate({
           mutation: gql`mutation {
