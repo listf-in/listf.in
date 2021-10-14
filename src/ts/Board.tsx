@@ -54,7 +54,9 @@ const Board: FC<BoardProps> = ({
                   set: {
                     listItems: [
                       {
-                        index: ${board.listItems.length}
+                        index: ${
+                          board.listItems[board.listItems.length - 1].index + 1
+                        },
                         board:
                         {
                           id: "${value}"
