@@ -4,7 +4,8 @@ import LoginButton from './LoginButton';
 
 const Landing: FC = () => {
   return (
-    <div>
+    <div id='landing'>
+      <h1 className='landingLogo'>LISTF.IN</h1>
       <LoginButton />
     </div>
   );
