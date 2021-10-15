@@ -4,6 +4,7 @@ const http = require('http');
 const https = require('https');
 const express = require('express');
 const path = require('path');
+const deleteAll = require('./delete');
 
 const app = express();
 
@@ -24,7 +25,15 @@ const credentials = {
   ca: ca,
 };
 
+app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '../build')));
+
+app.post('/delete', (req, res) => {
+  const { id } = req.body;
+  deleteAll(id);
+
+  res.send(id + ' deleted');
+});
 
 // Starting both http & https servers
 const httpServer = http.createServer(app);

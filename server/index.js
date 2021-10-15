@@ -10,6 +10,7 @@ const { makeExecutableSchema } = require('@graphql-tools/schema');
 const typeDefs = require('./schemagql.graphql');
 const resolvers = require('./resolvers');
 const apollo = require('./apollo');
+const deleteAll = require('./delete');
 
 const port = process.env.PORT || 3080;
 
@@ -39,6 +40,13 @@ const port = process.env.PORT || 3080;
   app.use(express.json());
   app.use('/', express.static(path.join(__dirname, '../build')));
   app.use(apollo);
+
+  app.post('/delete', (req, res) => {
+    const { id } = req.body;
+    deleteAll(id);
+
+    res.send(id + ' deleted');
+  });
 
   httpServer.listen(port, () =>
     console.log(`Server is now running on http://localhost:${port}/graphql`)

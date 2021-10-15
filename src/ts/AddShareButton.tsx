@@ -1,4 +1,3 @@
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 import React, { FC, useState } from 'react';
 import '../sass/styles.scss';
 

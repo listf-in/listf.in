@@ -53,7 +53,9 @@ const Board: FC<BoardProps> = ({
                   set: {
                     listItems: [
                       {
-                        index: ${board.listItems.length}
+                        index: ${
+                          board.listItems[board.listItems.length - 1].index + 1
+                        },
                         board:
                         {
                           id: "${value}"
@@ -63,14 +65,49 @@ const Board: FC<BoardProps> = ({
                   }
                 }) {
                   board {
-                    id
+                    listItems {
+                      index
+                      board {
+                        id
+                        parents
+                      }
+                    }
                   }
                 }
               }
               `,
         })
-        .then(() => {
-          //error handling
+        .then((data) => {
+          let parents =
+            data.data.updateBoard.board[0].listItems[
+              data.data.updateBoard.board[0].listItems.length - 1
+            ].board.parents;
+          parents = parents ? (parents += 1) : 2;
+
+          client
+            .mutate({
+              mutation: gql`mutation{
+                updateBoard(input: {filter: {
+                  id: "${value}",
+                },
+                set: {
+                  parents: ${parents}
+                }}
+                  ) {
+                  board {
+                    name
+                    id
+                  }
+                }
+              }
+              `,
+            })
+            .then(() => {
+              //
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);

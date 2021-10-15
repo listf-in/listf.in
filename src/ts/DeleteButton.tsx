@@ -1,4 +1,5 @@
 import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import axios from 'axios';
 import React, { FC } from 'react';
 import '../sass/styles.scss';
 import { Boardtype, Ordertype } from './Interfaces';
@@ -45,10 +46,11 @@ const DeleteButton: FC<DeleteButtonProps> = ({
   ) => {
     e.stopPropagation();
     optDelete();
-    client
-      .mutate({
-        mutation: gql`mutation{
-          updateBoard(input: {
+    if (container.board.parents > 1) {
+      client
+        .mutate({
+          mutation: gql`mutation{
+            updateBoard(input: {
            filter: {
               id: "${parentID}"
             },
@@ -57,8 +59,28 @@ const DeleteButton: FC<DeleteButtonProps> = ({
                 id: "${container.id}"
               }
             }
-
         }){
+          board {
+            id
+            name
+          }
+        }
+          deleteOrder(
+           filter: {
+              id: "${container.id}"
+          }){
+            order {
+              id
+            }
+          }
+          updateBoard(input: {
+            filter: {
+              id: "${container.board.id}"
+            },
+            set: {
+              parents: ${container.board.parents - 1}
+            }
+          }){
             board {
               id
               name
@@ -66,11 +88,46 @@ const DeleteButton: FC<DeleteButtonProps> = ({
           }
         }
         `,
-      })
-      .then(() => {})
-      .catch((err) => {
-        console.log(err);
+        })
+        .then(() => {})
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      client
+        .mutate({
+          mutation: gql`mutation{
+            updateBoard(input: {
+           filter: {
+              id: "${parentID}"
+            },
+            remove: {
+              listItems: {
+                id: "${container.id}"
+              }
+            }
+        }){
+          board {
+            id
+            name
+          }
+        }
+      }
+        `,
+        })
+        .then(() => {})
+        .catch((err) => {
+          console.log(err);
+        });
+
+      axios({
+        method: 'post',
+        url: '/delete',
+        data: {
+          id: container.id,
+        },
       });
+    }
   };
 
   return (
