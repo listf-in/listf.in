@@ -42,10 +42,12 @@ html {
   background-color: rgba(255, 255, 255, 0.1);
   transition: all 0.3s;
 }
+
 #landingLog:hover::before {
   opacity: 0;
   transform: scale(0.5, 0.5);
 }
+
 #landingLog::after {
   content: '';
   position: absolute;
@@ -59,6 +61,7 @@ html {
   border: 1px solid rgba(255, 255, 255, 0.5);
   transform: scale(1.2, 1.2);
 }
+
 #landingLog:hover::after {
   opacity: 1;
   transform: scale(1, 1);
