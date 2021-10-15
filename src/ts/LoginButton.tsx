@@ -11,11 +11,7 @@ const LoginButton: FC<LoginButtonProps> = ({ landing = false }) => {
   if (isAuthenticated) {
     return (
       <button
-        className={
-          landing
-            ? 'landingLog logoutButton clickable logButton'
-            : 'logoutButton clickable logButton'
-        }
+        className={'logoutButton clickable logButton'}
         onClick={() => logout({ returnTo: window.location.origin })}
       >
         Log Out
@@ -25,6 +21,7 @@ const LoginButton: FC<LoginButtonProps> = ({ landing = false }) => {
   return (
     <button
       className={'loginButton clickable logButton'}
+      id={landing ? 'landingLog' : null}
       onClick={() => loginWithRedirect()}
     >
       Log in
