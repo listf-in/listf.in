@@ -9,7 +9,7 @@ const Landing: FC = () => {
       <h3 className='landingSubtitle'>
         Infinite Lists, Infinite Possibilities
       </h3>
-      <LoginButton />
+      <LoginButton landing={true} />
     </div>
   );
 };
