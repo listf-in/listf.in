@@ -24,7 +24,7 @@ const LoginButton: FC<LoginButtonProps> = ({ landing = false }) => {
       id={landing ? 'landingLog' : null}
       onClick={() => loginWithRedirect()}
     >
-      Log in
+      Log in / Sign up
     </button>
   );
 };
