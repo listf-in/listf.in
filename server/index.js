@@ -42,7 +42,6 @@ const port = process.env.PORT || 3080;
   app.use(apollo);
 
   app.post('/delete', (req, res) => {
-    debugger;
     const { id } = req.body;
     deleteAll(id);
 
