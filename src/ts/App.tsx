@@ -163,9 +163,8 @@ const App: FC<AppProps> = ({ client }) => {
       setBoard(orderBoard(data.getBoard));
     }
   }, [data]);
-  console.log(data);
 
-  return user ? (
+  return user && board.name ? (
     <>
       <Login />
       <Board
@@ -181,9 +180,9 @@ const App: FC<AppProps> = ({ client }) => {
         setEditing={setEditing}
       />
     </>
-  ) : (
+  ) : !user ? (
     <Landing />
-  );
+  ) : null;
 };
 
 export default App;
