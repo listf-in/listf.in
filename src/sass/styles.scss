@@ -41,11 +41,13 @@ html {
 .landingLogo {
   grid-row: 2;
   font-size: 6em;
+  max-width: 100%;
 }
 
 .landingSubtitle {
   grid-row: 4;
   font-size: 4em;
+  max-width: 100%;
 }
 
 #landingLog {
