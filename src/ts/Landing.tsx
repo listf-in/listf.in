@@ -3,7 +3,8 @@ import '../sass/styles.scss';
 import LoginButton from './LoginButton';
 
 const Landing: FC = () => {
-  return (
+  const [loggingIn, setLoggingIn] = React.useState(false);
+  return loggingIn ? null : (
     <div id='landing'>
       <h1 className='landingLogo'>LISTF.IN</h1>
       <h3 className='landingSubtitle'>
@@ -11,7 +12,7 @@ const Landing: FC = () => {
         <br />
         Infinite Possibilities
       </h3>
-      <LoginButton landing={true} />
+      <LoginButton setLoggingIn={setLoggingIn} landing={true} />
     </div>
   );
 };
