@@ -3,16 +3,23 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 type LoginButtonProps = {
   landing?: boolean;
+  setLoggingIn?: Function;
 };
 
-const LoginButton: FC<LoginButtonProps> = ({ landing = false }) => {
+const LoginButton: FC<LoginButtonProps> = ({
+  landing = false,
+  setLoggingIn,
+}) => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
   if (isAuthenticated) {
     return (
       <button
         className={'logoutButton clickable logButton'}
-        onClick={() => logout({ returnTo: window.location.origin })}
+        onClick={() => {
+          setLoggingIn(false);
+          logout({ returnTo: window.location.origin });
+        }}
       >
         Log Out
       </button>
@@ -22,7 +29,10 @@ const LoginButton: FC<LoginButtonProps> = ({ landing = false }) => {
     <button
       className={'loginButton clickable logButton'}
       id={landing ? 'landingLog' : null}
-      onClick={() => loginWithRedirect()}
+      onClick={() => {
+        setLoggingIn(true);
+        loginWithRedirect();
+      }}
     >
       Log in / Sign up
     </button>
