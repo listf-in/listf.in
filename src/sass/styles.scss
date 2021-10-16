@@ -22,9 +22,9 @@ html {
 
 #landing {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 2fr 2fr;
-  font-family: 'Roboto', sans-serif;
+  grid-template-rows: 1fr 2fr 1fr 2fr;
+  font-family: serif;
+  font-weight: 100;
 }
 
 .landingLogo,
@@ -32,20 +32,20 @@ html {
   justify-self: center;
   align-self: center;
   text-align: center;
-  font-size: 4em;
 }
 
 .landingLogo {
   grid-row: 2;
+  font-size: 6em;
 }
 
 .landingSubtitle {
-  grid-row: 3;
+  grid-row: 4;
+  font-size: 4em;
 }
 
 #landingLog {
-  grid-row: 2 / 4;
-  grid-column: 2;
+  grid-row: 3;
   margin: auto;
   width: 15em;
   height: 3em;
