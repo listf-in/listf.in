@@ -16,10 +16,7 @@ const LoginButton: FC<LoginButtonProps> = ({
     return (
       <button
         className={'logoutButton clickable logButton'}
-        onClick={() => {
-          setLoggingIn(false);
-          logout({ returnTo: window.location.origin });
-        }}
+        onClick={() => logout({ returnTo: window.location.origin })}
       >
         Log Out
       </button>
