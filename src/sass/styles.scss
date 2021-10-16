@@ -21,10 +21,14 @@ html {
 }
 
 #landing {
-  display: grid;
-  grid-template-rows: 1fr 2fr 1fr 2fr;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
   font-family: serif;
   font-weight: 100;
+  width: 100vw;
+  height: 100vh;
 }
 
 .landingLogo,
@@ -46,7 +50,6 @@ html {
 
 #landingLog {
   grid-row: 3;
-  margin: auto;
   width: 15em;
   height: 3em;
   background-color: white;
