@@ -164,8 +164,8 @@ const App: FC<AppProps> = ({ client }) => {
     }
   }, [data]);
   console.log(data);
-
-  return user ? (
+  debugger;
+  return user && board.name ? (
     <>
       <Login />
       <Board
@@ -181,9 +181,9 @@ const App: FC<AppProps> = ({ client }) => {
         setEditing={setEditing}
       />
     </>
-  ) : (
+  ) : !user ? (
     <Landing />
-  );
+  ) : null;
 };
 
 export default App;
