@@ -20,51 +20,42 @@ html {
   float: right;
 }
 
-#landingLog {
-  color: rgb(58, 58, 58);
-  transition: all 0.5s;
-  position: relative;
-  line-height: 50px;
-  height: 50px;
+#landing {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 2fr 2fr;
+  font-family: 'Roboto', sans-serif;
+}
+
+.landingLogo,
+.landingSubtitle {
+  justify-self: center;
+  align-self: center;
   text-align: center;
-  width: 250px;
-  cursor: pointer;
+  font-size: 4em;
 }
 
-#landingLog::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  background-color: rgba(255, 255, 255, 0.1);
-  transition: all 0.3s;
+.landingLogo {
+  grid-row: 2;
 }
 
-#landingLog:hover::before {
-  opacity: 0;
-  transform: scale(0.5, 0.5);
+.landingSubtitle {
+  grid-row: 3;
 }
 
-#landingLog::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  opacity: 0;
-  transition: all 0.3s;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  transform: scale(1.2, 1.2);
+#landingLog {
+  grid-row: 2 / 4;
+  grid-column: 2;
+  margin: auto;
+  width: 15em;
+  height: 3em;
+  background-color: white;
+  font-size: 1.5em;
+  transition: 0.3s;
 }
 
-#landingLog:hover::after {
-  opacity: 1;
-  transform: scale(1, 1);
+#landingLog:hover {
+  background-color: #c0c0c0;
 }
 
 h1.logo {
