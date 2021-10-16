@@ -163,8 +163,7 @@ const App: FC<AppProps> = ({ client }) => {
       setBoard(orderBoard(data.getBoard));
     }
   }, [data]);
-  console.log(data);
-  debugger;
+
   return user && board.name ? (
     <>
       <Login />
