@@ -7,7 +7,9 @@ const Landing: FC = () => {
     <div id='landing'>
       <h1 className='landingLogo'>LISTF.IN</h1>
       <h3 className='landingSubtitle'>
-        Infinite Lists, Infinite Possibilities
+        Infinite Lists,
+        <br />
+        Infinite Possibilities
       </h3>
       <LoginButton landing={true} />
     </div>
