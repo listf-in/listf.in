@@ -72,10 +72,12 @@ const App: FC<AppProps> = ({ client }) => {
         setActiveBoard(result.data.getUser.homeBoard.id);
       })
       .catch((err) => {
-        // if (err.message === `Cannot read property 'homeBoard' of null`) {
-        client
-          .mutate({
-            mutation: gql`mutation {
+        console.log(err);
+        console.log(err.message);
+        if (err.message === `Cannot read property 'homeBoard' of null`) {
+          client
+            .mutate({
+              mutation: gql`mutation {
                 addUser(input: [
                   {
                     name: "${user.name}",
@@ -100,14 +102,14 @@ const App: FC<AppProps> = ({ client }) => {
                 }
               }
               `,
-          })
-          .then((result) => {
-            setActiveBoard(result.data.addUser.user[0].homeBoard.id);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        // }
+            })
+            .then((result) => {
+              setActiveBoard(result.data.addUser.user[0].homeBoard.id);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       });
   };
 
