@@ -74,7 +74,10 @@ const App: FC<AppProps> = ({ client }) => {
       .catch((err) => {
         console.log(err);
         console.log(err.message);
-        if (err.message === `Cannot read property 'homeBoard' of null`) {
+        if (
+          err.message === `Cannot read property 'homeBoard' of null` ||
+          err.message === "Cannot read properties of null (reading 'homeBoard')"
+        ) {
           client
             .mutate({
               mutation: gql`mutation {
