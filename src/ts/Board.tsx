@@ -379,7 +379,6 @@ const Board: FC<BoardProps> = ({
         <AddBoardForm
           parent={board.id}
           placeholder={'Change List Name'}
-          client={client}
           edit={true}
           initValue={board.name}
           setEditing={setEditing}
@@ -419,7 +418,6 @@ const Board: FC<BoardProps> = ({
                     <AddBoardForm
                       parent={board.id}
                       placeholder={'Change List Name'}
-                      client={client}
                       edit={true}
                       initValue={list.board.name}
                       setEditing={setEditing}
@@ -434,7 +432,6 @@ const Board: FC<BoardProps> = ({
                     key={list.board.id}
                     list={list.board}
                     setActiveBoard={setActiveBoard}
-                    client={client}
                     parent={board.id}
                     addHistory={addHistory}
                     editing={editing}
@@ -452,7 +449,6 @@ const Board: FC<BoardProps> = ({
                 <AddBoardForm
                   parent={board.id}
                   placeholder={'Add List'}
-                  client={client}
                   index={
                     board.listItems.length
                       ? board.listItems[board.listItems.length - 1].index + 1

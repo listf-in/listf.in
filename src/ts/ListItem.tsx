@@ -1,4 +1,3 @@
-import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import React, { FC } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import '../sass/styles.scss';
@@ -8,7 +7,6 @@ import { Boardtype, Ordertype } from './Interfaces';
 
 type ListItemProps = {
   setActiveBoard: Function;
-  client: ApolloClient<NormalizedCacheObject>;
   addMiddleBoard: Function;
   item: Boardtype;
   list: Boardtype;
@@ -24,7 +22,6 @@ const ListItem: FC<ListItemProps> = ({
   container,
   parentID,
   setActiveBoard,
-  client,
   addMiddleBoard,
   setEditing,
   index,
@@ -47,7 +44,6 @@ const ListItem: FC<ListItemProps> = ({
           <p className='listItemName'>{item.name}</p>
           <EditButton boardID={item.id} callback={setEditing} />
           <DeleteButton
-            client={client}
             parentID={parentID}
             container={container}
             setBoard={setBoard}

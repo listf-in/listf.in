@@ -1,4 +1,4 @@
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import axios from 'axios';
 import React, { FC } from 'react';
 import '../sass/styles.scss';
@@ -7,14 +7,12 @@ import { Boardtype, Ordertype } from './Interfaces';
 type DeleteButtonProps = {
   parentID: string;
   container: Ordertype;
-  client: ApolloClient<NormalizedCacheObject>;
   setBoard: Function;
   board: Boardtype;
 };
 
 const DeleteButton: FC<DeleteButtonProps> = ({
   parentID,
-  client,
   container,
   setBoard,
   board,
@@ -41,84 +39,89 @@ const DeleteButton: FC<DeleteButtonProps> = ({
     }
   };
 
+  const deleteBoardGql = gql`
+    mutation addBoard(
+      $parent: [ID!]
+      $orderId: [ID!]
+      $boardId: [ID!]
+      $newParents: Int!
+    ) {
+      updateBoard(
+        input: {
+          filter: { id: $parent }
+          remove: { listItems: { id: $orderId } }
+        }
+      ) {
+        board {
+          id
+          name
+        }
+      }
+      deleteOrder(filter: { id: $orderId }) {
+        order {
+          id
+        }
+      }
+      updateBoard(
+        input: { filter: { id: $boardId }, set: { parents: $newParents } }
+      ) {
+        board {
+          id
+          name
+        }
+      }
+    }
+  `;
+
+  const deleteBoardWithParentsGql = gql`
+    mutation addBoard($parent: [ID!], $orderId: [ID!]) {
+      updateBoard(
+        input: {
+          filter: { id: $parent }
+          remove: { listItems: { id: $orderId } }
+        }
+      ) {
+        board {
+          id
+          name
+        }
+      }
+      deleteOrder(filter: { id: $orderId }) {
+        order {
+          id
+        }
+      }
+    }
+  `;
+
+  const [deleteBoard] = useMutation(deleteBoardGql);
+  const [deleteBoardWithParents] = useMutation(deleteBoardWithParentsGql);
+
   const deleteFromParentBoard = (
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     e.stopPropagation();
     optDelete();
     if (container.board.parents > 1) {
-      client
-        .mutate({
-          mutation: gql`mutation{
-            updateBoard(input: {
-           filter: {
-              id: "${parentID}"
-            },
-            remove: {
-              listItems: {
-                id: "${container.id}"
-              }
-            }
-        }){
-          board {
-            id
-            name
-          }
-        }
-          deleteOrder(
-           filter: {
-              id: "${container.id}"
-          }){
-            order {
-              id
-            }
-          }
-          updateBoard(input: {
-            filter: {
-              id: "${container.board.id}"
-            },
-            set: {
-              parents: ${container.board.parents - 1}
-            }
-          }){
-            board {
-              id
-              name
-            }
-          }
-        }
-        `,
-        })
-        .then(() => {})
-        .catch((err) => {
-          console.log(err);
-        });
+      deleteBoard({
+        variables: {
+          parent: parentID,
+          orderId: container.id,
+          boardId: container.board.id,
+          newParents: container.board.parents - 1,
+        },
+      }).catch((err) => {
+        console.log(err);
+      });
     } else {
-      client
-        .mutate({
-          mutation: gql`mutation{
-            updateBoard(input: {
-           filter: {
-              id: "${parentID}"
-            },
-            remove: {
-              listItems: {
-                id: "${container.id}"
-              }
-            }
-        }){
-          board {
-            id
-            name
-          }
-        }
-      }
-        `,
-        })
-        .then(() => {})
-        .catch((err) => {
-          console.log(err);
-        });
+      deleteBoardWithParents({
+        variables: {
+          parent: parentID,
+          orderId: container.id,
+        },
+      }).catch((err) => {
+        console.log(err);
+      });
 
       axios({
         method: 'post',
