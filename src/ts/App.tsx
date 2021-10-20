@@ -67,16 +67,7 @@ const App: FC<AppProps> = ({ client }) => {
   useQuery(fetchUser, {
     variables: { email: user ? user.email : '' },
     onCompleted: (data) => {
-      if (data.getUser.homeBoard) {
-        setActiveBoard(data.getUser.homeBoard.id);
-      }
-    },
-    onError: (err) => {
-      console.log(err);
-      if (
-        err.message === `Cannot read property 'homeBoard' of null` ||
-        err.message === "Cannot read properties of null (reading 'homeBoard')"
-      ) {
+      if (!data.getUser) {
         client
           .mutate({
             mutation: gql`mutation {
@@ -111,7 +102,12 @@ const App: FC<AppProps> = ({ client }) => {
           .catch((err) => {
             console.log(err);
           });
+      } else if (data.getUser.homeBoard) {
+        setActiveBoard(data.getUser.homeBoard.id);
       }
+    },
+    onError: (err) => {
+      console.log(err);
     },
     skip: !(user && user.email),
   });
