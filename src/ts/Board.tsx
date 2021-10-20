@@ -1,6 +1,11 @@
 import React, { FC, MouseEventHandler } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import {
+  ApolloClient,
+  gql,
+  NormalizedCacheObject,
+  useMutation,
+} from '@apollo/client';
 
 import '../sass/styles.scss';
 import List from './List';
@@ -36,6 +41,42 @@ const Board: FC<BoardProps> = ({
   editing,
   setEditing,
 }) => {
+  const addToTopGql = gql`
+    mutation addBoard($parent: [ID!], $id: ID!, $index: Float) {
+      updateBoard(
+        input: {
+          filter: { id: $parent }
+          set: { listItems: [{ index: $index, board: { id: $id } }] }
+        }
+      ) {
+        board {
+          listItems {
+            index
+            board {
+              id
+              parents
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const [addToTop] = useMutation(addToTopGql);
+
+  const addToParentsGql = gql`
+    mutation addBoard($id: [ID!], $parents: Int) {
+      updateBoard(input: { filter: { id: $id }, set: { parents: $parents } }) {
+        board {
+          name
+          id
+        }
+      }
+    }
+  `;
+
+  const [addToParents] = useMutation(addToParentsGql);
+
   const addToTopBoard = (
     e: React.FormEvent<HTMLFormElement>,
     value: string
@@ -43,40 +84,15 @@ const Board: FC<BoardProps> = ({
     if (value === board.id) {
       window.alert('You cannot add a board to itself!');
     } else {
-      client
-        .mutate({
-          mutation: gql`mutation {
-                updateBoard(input:
-                  { filter: {
-                    id: "${board.id}"
-                  },
-                  set: {
-                    listItems: [
-                      {
-                        index: ${
-                          board.listItems[board.listItems.length - 1].index + 1
-                        },
-                        board:
-                        {
-                          id: "${value}"
-                        }
-                      }
-                    ]
-                  }
-                }) {
-                  board {
-                    listItems {
-                      index
-                      board {
-                        id
-                        parents
-                      }
-                    }
-                  }
-                }
-              }
-              `,
-        })
+      addToTop({
+        variables: {
+          parent: board.id,
+          index: board.listItems[board.listItems.length - 1]
+            ? board.listItems[board.listItems.length - 1].index + 1
+            : 0,
+          id: value,
+        },
+      })
         .then((data) => {
           let parents =
             data.data.updateBoard.board[0].listItems[
@@ -84,30 +100,14 @@ const Board: FC<BoardProps> = ({
             ].board.parents;
           parents = parents ? (parents += 1) : 2;
 
-          client
-            .mutate({
-              mutation: gql`mutation{
-                updateBoard(input: {filter: {
-                  id: "${value}",
-                },
-                set: {
-                  parents: ${parents}
-                }}
-                  ) {
-                  board {
-                    name
-                    id
-                  }
-                }
-              }
-              `,
-            })
-            .then(() => {
-              //
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+          addToParents({
+            variables: {
+              id: value,
+              parents,
+            },
+          }).catch((err) => {
+            console.log(err);
+          });
         })
         .catch((err) => {
           console.log(err);
