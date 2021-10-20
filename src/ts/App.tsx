@@ -4,6 +4,7 @@ import {
   ApolloClient,
   gql,
   NormalizedCacheObject,
+  useQuery,
   useSubscription,
 } from '@apollo/client';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -50,75 +51,66 @@ const App: FC<AppProps> = ({ client }) => {
     setPrevBoardList(prevBoardList.concat(newHist));
   };
 
-  const userFetch = (email: string): void => {
-    client
-      .query({
-        query: gql`
-          query {
-            getUser(email: "${email}") {
-              name
-              email
-              avatar
-              homeBoard {
-                id
+  const fetchUser = gql`
+    query ($email: String!) {
+      getUser(email: $email) {
+        name
+        email
+        avatar
+        homeBoard {
+          id
+        }
+      }
+    }
+  `;
 
-
-              }
-            }
-          }
-        `,
-      })
-      .then((result) => {
-        setActiveBoard(result.data.getUser.homeBoard.id);
-      })
-      .catch((err) => {
-        if (
-          err.message === `Cannot read property 'homeBoard' of null` ||
-          err.message === "Cannot read properties of null (reading 'homeBoard')"
-        ) {
-          client
-            .mutate({
-              mutation: gql`mutation {
-                addUser(input: [
-                  {
-                    name: "${user.name}",
-                    email: "${user.email}",
-                    homeBoard: {
-                      name: "${user.name}'s Home Board",
-                      owner: {
-                        email: "${user.email}"
-                      },
-                      home: true
-                    }
+  useQuery(fetchUser, {
+    variables: { email: user ? user.email : '' },
+    onCompleted: (data) => {
+      if (!data.getUser) {
+        client
+          .mutate({
+            mutation: gql`mutation {
+              addUser(input: [
+                {
+                  name: "${user.name}",
+                  email: "${user.email}",
+                  homeBoard: {
+                    name: "${user.name}'s Home Board",
+                    owner: {
+                      email: "${user.email}"
+                    },
+                    home: true
                   }
-                ]) {
-                  user {
-                    name
-                    email
-                    avatar
-                    homeBoard {
-                      id
-                    }
+                }
+              ]) {
+                user {
+                  name
+                  email
+                  avatar
+                  homeBoard {
+                    id
                   }
                 }
               }
-              `,
-            })
-            .then((result) => {
-              setActiveBoard(result.data.addUser.user[0].homeBoard.id);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      });
-  };
-
-  useEffect(() => {
-    if (user) {
-      userFetch(user.email);
-    }
-  }, [user]);
+            }
+            `,
+          })
+          .then((result) => {
+            setActiveBoard(result.data.addUser.user[0].homeBoard.id);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else if (data.getUser.homeBoard) {
+        setActiveBoard(data.getUser.homeBoard.id);
+      }
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+    skip: !(user && user.email),
+  });
 
   const boardSub = gql`
     subscription {
@@ -133,7 +125,7 @@ const App: FC<AppProps> = ({ client }) => {
         listItems(filter: {has: board}) {
           id
           index
-          board {
+          board (filter: {has: name}) {
             id
             name
             owner {
@@ -144,7 +136,7 @@ const App: FC<AppProps> = ({ client }) => {
             listItems(filter: {has: board}) {
               id
               index
-              board {
+              board (filter: {has: name}) {
                 id
                 name
                 owner {

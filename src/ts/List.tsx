@@ -5,13 +5,11 @@ import ListItem from './ListItem';
 import '../sass/styles.scss';
 import AddBoardForm from './AddBoardForm';
 import DeleteButton from './DeleteButton';
-import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import { Boardtype, Ordertype } from './Interfaces';
 import EditButton from './EditButton';
 
 type ListProps = {
   setActiveBoard: Function;
-  client: ApolloClient<NormalizedCacheObject>;
   parent: string;
   addHistory: Function;
   list: Boardtype;
@@ -27,7 +25,6 @@ const List: FC<ListProps> = ({
   list,
   container,
   setActiveBoard,
-  client,
   parent,
   addHistory,
   editing,
@@ -66,7 +63,6 @@ const List: FC<ListProps> = ({
                 </h5>
                 <DeleteButton
                   parentID={parent}
-                  client={client}
                   container={container}
                   setBoard={setBoard}
                   board={board}
@@ -80,7 +76,6 @@ const List: FC<ListProps> = ({
                           <AddBoardForm
                             parent={list.id}
                             placeholder={'Change Board Name'}
-                            client={client}
                             edit={true}
                             boardID={item.board.id}
                             setEditing={setEditing}
@@ -97,7 +92,6 @@ const List: FC<ListProps> = ({
                           container={item}
                           parentID={list.id}
                           setActiveBoard={setActiveBoard}
-                          client={client}
                           addMiddleBoard={addMiddleBoard}
                           setEditing={setEditing}
                           index={i}
@@ -113,7 +107,6 @@ const List: FC<ListProps> = ({
                   <AddBoardForm
                     parent={list.id}
                     placeholder={'Add List Item'}
-                    client={client}
                     index={
                       list.listItems.length
                         ? list.listItems[list.listItems.length - 1].index + 1

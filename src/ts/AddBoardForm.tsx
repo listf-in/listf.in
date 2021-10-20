@@ -1,4 +1,4 @@
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { FC, useState } from 'react';
 import '../sass/styles.scss';
@@ -8,7 +8,6 @@ type AddBoardFormProps = {
   parent: string;
   index: number;
   placeholder: string;
-  client: ApolloClient<NormalizedCacheObject>;
   setBoard: Function;
   board: Boardtype;
   edit?: boolean;
@@ -21,7 +20,6 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
   parent,
   index,
   placeholder,
-  client,
   edit = false,
   boardID,
   setEditing,
@@ -75,45 +73,51 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
     setBoard({ ...board });
   };
 
-  const addToParentBoard = () => {
-    optAddBoard();
-    client
-      .mutate({
-        mutation: gql`mutation {
-                updateBoard(input:
-                  { filter: {
-                    id: "${parent}"
-                  },
-                  set: {
-                    listItems: [
-                      {
-                        index: ${index || 0},
-                        board:{
-                          name: "${formValue}",
-                          owner: {
-                            email: "${user.email}"
-                          },
-                          members: {
-                            email: "${user.email}"
-                          },
-                          parents: 1,
-                          home: false
-                        }
-                      }
-                    ]
-                  }
-                }) {
-                  board {
-                    id
-                  }
+  const addToBoardGql = gql`
+    mutation addBoard(
+      $parent: [ID!]
+      $name: String!
+      $index: Float!
+      $email: String!
+    ) {
+      updateBoard(
+        input: {
+          filter: { id: $parent }
+          set: {
+            listItems: [
+              {
+                index: $index
+                board: {
+                  name: $name
+                  owner: { email: $email }
+                  members: { email: $email }
+                  parents: 1
+                  home: false
                 }
               }
-              `,
-      })
-      .then(() => {})
-      .catch((err) => {
-        console.log(err);
-      });
+            ]
+          }
+        }
+      ) {
+        board {
+          id
+        }
+      }
+    }
+  `;
+
+  const [addToBoard] = useMutation(addToBoardGql);
+
+  const addToParentBoard = () => {
+    optAddBoard();
+    addToBoard({
+      variables: {
+        parent: parent,
+        index: index || 0,
+        name: formValue,
+        email: user.email,
+      },
+    }).catch((err) => console.log(err));
     setFormValue('');
   };
 
@@ -138,26 +142,27 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
     setBoard({ ...board });
   };
 
+  const editBoardGql = gql`
+    mutation addBoard($id: [ID!], $name: String!) {
+      updateBoard(input: { filter: { id: $id }, set: { name: $name } }) {
+        board {
+          name
+          id
+        }
+      }
+    }
+  `;
+
+  const [editsBoard] = useMutation(editBoardGql);
+
   const editBoard = () => {
     optEditBoard();
-    client
-      .mutate({
-        mutation: gql`mutation{
-          updateBoard(input: {filter: {
-            id: "${boardID}",
-          },
-          set: {
-            name: "${formValue}"
-          }}
-            ) {
-            board {
-              name
-              id
-            }
-          }
-        }
-        `,
-      })
+    editsBoard({
+      variables: {
+        id: boardID,
+        name: formValue,
+      },
+    })
       .then(() => {
         setEditing('');
       })
