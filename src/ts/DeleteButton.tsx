@@ -74,7 +74,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({
   `;
 
   const deleteBoardWithParentsGql = gql`
-    mutation addBoard($parent: [ID!], $orderId: [ID!]) {
+    mutation addBoard($parent: [ID!], $orderId: ID!) {
       updateBoard(
         input: {
           filter: { id: $parent }
@@ -84,11 +84,6 @@ const DeleteButton: FC<DeleteButtonProps> = ({
         board {
           id
           name
-        }
-      }
-      deleteOrder(filter: { id: $orderId }) {
-        order {
-          id
         }
       }
     }
