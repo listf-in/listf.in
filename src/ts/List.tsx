@@ -44,6 +44,7 @@ const List: FC<ListProps> = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
+          className='listDragCont'
         >
           <Droppable droppableId={list.id} type={'item'}>
             {(provided) => (
