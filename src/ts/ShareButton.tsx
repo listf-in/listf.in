@@ -9,15 +9,17 @@ const ShareButton: FC<shareButtonProps> = ({ id }) => {
   const [code, setCode] = React.useState('');
   return (
     <div>
-      <i
-        className='fas fa-share-alt-square shareButton shareButtons clickable'
+      <button
+        className='shareButton shareButtons clickable'
         onClick={() => {
           setCode(id);
           setTimeout(() => {
             setCode('');
           }, 5000);
         }}
-      ></i>
+      >
+        Share Board
+      </button>
       <span className='shareCode clickable'>{code}</span>
     </div>
   );
