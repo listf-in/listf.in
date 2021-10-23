@@ -132,7 +132,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({
 
   return (
     <i
-      className='fas fa-window-close shareButtons deleteButton clickable'
+      className='fas fa-window-close listButtons deleteButton clickable'
       onClick={(e) => deleteFromParentBoard(e)}
     ></i>
   );

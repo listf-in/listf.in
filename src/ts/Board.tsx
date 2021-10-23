@@ -397,7 +397,7 @@ const Board: FC<BoardProps> = ({
       >
         Back
       </button>
-      <EditButton boardID={board.id} callback={setEditing} />
+      <EditButton top={true} boardID={board.id} callback={setEditing} />
       {board.home ? null : <ShareButton id={board.id} />}
       <AddShareButton addToTopBoard={addToTopBoard} />
       <DragDropContext onDragEnd={onDragEnd}>

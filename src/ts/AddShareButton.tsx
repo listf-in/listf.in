@@ -17,12 +17,14 @@ const AddShareButton: FC<addShareButtonProps> = ({ addToTopBoard }) => {
 
   return (
     <div>
-      <i
-        className='fas fa-plus-square addShareButton shareButtons clickable'
+      <button
+        className='addShareButton shareButtons clickable'
         onClick={() => {
           setClicked(!clicked);
         }}
-      ></i>
+      >
+        Add Shared Board
+      </button>
       {clicked && (
         <form className='boardShareInputForm' onSubmit={addShareBoard}>
           <input
