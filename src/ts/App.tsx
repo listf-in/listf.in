@@ -8,7 +8,7 @@ import {
   useSubscription,
 } from '@apollo/client';
 import { useAuth0 } from '@auth0/auth0-react';
-import Login from './Login';
+import Header from './Header';
 import Board from './Board';
 import orderBoard from './sharedMethods';
 import Landing from './Landing';
@@ -161,7 +161,7 @@ const App: FC<AppProps> = ({ client }) => {
 
   return user && board.name ? (
     <>
-      <Login />
+      <Header />
       <Board
         client={client}
         board={board}
