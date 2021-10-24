@@ -42,7 +42,6 @@ html {
 
 .logo {
   font-family: 'Kalam', cursive;
-  margin: 0 0 0 0.5rem;
   word-wrap: normal;
 }
 
@@ -77,11 +76,18 @@ html {
   display: grid;
   grid-template-columns: auto auto auto minmax(80px, 10%);
   width: 100%;
+  & .logo {
+    grid-column: 1;
+    align-self: center;
+    margin: auto 0.5rem;
+    height: 1.3em;
+  }
 }
 
 #userProfileInfo {
   grid-column: 3;
   margin: 0 0 0 auto;
+  text-align: center;
 }
 
 .profilePicture {
@@ -91,6 +97,8 @@ html {
 .profileUsername {
   display: inline;
   word-wrap: normal;
+  margin: auto 10px;
+  align-self: center;
 }
 
 .board {
