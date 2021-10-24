@@ -11,6 +11,10 @@ html {
 
 #root {
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100vh;
 }
 
 #app {
@@ -77,6 +81,7 @@ html {
   grid-template-columns: auto auto auto auto;
   width: 100%;
   background-color: #f8f8f8;
+  height: 3rem;
   & .logo {
     grid-column: 1;
     align-self: center;
@@ -103,19 +108,21 @@ html {
 }
 
 .board {
+  overflow-x: hidden;
   overflow-y: hidden;
-  overflow-x: auto;
-  height: 90vh;
-  margin: 10px;
+  height: calc(100vh - 3rem);
+  margin: 10px 10px 0 10px;
 }
 
 #mainBoard {
   display: grid;
-  height: calc(100% - 75px);
+  height: calc(100vh - 144px);
   grid-template-rows: 100%;
   grid-template-columns: repeat(auto-fill, 255px);
   grid-auto-flow: column;
   grid-gap: 10px;
+  overflow-y: hidden;
+  overflow-x: auto;
   margin: 10px 0 0 0;
 }
 
@@ -138,10 +145,10 @@ html {
 
 .list {
   width: 250px;
+  max-height: calc(100vh - 160px);
   overflow: hidden;
   border-radius: 5px;
   height: fit-content;
-  max-height: 80vh;
   background-color: #ebecf0;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.267);
 }
@@ -167,7 +174,8 @@ html {
 }
 
 .listContainer {
-  max-height: 70vh;
+  max-height: calc(100vh - 240px);
+  // max-height: 70vh;
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
