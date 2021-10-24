@@ -10,11 +10,11 @@ import {
 import '../sass/styles.scss';
 import List from './List';
 import AddBoardForm from './AddBoardForm';
-import DepthBar from './DepthBar';
 import ShareButton from './ShareButton';
 import AddShareButton from './AddShareButton';
 import { Boardtype } from './Interfaces';
 import EditButton from './EditButton';
+import DepthBarCont from './DepthBarCont';
 
 type BoardProps = {
   setActiveBoard: Function;
@@ -370,26 +370,15 @@ const Board: FC<BoardProps> = ({
 
   return (
     <div className='board'>
-      <DepthBar
-        prevBoardList={prevBoardList}
-        setActiveBoard={setActiveBoard}
+      <DepthBarCont
+        board={board}
+        setBoard={setBoard}
+        prevBoardList={prevBoardList.slice().reverse()}
         setPrevBoardList={setPrevBoardList}
+        setActiveBoard={setActiveBoard}
+        editing={editing === board.id}
+        setEditing={setEditing}
       />
-      {editing === board.id ? (
-        <AddBoardForm
-          parent={board.id}
-          placeholder={'Change List Name'}
-          edit={true}
-          initValue={board.name}
-          setEditing={setEditing}
-          boardID={board.id}
-          index={board.listItems.length}
-          setBoard={setBoard}
-          board={board}
-        />
-      ) : (
-        board.name
-      )}
       <button
         className={'backButton clickable'}
         onClick={goBack}
