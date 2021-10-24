@@ -3,9 +3,10 @@ import '../sass/styles.scss';
 
 type shareButtonProps = {
   id: string;
+  home: boolean;
 };
 
-const ShareButton: FC<shareButtonProps> = ({ id }) => {
+const ShareButton: FC<shareButtonProps> = ({ id, home }) => {
   const [code, setCode] = React.useState('');
   return (
     <div>
@@ -17,6 +18,7 @@ const ShareButton: FC<shareButtonProps> = ({ id }) => {
             setCode('');
           }, 5000);
         }}
+        disabled={!home}
       >
         Share Board
       </button>

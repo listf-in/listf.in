@@ -116,7 +116,7 @@ html {
 
 #mainBoard {
   display: grid;
-  height: calc(100vh - 144px);
+  height: calc(100vh - 165px);
   grid-template-rows: 100%;
   grid-template-columns: repeat(auto-fill, 255px);
   grid-auto-flow: column;
@@ -145,7 +145,7 @@ html {
 
 .list {
   width: 250px;
-  max-height: calc(100vh - 160px);
+  max-height: calc(100vh - 181px);
   overflow: hidden;
   border-radius: 5px;
   height: fit-content;
@@ -174,8 +174,7 @@ html {
 }
 
 .listContainer {
-  max-height: calc(100vh - 240px);
-  // max-height: 70vh;
+  max-height: calc(100vh - 261px);
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;

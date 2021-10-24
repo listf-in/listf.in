@@ -385,7 +385,12 @@ const Board: FC<BoardProps> = ({
         editing={editing === board.id}
         setEditing={setEditing}
       />
-      {board.home ? null : <ShareButton id={board.id} />}
+      {
+        <ShareButton
+          home={board.home === null || board.home === false}
+          id={board.id}
+        />
+      }
       <AddShareButton addToTopBoard={addToTopBoard} />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable
