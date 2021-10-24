@@ -76,6 +76,7 @@ html {
   display: grid;
   grid-template-columns: auto auto auto minmax(80px, 10%);
   width: 100%;
+  background-color: #f8f8f8;
   & .logo {
     grid-column: 1;
     align-self: center;
