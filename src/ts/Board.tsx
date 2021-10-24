@@ -13,7 +13,6 @@ import AddBoardForm from './AddBoardForm';
 import ShareButton from './ShareButton';
 import AddShareButton from './AddShareButton';
 import { Boardtype } from './Interfaces';
-import EditButton from './EditButton';
 import DepthBarCont from './DepthBarCont';
 
 type BoardProps = {
@@ -370,6 +369,13 @@ const Board: FC<BoardProps> = ({
 
   return (
     <div className='board'>
+      <button
+        className={'backButton clickable'}
+        onClick={goBack}
+        disabled={!prevBoardList[0]}
+      >
+        Back
+      </button>
       <DepthBarCont
         board={board}
         setBoard={setBoard}
@@ -379,14 +385,6 @@ const Board: FC<BoardProps> = ({
         editing={editing === board.id}
         setEditing={setEditing}
       />
-      <button
-        className={'backButton clickable'}
-        onClick={goBack}
-        disabled={!prevBoardList[0]}
-      >
-        Back
-      </button>
-      <EditButton top={true} boardID={board.id} callback={setEditing} />
       {board.home ? null : <ShareButton id={board.id} />}
       <AddShareButton addToTopBoard={addToTopBoard} />
       <DragDropContext onDragEnd={onDragEnd}>

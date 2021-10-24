@@ -106,6 +106,7 @@ html {
   overflow-y: hidden;
   overflow-x: auto;
   height: 90vh;
+  margin: 0 10px;
 }
 
 #mainBoard {
@@ -115,6 +116,20 @@ html {
   grid-template-columns: repeat(auto-fill, 255px);
   grid-auto-flow: column;
   grid-gap: 10px;
+  margin: 10px 0 0 0;
+}
+
+.depthBarCont {
+  height: 33px;
+}
+
+.depthBarSpacer {
+  height: 4px;
+}
+
+.boardName {
+  font-size: 1.5em;
+  font-weight: bold;
 }
 
 .listDragCont {
@@ -194,7 +209,6 @@ html {
 .AddBoardForm {
   min-height: 2em;
   overflow: hidden;
-  opacity: 50%;
   background-color: inherit;
 }
 

@@ -159,6 +159,10 @@ const App: FC<AppProps> = ({ client }) => {
     }
   }, [data]);
 
+  useEffect(() => {
+    document.title = board.name ? `${board.name} | Listf.in` : 'Listf.in';
+  }, [board.name]);
+
   return user && board.name ? (
     <>
       <Header />

@@ -5,23 +5,15 @@ import '../sass/styles.scss';
 type EditButtonProps = {
   boardID: string;
   callback: Function;
-  top: boolean;
 };
 
-const EditButton: FC<EditButtonProps> = ({ boardID, callback, top }) => {
+const EditButton: FC<EditButtonProps> = ({ boardID, callback }) => {
   const editBoardFormer = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.stopPropagation();
     callback(boardID);
   };
 
-  return top ? (
-    <button
-      className='shareButtons clickable'
-      onClick={(e) => editBoardFormer(e)}
-    >
-      Edit Board Name
-    </button>
-  ) : (
+  return (
     <i
       className='fas fa-pen-square listButtons editButton clickable'
       onClick={(e) => editBoardFormer(e)}

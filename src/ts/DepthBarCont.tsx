@@ -38,7 +38,15 @@ const DepthBarCont: FC<depthBarProps> = ({
           board={board}
         />
       ) : (
-        board.name
+        <>
+          <div className='depthBarSpacer' />
+          <span
+            className='boardName clickable'
+            onClick={() => setEditing(board.id)}
+          >
+            {board.name}
+          </span>
+        </>
       )}
       <DepthBar
         prevBoardList={prevBoardList}
