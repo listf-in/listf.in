@@ -195,6 +195,11 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
           setFormValue(e.target.value);
         }}
         autoFocus={edit}
+        onBlur={() => {
+          if (edit) {
+            setEditing('');
+          }
+        }}
       />
     </form>
   );
