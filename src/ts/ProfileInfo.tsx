@@ -6,9 +6,9 @@ const ProfileInfo: FC = () => {
 
   return (
     isAuthenticated && (
-      <div>
-        <img src={user.picture} alt={user.name} className={'profilePicture'} />
+      <div id='userProfileInfo'>
         <h2 className={'profileUsername'}>{user.name}</h2>
+        <img src={user.picture} alt={user.name} className={'profilePicture'} />
       </div>
     )
   );

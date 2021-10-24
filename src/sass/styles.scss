@@ -18,7 +18,8 @@ html {
 }
 
 #loginButton {
-  float: right;
+  grid-column: 4;
+  margin: auto;
 }
 
 #landing {
@@ -39,11 +40,17 @@ html {
   text-align: center;
 }
 
+.logo {
+  font-family: 'Kalam', cursive;
+  margin: 0 0 0 0.5rem;
+  word-wrap: normal;
+}
+
 .landingLogo {
   grid-row: 2;
   font-size: 10vmin;
   max-width: 100%;
-  word-wrap: none;
+  word-wrap: normal;
 }
 
 .landingSubtitle {
@@ -66,13 +73,15 @@ html {
   background-color: #c0c0c0;
 }
 
-h1.logo {
-  display: block;
-  width: 200px;
+#header {
+  display: grid;
+  grid-template-columns: auto auto auto minmax(80px, 10%);
+  width: 100%;
 }
 
-#userProfileIlnfo {
-  height: 10vh;
+#userProfileInfo {
+  grid-column: 3;
+  margin: 0 0 0 auto;
 }
 
 .profilePicture {
@@ -81,6 +90,7 @@ h1.logo {
 
 .profileUsername {
   display: inline;
+  word-wrap: normal;
 }
 
 .board {
