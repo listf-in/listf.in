@@ -7,7 +7,7 @@ import LoginButton from './LoginButton';
 const Header: FC = () => {
   return (
     <div id='header'>
-      <h1 className='logo'>LISTFIN</h1>
+      <h1 className='logo'>LISTF.IN</h1>
       {/* <ProfileInfo /> */}
       <div id='loginButton'>
         <LoginButton />
