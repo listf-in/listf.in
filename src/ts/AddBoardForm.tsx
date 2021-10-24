@@ -194,6 +194,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
         onChange={(e) => {
           setFormValue(e.target.value);
         }}
+        autoFocus={edit}
       />
     </form>
   );
