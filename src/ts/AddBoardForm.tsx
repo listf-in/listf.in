@@ -187,7 +187,7 @@ const AddBoardForm: FC<AddBoardFormProps> = ({
       onSubmit={onSubmitFilter}
     >
       <input
-        className={'AddBoardFormInput'}
+        className={edit ? 'AddBoardFormInput edit' : 'AddBoardFormInput'}
         type={'text'}
         value={formValue}
         placeholder={placeholder}
