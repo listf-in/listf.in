@@ -19,7 +19,7 @@ html {
 
 #loginButton {
   grid-column: 4;
-  margin: auto;
+  margin: auto 10px auto auto;
 }
 
 #landing {
@@ -74,7 +74,7 @@ html {
 
 #header {
   display: grid;
-  grid-template-columns: auto auto auto minmax(80px, 10%);
+  grid-template-columns: auto auto auto auto;
   width: 100%;
   background-color: #f8f8f8;
   & .logo {
