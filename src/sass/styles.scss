@@ -118,9 +118,8 @@ html {
   display: grid;
   height: calc(100vh - 165px);
   grid-template-rows: 100%;
-  grid-template-columns: repeat(auto-fill, 255px);
+  grid-template-columns: repeat(auto-fill, 265px);
   grid-auto-flow: column;
-  grid-gap: 10px;
   overflow-y: hidden;
   overflow-x: auto;
   margin: 10px 0 0 0;
