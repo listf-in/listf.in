@@ -46,80 +46,82 @@ const List: FC<ListProps> = ({
           ref={provided.innerRef}
           className='listDragCont'
         >
-          <Droppable droppableId={list.id} type={'item'}>
-            {(provided) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                className='list'
-              >
-                <h5
-                  onClick={() => {
-                    addHistory();
-                    setActiveBoard(list.id);
-                  }}
-                  className='listTitle clickable'
+          <div className='list'>
+            <h5
+              onClick={() => {
+                addHistory();
+                setActiveBoard(list.id);
+              }}
+              className='listTitle clickable'
+            >
+              {list.name}
+            </h5>
+            <DeleteButton
+              parentID={parent}
+              container={container}
+              setBoard={setBoard}
+              board={board}
+            />
+            <EditButton boardID={list.id} callback={setEditing} />
+            <Droppable droppableId={list.id} type={'item'}>
+              {(provided) => (
+                <div
+                  className='listContainer'
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
                 >
-                  {list.name}
-                </h5>
-                <DeleteButton
-                  parentID={parent}
-                  container={container}
-                  setBoard={setBoard}
-                  board={board}
-                />
-                <EditButton boardID={list.id} callback={setEditing} />
-                <div className='listContainer'>
-                  {list['listItems'] &&
-                    list['listItems'].map((item, i) =>
-                      item.board.id === editing ? (
-                        <div className='listItem addBoardForm'>
-                          <AddBoardForm
-                            parent={list.id}
-                            placeholder={'Change Board Name'}
-                            edit={true}
-                            boardID={item.board.id}
+                  <div className='listItemsCont'>
+                    {list['listItems'] &&
+                      list['listItems'].map((item, i) =>
+                        item.board.id === editing ? (
+                          <div className='listItem addBoardForm'>
+                            <AddBoardForm
+                              parent={list.id}
+                              placeholder={'Change Board Name'}
+                              edit={true}
+                              boardID={item.board.id}
+                              setEditing={setEditing}
+                              initValue={item.board.name}
+                              index={item.index}
+                              setBoard={setBoard}
+                              board={board}
+                            />
+                          </div>
+                        ) : (
+                          <ListItem
+                            key={item.board.id}
+                            item={item.board}
+                            container={item}
+                            parentID={list.id}
+                            setActiveBoard={setActiveBoard}
+                            addMiddleBoard={addMiddleBoard}
                             setEditing={setEditing}
-                            initValue={item.board.name}
-                            index={item.index}
-                            setBoard={setBoard}
+                            index={i}
+                            list={list}
                             board={board}
+                            setBoard={setBoard}
                           />
-                        </div>
-                      ) : (
-                        <ListItem
-                          key={item.board.id}
-                          item={item.board}
-                          container={item}
-                          parentID={list.id}
-                          setActiveBoard={setActiveBoard}
-                          addMiddleBoard={addMiddleBoard}
-                          setEditing={setEditing}
-                          index={i}
-                          list={list}
-                          board={board}
-                          setBoard={setBoard}
-                        />
-                      )
-                    )}
-                  {provided.placeholder}
+                        )
+                      )}
+                    {provided.placeholder}
+                  </div>
                 </div>
-                <div className='listItem addBoardForm'>
-                  <AddBoardForm
-                    parent={list.id}
-                    placeholder={'Add List Item'}
-                    index={
-                      list.listItems.length
-                        ? list.listItems[list.listItems.length - 1].index + 1
-                        : 0
-                    }
-                    setBoard={setBoard}
-                    board={board}
-                  />
-                </div>
-              </div>
-            )}
-          </Droppable>
+              )}
+            </Droppable>
+            <div className='listItem addBoardForm'>
+              <AddBoardForm
+                parent={list.id}
+                placeholder={'Add List Item'}
+                index={
+                  list.listItems.length
+                    ? list.listItems[list.listItems.length - 1].index + 1
+                    : 0
+                }
+                setBoard={setBoard}
+                board={board}
+              />
+            </div>
+          </div>
         </div>
       )}
     </Draggable>
