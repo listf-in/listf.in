@@ -21,7 +21,7 @@ const DepthBar: FC<depthBarProps> = ({
         onClick={() => {
           setActiveBoard(depth.id);
           setPrevBoardList(
-            prevBoardList.slice(0, prevBoardList.indexOf(depth))
+            prevBoardList.slice(prevBoardList.indexOf(depth) + 1).reverse()
           );
         }}
       >
