@@ -121,7 +121,6 @@ const List: FC<ListProps> = ({
                 board={board}
               />
             </div>
-            <div className='boardRightMargin' />
           </div>
         </div>
       )}
