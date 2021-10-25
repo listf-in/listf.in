@@ -140,10 +140,11 @@ html {
 
 .listDragCont {
   height: fit-content;
+  margin-right: 10px;
 }
 
 .list {
-  width: 250px;
+  width: 255px;
   max-height: calc(100vh - 181px);
   overflow: hidden;
   border-radius: 5px;
