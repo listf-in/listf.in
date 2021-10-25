@@ -46,6 +46,7 @@ html {
   grid-row: 2;
   font-size: 10vmin;
   max-width: 80%;
+  max-width: 1200px;
   word-wrap: normal; }
 
 .landingSubtitle {
