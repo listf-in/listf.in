@@ -1,5 +1,6 @@
 import React, { FC, MouseEventHandler } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import ScrollContainer from 'react-indiana-drag-scroll';
 import {
   ApolloClient,
   gql,
@@ -399,10 +400,15 @@ const Board: FC<BoardProps> = ({
           type={'list'}
         >
           {(provided) => (
-            <div
-              id='mainBoard'
+            <ScrollContainer
+              className='scroll-container mainBoard'
+              horizontal={true}
+              vertical={false}
               {...provided.droppableProps}
-              ref={provided.innerRef}
+              innerRef={provided.innerRef}
+              ignoreElements={
+                '.list, .listItem, .addBoardForm, .listTitle, .listItemName'
+              }
             >
               {board.listItems.map((list, i) =>
                 list.board.id === editing ? (
@@ -450,7 +456,7 @@ const Board: FC<BoardProps> = ({
                   board={board}
                 />
               </div>
-            </div>
+            </ScrollContainer>
           )}
         </Droppable>
       </DragDropContext>
