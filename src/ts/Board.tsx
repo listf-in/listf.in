@@ -457,6 +457,7 @@ const Board: FC<BoardProps> = ({
                   board={board}
                 />
               </div>
+              <div className='boardRightMargin' />
             </ScrollContainer>
           )}
         </Droppable>

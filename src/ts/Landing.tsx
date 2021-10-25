@@ -6,7 +6,7 @@ const Landing: FC = () => {
   const [loggingIn, setLoggingIn] = React.useState(false);
   return loggingIn ? null : (
     <div id='landing'>
-      <h1 className='landingLogo logo'>LISTF.IN</h1>
+      <img src='listfinBlack.png' className='landingLogo logo'></img>
       <LoginButton setLoggingIn={setLoggingIn} landing={true} />
       <h3 className='landingSubtitle'>
         Infinite Lists,

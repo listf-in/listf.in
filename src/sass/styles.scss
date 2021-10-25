@@ -42,6 +42,7 @@ html {
   justify-self: center;
   align-self: center;
   text-align: center;
+  margin: 2rem auto;
 }
 
 .logo {
@@ -52,7 +53,7 @@ html {
 .landingLogo {
   grid-row: 2;
   font-size: 10vmin;
-  max-width: 100%;
+  max-width: 80%;
   word-wrap: normal;
 }
 
@@ -111,7 +112,7 @@ html {
   overflow-x: hidden;
   overflow-y: hidden;
   height: calc(100vh - 3rem);
-  margin: 10px 10px 0 10px;
+  margin: 10px 0 0 0;
 }
 
 .mainBoard {
@@ -123,6 +124,10 @@ html {
   overflow-y: hidden;
   overflow-x: auto;
   margin: 10px 0 0 0;
+}
+
+.boardRightMargin {
+  width: 10px;
 }
 
 .depthBarCont {
@@ -152,6 +157,15 @@ html {
   background-color: #ebecf0;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.267);
 }
+
+.list:first-of-type {
+  margin-left: 10px;
+}
+
+// .list.addBoardForm {
+//   margin-right: 10px;
+//   width: 255px;
+// }
 
 .listTitle {
   width: 200px;

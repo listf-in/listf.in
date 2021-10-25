@@ -7,7 +7,7 @@ import LoginButton from './LoginButton';
 const Header: FC = () => {
   return (
     <div id='header'>
-      <h1 className='logo'>LISTF.IN</h1>
+      <img src='listfinBlack.png' className='logo'></img>
       {/* <ProfileInfo /> */}
       <div id='loginButton'>
         <LoginButton />
