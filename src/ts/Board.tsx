@@ -409,6 +409,7 @@ const Board: FC<BoardProps> = ({
               ignoreElements={
                 '.list, .listItem, .addBoardForm, .listTitle, .listItemName'
               }
+              hideScrollbars={false}
             >
               {board.listItems.map((list, i) =>
                 list.board.id === editing ? (
