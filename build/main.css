@@ -1,0 +1,254 @@
+* {
+  word-wrap: break-word;
+  box-sizing: border-box; }
+
+body,
+html {
+  overflow: hidden;
+  margin: 0; }
+
+#root {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100vh; }
+
+#app {
+  overflow: hidden; }
+
+#loginButton {
+  grid-column: 4;
+  margin: auto 10px auto auto; }
+
+#landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: serif;
+  font-weight: 100;
+  width: 100vw;
+  height: 100vh; }
+
+.landingLogo,
+.landingSubtitle {
+  justify-self: center;
+  align-self: center;
+  text-align: center;
+  margin: 2rem auto; }
+
+.logo {
+  font-family: 'Kalam', cursive;
+  word-wrap: normal; }
+
+.landingLogo {
+  grid-row: 2;
+  font-size: 10vmin;
+  max-width: 80%;
+  word-wrap: normal; }
+
+.landingSubtitle {
+  grid-row: 4;
+  font-size: 8vmin;
+  max-width: 100%; }
+
+#landingLog {
+  grid-row: 3;
+  width: 15em;
+  max-width: 80%;
+  height: 3em;
+  background-color: white;
+  font-size: 1.5em;
+  transition: 0.3s; }
+
+#landingLog:hover {
+  background-color: #c0c0c0; }
+
+#header {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  width: 100%;
+  background-color: #f8f8f8;
+  height: 3rem; }
+  #header .logo {
+    grid-column: 1;
+    align-self: center;
+    margin: auto 0.5rem;
+    height: 1.3em; }
+
+#userProfileInfo {
+  grid-column: 3;
+  margin: 0 0 0 auto;
+  text-align: center; }
+
+.profilePicture {
+  height: 3em; }
+
+.profileUsername {
+  display: inline;
+  word-wrap: normal;
+  margin: auto 10px;
+  align-self: center; }
+
+.board {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: calc(100vh - 3rem);
+  margin: 10px 0 0 0; }
+
+.mainBoard {
+  display: grid;
+  height: calc(100vh - 165px);
+  grid-template-rows: 100%;
+  grid-template-columns: repeat(auto-fill, 265px);
+  grid-auto-flow: column;
+  overflow-y: hidden;
+  overflow-x: auto;
+  margin: 10px 0 0 0; }
+
+.boardRightMargin {
+  width: 10px; }
+
+.depthBarCont {
+  height: 33px; }
+
+.depthBarSpacer {
+  height: 4px; }
+
+.boardName {
+  font-size: 1.5em;
+  font-weight: bold; }
+
+.listDragCont {
+  height: fit-content;
+  margin-right: 10px; }
+
+.list {
+  width: 255px;
+  max-height: calc(100vh - 181px);
+  overflow: hidden;
+  border-radius: 5px;
+  height: fit-content;
+  background-color: #ebecf0;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.267); }
+
+.list:first-of-type {
+  margin-left: 10px; }
+
+.listTitle {
+  width: 200px;
+  font-size: 1.2em;
+  font-weight: bold;
+  display: inline-block;
+  margin: 10px 0 10px 5px; }
+
+.list .deleteButton,
+.list .editButton {
+  float: right;
+  visibility: hidden;
+  display: inline; }
+
+.list:hover .deleteButton,
+.list:hover .editButton {
+  visibility: visible; }
+
+.listContainer {
+  max-height: calc(100vh - 261px);
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto; }
+
+.listItem {
+  width: 235px;
+  border-radius: 5px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.267);
+  display: grid;
+  grid-template-columns: auto 20px 20px; }
+  .listItem:hover {
+    background-color: #f6f6f8; }
+
+.list .listItem .deleteButton,
+.list .listItem .editButton {
+  visibility: hidden; }
+
+.list .listItem:hover .deleteButton,
+.list .listItem:hover .editButton {
+  visibility: visible; }
+
+.listItemName {
+  display: inline-block;
+  width: 210px;
+  margin: 0.5em 0 0.5em 5px;
+  grid-column: 1 / 4;
+  grid-row: 1;
+  z-index: 3; }
+
+.AddBoardForm {
+  min-height: 2em;
+  overflow: hidden;
+  background-color: inherit;
+  border-radius: 5px; }
+
+.AddBoardFormInput {
+  width: 100%;
+  min-height: 2.5em;
+  background: none;
+  outline: none;
+  border: none;
+  padding: 0;
+  margin-left: 5px; }
+
+.deleteButton,
+.editButton {
+  display: inline;
+  grid-row: 1;
+  height: 16px; }
+
+.deleteButton {
+  grid-column: 3;
+  z-index: 4;
+  margin-right: 4px; }
+
+.editButton {
+  grid-column: 2;
+  z-index: 4;
+  margin-right: 6px; }
+
+.backButton {
+  display: block; }
+
+.clickable {
+  cursor: pointer; }
+
+.listButtons {
+  color: lightgray; }
+  .listButtons:hover {
+    color: black; }
+
+.boardShareInputForm {
+  display: inline; }
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 20px; }
+
+::-webkit-scrollbar-track {
+  background-color: transparent; }
+
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box; }
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf; }
+
+/* end custom scrollbar */
+.listItemsCont {
+  min-height: 1px; }
+
