@@ -125,7 +125,7 @@ html {
 
 .listDragCont {
   height: fit-content;
-  margin-right: 10px; }
+  margin-left: 10px; }
 
 .list {
   width: 255px;
@@ -135,9 +135,6 @@ html {
   height: fit-content;
   background-color: #ebecf0;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.267); }
-
-.list:first-of-type {
-  margin-left: 10px; }
 
 .list.addBoardForm {
   margin-left: 10px; }
