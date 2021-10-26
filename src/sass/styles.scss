@@ -136,15 +136,42 @@ html {
 
 .depthBarCont {
   height: 33px;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
 
 .depthBarSpacer {
   height: 4px;
 }
 
+.depthBar {
+  display: flex;
+  height: 33px;
+  align-items: baseline;
+  justify-content: flex-start;
+  align-content: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}
+
+.depthBarItem {
+  display: inline-block;
+  word-wrap: normal;
+  white-space: nowrap;
+}
+
 .boardName {
   font-size: 1.5em;
   font-weight: bold;
+  height: 33px;
+  max-width: 100%;
+  min-width: 50px;
+  display: inline-block;
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  word-wrap: break-word;
 }
 
 .listDragCont {
@@ -161,14 +188,6 @@ html {
   background-color: #ebecf0;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.267);
 }
-
-// .listDragCont:first-of-type {
-//   margin-left: 10px;
-// }
-
-// .list:last-of-type {
-//   margin-left: 10px;
-// }
 
 .list.addBoardForm {
   margin-left: 10px;
@@ -291,7 +310,8 @@ html {
 
 /* custom scrollbar */
 ::-webkit-scrollbar {
-  width: 20px;
+  width: 10px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
@@ -300,8 +320,11 @@ html {
 
 ::-webkit-scrollbar-thumb {
   background-color: #d6dee1;
-  border-radius: 20px;
-  border: 6px solid transparent;
+  // border-radius: 7px;
+  // border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 4px solid transparent;
   background-clip: content-box;
 }
 
