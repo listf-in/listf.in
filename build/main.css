@@ -45,8 +45,7 @@ html {
 .landingLogo {
   grid-row: 2;
   font-size: 10vmin;
-  max-width: 80%;
-  max-width: 1200px;
+  width: 80vmin;
   word-wrap: normal; }
 
 .landingSubtitle {
@@ -97,6 +96,9 @@ html {
   overflow-y: hidden;
   height: calc(100vh - 3rem);
   margin: 10px 0 0 0; }
+
+.board-header {
+  margin-left: 10px; }
 
 .mainBoard {
   display: grid;

@@ -370,29 +370,31 @@ const Board: FC<BoardProps> = ({
 
   return (
     <div className='board'>
-      <button
-        className={'backButton clickable'}
-        onClick={goBack}
-        disabled={!prevBoardList[0]}
-      >
-        Back
-      </button>
-      <DepthBarCont
-        board={board}
-        setBoard={setBoard}
-        prevBoardList={prevBoardList.slice().reverse()}
-        setPrevBoardList={setPrevBoardList}
-        setActiveBoard={setActiveBoard}
-        editing={editing === board.id}
-        setEditing={setEditing}
-      />
-      {
-        <ShareButton
-          home={board.home === null || board.home === false}
-          id={board.id}
+      <div className='board-header'>
+        <button
+          className={'backButton clickable'}
+          onClick={goBack}
+          disabled={!prevBoardList[0]}
+        >
+          Back
+        </button>
+        <DepthBarCont
+          board={board}
+          setBoard={setBoard}
+          prevBoardList={prevBoardList.slice().reverse()}
+          setPrevBoardList={setPrevBoardList}
+          setActiveBoard={setActiveBoard}
+          editing={editing === board.id}
+          setEditing={setEditing}
         />
-      }
-      <AddShareButton addToTopBoard={addToTopBoard} />
+        {
+          <ShareButton
+            home={board.home === null || board.home === false}
+            id={board.id}
+          />
+        }
+        <AddShareButton addToTopBoard={addToTopBoard} />
+      </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable
           droppableId={board.id}
