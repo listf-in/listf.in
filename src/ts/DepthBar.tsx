@@ -25,7 +25,7 @@ const DepthBar: FC<depthBarProps> = ({
           );
         }}
       >
-        {' < ' + depth.name}
+        {'  < ' + depth.name}
       </span>
     );
   });
